@@ -1,10 +1,10 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-dnl m4_define([stsmon_suffix], [m4_esyscmd(test -n "$program_suffix" && echo -n $program_suffix || echo -n pix)])
-dnl m4_define([stsmon_progname], [m4_esyscmd(test -n "$program_suffix" && echo -n stsmon$program_suffix || echo -n stsmonpix)])
-m4_define([stsmon_suffix], [m4_esyscmd(test -n "$program_suffix" && echo -n $program_suffix)])
-m4_define([stsmon_progname], [m4_esyscmd(test -n "$program_suffix" && echo -n stsmon$program_suffix)])
+m4_define([stsmon_suffix], [m4_esyscmd(test -n "$program_suffix" && echo -n $program_suffix || echo -n pixmaip1500)])
+m4_define([stsmon_progname], [m4_esyscmd(test -n "$program_suffix" && echo -n stsmon$program_suffix || echo -n stsmonpixmaip1500)])
+dnl m4_define([stsmon_suffix], [m4_esyscmd(test -n "$program_suffix" && echo -n $program_suffix)])
+dnl m4_define([stsmon_progname], [m4_esyscmd(test -n "$program_suffix" && echo -n stsmon$program_suffix)])
 
 AC_INIT(stsmon_progname(), 2.50)
 
