@@ -37,7 +37,7 @@ AC_CONFIG_FILES(po/Makefile.in)
 
 PKG_CHECK_MODULES(LIBXML,libxml)
 
-PKG_CHECK_MODULES(GTK_,gtk+)
+PKG_CHECK_MODULES(GTK_,gtk+-2.0)
 
 AC_OUTPUT([
 Makefile

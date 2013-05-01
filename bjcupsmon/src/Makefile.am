@@ -4,6 +4,10 @@ AM_CPPFLAGS = \
 	$(LIBXML_CFLAGS) \
 	$(GTK__CFLAGS)
 
+AM_LDFLAGS = \
+	$(LIBXML_LIBS) \
+	$(GTK__LIBS)
+
 CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\"
@@ -31,5 +35,5 @@ bjcupsmon_SOURCES =  \
 	support.c \
 	support.h
 
-bjcupsmon_LDADD = -lcups -lgtk -lxml
+bjcupsmon_LDADD = -lcups
 
