@@ -102,8 +102,8 @@ gboolean on_drawMainCartridge_configure_event(GtkWidget *widget, GdkEventConfigu
 gboolean on_drawMainCartridge_expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 {
 	// Re-draw drawing area.
-	gdk_draw_pixmap(widget->window,
-					widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
+	gdk_draw_drawable(gtk_widget_get_window(widget),
+					gtk_widget_get_style(widget)->fg_gc[gtk_widget_get_state(widget)],
 					gpPixmap,
 					event->area.x,
 					event->area.y,

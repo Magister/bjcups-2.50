@@ -2,11 +2,22 @@
 
 AM_CPPFLAGS = \
 	$(LIBXML_CFLAGS) \
-	$(GTK__CFLAGS)
+	$(GTK_CFLAGS)
+
+AM_LDFLAGS = \
+	$(LIBXML_LIBS) \
+	$(GTK_LIBS)
 
 CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\"
+
+CFLAGS += -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED \
+        -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED \
+        -DGSEAL_ENABLE \
+        -DG_DISABLE_SINGLE_INCLUDES -DATK_DISABLE_SINGLE_INCLUDES \
+        -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES -DGTK_DISABLE_SINGLE_INCLUDES
+
 
 bin_PROGRAMS =  \
 	bjcupsmon
@@ -31,5 +42,5 @@ bjcupsmon_SOURCES =  \
 	support.c \
 	support.h
 
-bjcupsmon_LDADD = -lcups -lgtk -lxml
+bjcupsmon_LDADD = -lcups
 
