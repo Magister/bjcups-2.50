@@ -1,23 +1,35 @@
 ## Process this file with automake to produce Makefile.in
 
-INCLUDES = \
-	-DUSE_LIB_GLASE	\
-	@GTK_CFLAGS@
+AM_CPPFLAGS = \
+	$(LIBXML_CFLAGS) \
+	$(GTK__CFLAGS)
 
-bin_PROGRAMS = bjcupsmon
+CPPFLAGS = \
+	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
+	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\"
 
-bjcupsmon_SOURCES = \
+bin_PROGRAMS =  \
+	bjcupsmon
+
+bjcupsmon_SOURCES =  \
+	bjcupsmon_callbacks.c \
+	bjcupsmon_common.h \
+	bjcupsmon_cups.c \
+	bjcupsmon_cups.h \
+	bjcupsmon_draw.c \
+	bjcupsmon_draw.h \
+	bjcupsmon_err.h \
+	bjcupsmon_funcprot.h \
 	bjcupsmon_main.c \
-	bjcupsmon_cups.c bjcupsmon_cups.h \
-	bjcupsmon_draw.c bjcupsmon_draw.h \
-	bjcupsmon_err.h  bjcupsmon_common.h \
-	bjcupsmon_callbacks.c bjcupsmon_funcprot.h \
 	bjcupsmon_msgidset.c \
-	bjcupsmon_transsts.c bjcupsmon_transsts.h \
-	bjcupsmon_ui.c       bjcupsmon_ui.h \
-	bjcupsmon_support.h \
-	interface.c interface.h support.c support.h 
+	bjcupsmon_transsts.c \
+	bjcupsmon_transsts.h \
+	bjcupsmon_ui.c \
+	bjcupsmon_ui.h \
+	interface.c \
+	interface.h \
+	support.c \
+	support.h
 
-
-bjcupsmon_LDADD = @GTK_LIBS@ $(INTLLIBS) -lxml -lcups 
+bjcupsmon_LDADD = -lcups -lgtk -lxml
 

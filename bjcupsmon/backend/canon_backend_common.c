@@ -34,10 +34,13 @@
 // CUPS Header
 #include <cups/cups.h>
 #include <cups/ipp.h>
+#include <cups/ppd.h>
 
 // Header file for CANON
 #include "canon_backend_common.h"
 #include "canon_common_function.h"
+#include "common.h"
+#include <stdarg.h>
 
 
 /*--------- Prototypes.	*/
@@ -54,8 +57,45 @@ static int write_to_bsccfile( char*, char*, short );
 
 //* Functions *****************************************************************
 /*----------------------------------------------------------------------------*
- * This function is a main function for calling a monitor process. 
+ * This function is a main function for calling a monitor process.
  */
+
+#ifdef DEBUG
+void create_log(void)
+{
+        FILE *path;
+
+        //path = fopen("/var/log/log.txt", "w");
+        path = fopen("/tmp/log_canon-usb.txt", "w");
+
+        log_path = path;
+        write_log("**********  LOG start  ***********\n");
+}
+
+#define MAX_PRINT_LEN 1000
+void write_log(char *str, ...)
+{
+        if(log_path == 0)
+                return ;
+
+        va_list args;
+        char *tmp_buf;
+        int llen = 0;
+
+        tmp_buf = (char *)malloc(MAX_PRINT_LEN);
+        if (tmp_buf != NULL) {
+            va_start(args, str);
+            llen = vsnprintf(tmp_buf, MAX_PRINT_LEN, str, args);
+            fwrite(tmp_buf, 1, llen, log_path);
+            //fprintf(stderr, "%s (%d): %s", file, line, tmp_buf);
+            va_end(args);
+
+            free(tmp_buf);
+        }
+
+        fflush(log_path);
+}
+#endif
 
 int 	_canon_bj( int argc, FILE *fp, int fd, int copies, char* option )
 {
@@ -103,11 +143,15 @@ int 	_canon_bj( int argc, FILE *fp, int fd, int copies, char* option )
 
 	sts = make_lgmon_command( lgmon_command, option, utilbyte ) ;
 
+#ifdef DEBUG
+    write_log("make_lgmon_command returned %d\n", sts);
+#endif
+
 	if	( sts == CANON_STS_SUCCESS ) {
 		/* Clear printer status */
 		fprintf( stderr, "INFO: \n" );
 
-		sts = lgmon_exec( argc, fp, fd, lgmon_command, copies ) ; 
+		sts = lgmon_exec( argc, fp, fd, lgmon_command, copies ) ;
 	}
 	if  ( sts != CANON_STS_SUCCESS ) {			/* status check				*/
 												/* error					*/
@@ -156,7 +200,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte )
 	memset( model_name, 0x00, sizeof( model_name ) ) ;
 
 										/* model neme get 					*/
-	if	( ( status = get_model_name( model_name ) ) == CANON_STS_SUCCESS ) { 
+	if	( ( status = get_model_name( model_name ) ) == CANON_STS_SUCCESS ) {
 
 										/* making lgmon command 			*/
 		if( utilbyte > 0 ){
@@ -165,7 +209,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte )
 					 LGMON_CMD_GUI_OPTIN_STR,
 					 LGMON_CMD_CUPS_OPTIN_STR,
 					 LGMON_CMD_UTIL_OPTIN_STR,
-					 utilbyte) ;	
+					 utilbyte) ;
 		}
 		else{
 			sprintf( command, "%s%s %s %s",	LGMON_CMD_BASE_STR,
@@ -178,7 +222,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte )
 
 
 /*----------------------------------------------------------------------------*
- * This function is carrying out processing which acquires 
+ * This function is carrying out processing which acquires
  * the model name of a device (printer) from the product key of a PPD file.
  */
 static
@@ -212,7 +256,7 @@ int     get_model_name( char *model_name )
 		}
 		ppdClose( p_file ) ;
 	}
-	else {							/* ppd file open eror	r				*/ 
+	else {							/* ppd file open eror	r				*/
 			status = CANON_STS_PPD_FILE_OPEN_ERR ;
 	}
 
@@ -221,7 +265,7 @@ int     get_model_name( char *model_name )
 
 
 /*----------------------------------------------------------------------------*
- * This function is carrying out processing which calls a lgmon process. 
+ * This function is carrying out processing which calls a lgmon process.
  * And pipes create.
  */
 static
@@ -261,7 +305,16 @@ int		lgmon_exec( int argc, FILE *fp, int fd, char *command, int copies  ) {
 		fprintf( stderr, "%s(Canon) langage moniter[%s] start!\n",
                        message_str_base[DEBUG_MESSAGE], cmd_argv[2] ) ;
 
+#ifdef DEBUG
+        write_log("%s(Canon) langage moniter[%s] start!\n",
+                         message_str_base[DEBUG_MESSAGE], cmd_argv[2]);
+#endif
+
    		rtn = execvp ( cmd_sh_path, cmd_argv ) ;/* lgmon exec 				*/
+
+#ifdef DEBUG
+        write_log("lgmon returned %s\n", rtn);
+#endif
 
 		if  ( rtn == -1 ) {						/* error					*/
 			switch( errno ) {
@@ -310,9 +363,16 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 	char		buffer[LGMON_DATA_WRITE_STR_LEN],		/* Output buffer	*/
 				*bufptr;    				/* Pointer into buffer			*/
 
-	while (copies > 0) {
+#ifdef DEBUG
+    write_log("Start writing data...\n");
+#endif
 
-		copies --;
+    while (copies > 0) {
+
+#ifdef DEBUG
+    write_log("Copy %d...\n", copies);
+#endif
+        copies --;
 
  		if  ( fp != stdin ) {
 			/*---------------------------------------------------------------*
@@ -320,12 +380,18 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 			*
 			fputs( "PAGE: 1 1\n", stderr ) ;
 			-----------------------------------------------------------------*/
-			rewind(fp);
+#ifdef DEBUG
+            write_log("fp != stdin, doing rewind(fp)\n");
+#endif
+            rewind(fp);
 		}
 
 		tbytes = 0;
 
-		/*
+#ifdef DEBUG
+        write_log("Reading data...\n");
+#endif
+        /*
 		*	data read
 		*/
 		while ((nbytes = fread(buffer, 1, sizeof(buffer), fp)) > 0) {
@@ -333,7 +399,10 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 			if( g_signal != 0 )			/* signal(SIGTERM) writing end. */
 				break;
 
-			/*
+#ifdef DEBUG
+            write_log("Writing %d bytes\n", nbytes);
+#endif
+            /*
 			* Write the print data to the printer...
 			*/
 			tbytes += nbytes;
@@ -345,7 +414,10 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 						wbytes = write(pipe_fds, bufptr, nbytes);
 
 				if (wbytes < 0) {					/* write error			*/
-					perror("ERROR: Unable to send print file to printer");
+#ifdef DEBUG
+                    write_log("ERROR: Unable to send print file to printer");
+#endif
+                    perror("ERROR: Unable to send print file to printer");
 					break;
 				}
 
@@ -370,11 +442,20 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 
 	} /* while end */
 
+#ifdef DEBUG
+    write_log("Finished.");
+#endif
+
 	if( g_signal != 0 ) {
 		fprintf( stderr, "%s %s %s\n", message_str_base[INFO_MASSAGE],
                                     sts_message_str[CANON_STS_DEFAULT],
                                     sts_message_str[CANON_STS_PRINT_CANCEL] ) ;
-	}
+#ifdef DEBUG
+        write_log("%s %s %s\n", message_str_base[INFO_MASSAGE],
+                                sts_message_str[CANON_STS_DEFAULT],
+                                sts_message_str[CANON_STS_PRINT_CANCEL] ) ;
+#endif
+    }
 }
 
 
@@ -382,13 +463,13 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 #define BSCCFILEPATH "/usr/lib/bjlib/"
 #define UTIL_OPTION	"CNBjUtilByte"
 
-static 
+static
 int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 				  char* tmp_file, char* option )
 {
 
 	cups_option_t *p_opt = NULL;
-	int num_opt = 0; 
+	int num_opt = 0;
 	int i,result = 0;
 	short regi_flag=0;
 	int cmdlen = 0;
@@ -396,8 +477,8 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 
 	if( (num_opt = cupsParseOptions(option, 0, &p_opt)) > 0 ){
 		for( i=0; i< num_opt; i++ ){
-	
-			/* bscc */	
+
+			/* bscc */
 			if( strcmp( p_opt[i].name, REGI_OPTION)== 0){
 				bscc_id = atoi(p_opt[i].value);
 				regi_flag = 1;
@@ -408,7 +489,7 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 			}
 		}
 	}
-	
+
 	if( regi_flag ){
 		char model_name[MODEL_NAME_STR_LEN] ;
 		char bscc_file[256];
@@ -419,7 +500,7 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 
 		sprintf( tmp_file, "/tmp/CNBjBackend%d", getpid());
 		if( (tmp_fp =fopen( tmp_file, "w")) == NULL )
-			goto open_error;	
+			goto open_error;
 
 
 		total_size = cmdlen;
@@ -429,26 +510,26 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 			total_size -= r_size;
 		}
 		fseek( tmp_fp, 0, SEEK_SET );
-		
+
 		r_size = fread( bscc_buf, 1, 256, (FILE*)(*fp) );
 		/* bscc file */
 		get_model_name( model_name );
 		sprintf( bscc_file, "%sbjfilter%s.bscc", BSCCFILEPATH, model_name );
-		
+
 		if( write_to_bsccfile( bscc_file, bscc_buf, bscc_id ) )
 			result = -1;
 
 		*fp = tmp_fp;
 	}
-	
+
 	*is_setregi = regi_flag;
 	cupsFreeOptions( num_opt, p_opt );
 	return result;
-	
+
  open_error:
 	cupsFreeOptions( num_opt, p_opt );
 	return -1;
-		
+
 }
 
 static int is_bscctag( FILE** fp )
@@ -464,27 +545,27 @@ static int is_bscctag( FILE** fp )
 
 	while( (cc=fgetc(fpTmp)) != EOF ){
 		if( cc == ']' )
-			bufTmp[pos] = 0x00;	
+			bufTmp[pos] = 0x00;
 		else if( cc == 0x09 || cc == 0x20 )
 			;
 		else if( cc == 0x0A ){
 			result = strcmp( bufTmp, "bscc" ) ? 0 : 1;
 			break;
-		}	
+		}
 		else
-			bufTmp[pos++] = cc;	
+			bufTmp[pos++] = cc;
 	}
-		
+
 	*fp = fpTmp;
 	return result;
-		
+
 }
 
 
 static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 {
 
-	FILE* fp = NULL;	
+	FILE* fp = NULL;
 	int cc;
 	char bufTmp[128];
 	char *pStr[2];
@@ -494,17 +575,17 @@ static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 	int index = 0;
 	int pos = 0;
 	int result = 1;
-	
+
 	if( strncmp( bscc_buf, "REG", 3 ) != 0 ){
 		fprintf( stderr, "bscc command error \n" );
-		return -1;	
+		return -1;
 	}
 
 	/* Open BSCC File */
 	if( (fp = fopen( bscc_file, "r+")) == NULL ){
 		fprintf( stderr, "bscc file error \n" );
-		return -1;	
-	}		
+		return -1;
+	}
 
 	isFirst = 0;
 	isBscc = 0;
@@ -518,30 +599,30 @@ static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 		else if( cc == '[' ){
 			isBscc = is_bscctag( &fp ) ? 1:0;
 			if( isBscc )
-				isFirst = 1;	
+				isFirst = 1;
 		}
 		else{
 			if( isBscc ){
 				if( cc == 0x0A ){	// End Of Command Line
-					bufTmp[pos] = 0x00;	
+					bufTmp[pos] = 0x00;
 					id = (short)atoi( pStr[1] );
 					if( id == bscc_id ){
 						if(	strlen( pStr[0] ) == strlen( bscc_buf ) ){
 							fseek( fp, -(strlen(pStr[0])+strlen(pStr[1])+2),
 								   SEEK_CUR );
 							if( (fputs(bscc_buf,fp)) != EOF )
-								result = 0;	
+								result = 0;
 							break;
 						}
 					}
 					else{
-						isFirst = 1; 
+						isFirst = 1;
 						index = 0;
 						pos = 0;
 					}
 				}
 				else if( cc == 0x09 || cc == 0x20 ){	// Space or Tab
-					isFirst = 1;	
+					isFirst = 1;
 					bufTmp[pos++] = 0x00;
 				}
 				else{			// Command string or Id string
@@ -557,14 +638,14 @@ static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 			}
 		}
 	}
-			
-	
+
+
 	if( fp != NULL )
-		fclose( fp );	
+		fclose( fp );
 	return result;
 
 }
-		
-				
 
-	
+
+
+

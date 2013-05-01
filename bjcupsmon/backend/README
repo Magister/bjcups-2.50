@@ -1,8 +1,8 @@
 canon_parallel  --- CUPS parallel backend for Canon Bubble Jet Printer.
-canon_usb       --- CUPS USB backend for Canon Bubble Jet Printer.
+canon-usb       --- CUPS USB backend for Canon Bubble Jet Printer.
 
 DESCRIPTION
-    The "canon_parallel" and "canon_usb" are the CUPS backend programs.
+    The "canon_parallel" and "canon-usb" are the CUPS backend programs.
     which fork the "lgmon*" process to obtain the printer status.
 
 REQUIREMENTS

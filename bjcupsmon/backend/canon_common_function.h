@@ -21,4 +21,5 @@
 /*
  * function prototypes
  */
-int	_canon_bj( int argc, FILE *fp, int fd, int copies, char* option ) ;
+int	_canon_bj( int argc, FILE *fp, int fd, int copies, char* option );
+

@@ -20,6 +20,7 @@
 
 /*** Includes ***/
 #include <cups/cups.h>
+#include <cups/ppd.h>
 #include <cups/language.h>
 #include <sys/types.h>
 #include <unistd.h>
