@@ -1,28 +1,28 @@
 ## Process this file with automake to produce Makefile.in
+## Created by Anjuta
 
-SUBDIRS = po src lgmon
-
-install-data-local:
-	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir); \
-	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/pixmaps; \
-	if test -d $(srcdir)/pixmaps; then \
-	  for pixmap in $(srcdir)/pixmaps/*; do \
-	    if test -f $$pixmap; then \
-	      $(INSTALL_DATA) $$pixmap $(DESTDIR)$(pkgdatadir)/pixmaps; \
-	    fi \
-	  done \
-	fi
-
-dist-hook:
-	mkdir $(distdir); \
-	if test -d pixmaps; then \
-	  mkdir $(distdir)/pixmaps; \
-	  for pixmap in pixmaps/*; do \
-	    if test -f $$pixmap; then \
-	      cp -p $$pixmap $(distdir)/pixmaps; \
-	    fi \
-	  done \
-	fi
+SUBDIRS = src po lgmon
 
 
+INTLTOOL_FILES = intltool-extract.in \
+	intltool-merge.in \
+	intltool-update.in
+
+EXTRA_DIST = \
+	$(INTLTOOL_FILES) \
+	$(PIXMAPS_DATA)
+
+DISTCLEANFILES = \
+        intltool-extract.* \
+        intltool-merge.* \
+        intltool-update.* \
+        po/.intltool-merge-cache
+
+PIXMAPSdir = $(pkgdatadir)/pixmaps
+
+PIXMAPS_DATA = \
+        pixmaps/*.xpm
+
+EXTRA_DIST = \
+        $(INTLTOOL_FILES) \
+        $(PIXMAPS_DATA)
