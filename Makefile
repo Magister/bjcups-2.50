@@ -1,7 +1,7 @@
 dirs = libs bjcups bjcupsmon ppd pstocanonbj 
 
 autogen=for dir in $(dirs); do\
-			(cd $$dir; ./autogen.sh|| exit 1;\
+			(cd $$dir ; ./autogen.sh)|| exit 1;\
 		done
 
 scripts=for dir in $(dirs); do\
@@ -9,6 +9,7 @@ scripts=for dir in $(dirs); do\
 		done
 
 all :
+	$(autogen)
 	$(scripts)
 
 clean :
