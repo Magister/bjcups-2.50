@@ -1,0 +1,8 @@
+Debug/*
+Optimized/*
+*.anjuta*
+autom4te.cache/*
+*~
+*.in
+aclocal.m4
+
