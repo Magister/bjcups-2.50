@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#define GTK_ENABLE_BROKEN
+
 /*** Includes ***/
 #include <config.h>
 #include <libintl.h>
@@ -541,10 +541,15 @@ PRIVATE void clearTextArea(const gchar *pWidgetName)
 {
 /*** Parameters start ***/
 	GtkWidget	*widget = NULL;		// Temporary pointer to widget.
+	GtkTextBuffer *buffer;
+	GtkTextIter start, end;
 /*** Parameters end ***/
 	
 	widget = lookupWidget(pWidgetName);
-	gtk_editable_delete_text(GTK_EDITABLE(widget), 0, -1);
+	buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+	gtk_text_buffer_get_start_iter(buffer, &start);
+	gtk_text_buffer_get_end_iter(buffer, &end);
+	gtk_text_buffer_delete(buffer, &start, &end);
 	
 	return;
 }// End clearTextArea
@@ -562,10 +567,16 @@ PRIVATE void insertStringToText(const gchar *pWidgetName, const gchar *pString)
 {
 /*** Parameters start ***/
 	GtkWidget	*widget = NULL;		// Temporary pointer to widget.
+	GtkTextBuffer *buffer;
+	GtkTextMark *mark;
+	GtkTextIter iter;
 /*** Parameters end ***/
 	
 	widget = lookupWidget(pWidgetName);
-	gtk_text_insert(GTK_TEXT(widget), NULL, NULL, NULL, dgettext(PACKAGE, pString), -1);
+	buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+	mark = gtk_text_buffer_get_insert (buffer);
+	gtk_text_buffer_get_iter_at_mark (buffer, &iter, mark);
+	gtk_text_buffer_insert (buffer, &iter, dgettext(PACKAGE, pString), -1);
 	
 	return;
 }// End insertStringToText
@@ -574,10 +585,16 @@ PRIVATE void insertStringToText_NoConv(const gchar *pWidgetName, const gchar *pS
 {
 /*** Parameters start ***/
 	GtkWidget	*widget = NULL;		// Temporary pointer to widget.
+	GtkTextBuffer *buffer;
+	GtkTextMark *mark;
+	GtkTextIter iter;
 /*** Parameters end ***/
 	
 	widget = lookupWidget(pWidgetName);
-	gtk_text_insert(GTK_TEXT(widget), NULL, NULL, NULL, pString, -1);
+	buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+	mark = gtk_text_buffer_get_insert (buffer);
+	gtk_text_buffer_get_iter_at_mark (buffer, &iter, mark);
+	gtk_text_buffer_insert (buffer, &iter, pString, -1);
 	
 	return;
 }// End insertStringToText_NoConv
@@ -594,16 +611,10 @@ PRIVATE void insertStringToText_NoConv(const gchar *pWidgetName, const gchar *pS
 PRIVATE void freezeText(const gchar *pWidgetName, gboolean freeze)
 {
 /*** Parameters start ***/
-	GtkWidget	*widget = NULL;		// Temporary pointer to widget.
+//	GtkWidget	*widget = NULL;		// Temporary pointer to widget.
 /*** Parameters end ***/
 	
-	widget = lookupWidget(pWidgetName);
-	if (freeze == TRUE) {
-		gtk_text_freeze(GTK_TEXT(widget));
-	}
-	else {
-		gtk_text_thaw(GTK_TEXT(widget));
-	}
+	// for now do nothing, as gtk-2.0 does not support freezing
 	
 	return;
 }// End freezeText
