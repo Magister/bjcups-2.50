@@ -147,6 +147,7 @@ int LoadResources()
 			}
 		}
 		// Load text resource.
+		printf("Loading ui resourse: %s\n", keytext_name);
 		g_keytext_list = LoadKeyTextList(keytext_name);
 
 #ifdef	USE_LIB_GLADE

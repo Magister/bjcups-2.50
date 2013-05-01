@@ -128,13 +128,18 @@ KeyTextList* LoadKeyTextList(gchar* filename)
 {
 	KeyTextList* list;
 	gchar* pathname = NULL;
+	
+	printf("keytext_dir: %s\n", g_keytext_dir);
 
 	if( !g_keytext_dir || !filename )
 		return NULL;
 
-	if( (pathname = CheckFileExists(g_keytext_dir, filename)) == NULL )
-		if( (pathname = CheckFileExists("keytext", filename)) == NULL )
+	if( (pathname = CheckFileExists(g_keytext_dir, filename)) == NULL ) {
+		if( (pathname = CheckFileExists("keytext", filename)) == NULL ) {
+			printf("resource not found: %s", filename);
 			return NULL;
+		}
+	}
 
 	list = (KeyTextList*)g_malloc(sizeof(KeyTextList));
 
