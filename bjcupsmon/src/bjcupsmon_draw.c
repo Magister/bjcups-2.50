@@ -628,6 +628,7 @@ PUBLIC void updateCartridgePictArea(ST_PrinterStatus *pPrinterStatus, gboolean d
 /*** Parameters start ***/
 	GtkWidget		*widget = NULL;	// Temporary pointer to widget.
 	GdkRectangle	updateRect;		// Area to re-draw,
+	GtkAllocation	allocation;
 /*** Parameters end ***/
 
 //	printf("updatePictArea\n");
@@ -635,7 +636,7 @@ PUBLIC void updateCartridgePictArea(ST_PrinterStatus *pPrinterStatus, gboolean d
 	if (pPrinterStatus != NULL) {
 		widget = lookupWidget((const gchar*)STR_MAIN_DRAW_CARTRIDGE);
 		
-		if (!(widget->window))
+		if (!(gtk_widget_get_window(widget)))
 			return;
 		
 		drawPixmaps(widget, pPrinterStatus);
@@ -645,8 +646,9 @@ PUBLIC void updateCartridgePictArea(ST_PrinterStatus *pPrinterStatus, gboolean d
 		if (draw == TRUE) {
 			updateRect.x = 0;
 			updateRect.y = 0;
-			updateRect.width = widget->allocation.width;
-			updateRect.height = widget->allocation.height;
+			gtk_widget_get_allocation(widget, &allocation);
+			updateRect.width = allocation.width;
+			updateRect.height = allocation.height;
 			gtk_widget_draw(widget, &updateRect);
 		}
 	}
@@ -667,22 +669,26 @@ PUBLIC void clearCartridgePictArea(void)
 /*** Parameters start ***/
 	GtkWidget		*widget = NULL;	// Temporary pointer to widget.
 	GdkRectangle	updateRect;		// Area to re-draw,
+	GtkAllocation	allocation;
+	GtkStyle	*style;
 /*** Parameters end ***/
 	
 	freePixmaps();
 	
 	widget = lookupWidget((gchar*)STR_MAIN_DRAW_CARTRIDGE);
 
-	if (!widget->window)
+	if (!gtk_widget_get_window(widget))
 		return;
 	
-	gpPixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
-	gdk_draw_rectangle(gpPixmap, widget->style->bg_gc[GTK_WIDGET_STATE(widget)], TRUE, 0, 0, widget->allocation.width, widget->allocation.height);
+	gtk_widget_get_allocation(widget, &allocation);
+	style = gtk_widget_get_style(widget);
+	gpPixmap = gdk_pixmap_new(gtk_widget_get_window(widget), allocation.width, allocation.height, -1);
+	gdk_draw_rectangle(gpPixmap, style->bg_gc[gtk_widget_get_state(widget)], TRUE, 0, 0, allocation.width, allocation.height);
 	
 	updateRect.x = 0;
 	updateRect.y = 0;
-	updateRect.width = widget->allocation.width;
-	updateRect.height = widget->allocation.height;
+	updateRect.width = allocation.width;
+	updateRect.height = allocation.height;
 	gtk_widget_draw(widget, &updateRect);
 	
 	return;
@@ -704,12 +710,16 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 	guint	xoffset = 0;	// X offset of pixmap.
 	gint	index[2];		// Cartridge index.
 	gint	i, j;			// Counter.
+	GtkAllocation	allocation;
+	GtkStyle	*style;
 /*** Parameters end ***/
 	
 	freePixmaps();
 	
-	gpPixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
-	gdk_draw_rectangle(gpPixmap, widget->style->bg_gc[GTK_WIDGET_STATE(widget)], TRUE, 0, 0, widget->allocation.width, widget->allocation.height);
+	gtk_widget_get_allocation(widget, &allocation);
+	style = gtk_widget_get_style(widget);
+	gpPixmap = gdk_pixmap_new(gtk_widget_get_window(widget), allocation.width, allocation.height, -1);
+	gdk_draw_rectangle(gpPixmap, style->bg_gc[gtk_widget_get_state(widget)], TRUE, 0, 0, allocation.width, allocation.height);
 	
 	for (i = 0; i < 2; i++) {
 		if (pPrinterStatus->cartridgeClass[i].type >= ID_CARTRIDGE_TYPE_PHOTO ) {
@@ -724,8 +734,8 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 		}
 	}
 	
-	gDW = (widget->allocation.width - totalWidth) >> 1;
-	gDH = (widget->allocation.height - MAX_PIXMAP_HEIGHT) >> 1;
+	gDW = (allocation.width - totalWidth) >> 1;
+	gDH = (allocation.height - MAX_PIXMAP_HEIGHT) >> 1;
 	
 	for (i = 0; i < 2; i++) {
 		if (index[i] != -1) {
@@ -736,21 +746,21 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 					break;
 				}
 
-				gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], *gpMask[gPatternTable[index[i]][j].pixmapID]);
+				gdk_gc_set_clip_mask(style->bg_gc[gtk_widget_get_state(widget)], *gpMask[gPatternTable[index[i]][j].pixmapID]);
 				
-				gdk_gc_set_clip_origin(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], gDW + xoffset, gDH + PIXMAP_Y_OFFSET);
+				gdk_gc_set_clip_origin(style->bg_gc[gtk_widget_get_state(widget)], gDW + xoffset, gDH + PIXMAP_Y_OFFSET);
 				
-				gdk_draw_pixmap(gpPixmap,
-								widget->style->bg_gc[GTK_WIDGET_STATE(widget)],
+				gdk_draw_drawable(gpPixmap,
+								style->bg_gc[gtk_widget_get_state(widget)],
 								*gpInk[gPatternTable[index[i]][j].pixmapID],
 								0,
 								0,
 								gDW + xoffset,
 								gDH + PIXMAP_Y_OFFSET,
-								widget->allocation.width,
-								widget->allocation.height);
+								allocation.width,
+								allocation.height);
 				
-				gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], NULL);
+				gdk_gc_set_clip_mask(style->bg_gc[gtk_widget_get_state(widget)], NULL);
 				
 				if (gPatternTable[index[i]][j].pixmapID < ID_PIXMAP_EL) {
 					drawInkLevelPixmap(widget, &(pPrinterStatus->cartridgeClass[i]), gPatternTable[index[i]][j].pixmapID, pPrinterStatus->cartridgeStatus[gPatternTable[index[i]][j].pixmapID].level, xoffset);
@@ -783,6 +793,8 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 /*** Parameters start ***/
 	GdkPixmap 	**pix = NULL;	// Pointer to pixmap.
 	GdkBitmap 	**bmp = NULL;	// Pointer to mask.
+	GtkAllocation	allocation;
+	GtkStyle	*style;
 /*** Parameters end ***/
 	
 	if (colorID == ID_PIXMAP_BB) {
@@ -857,20 +869,22 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 	}
 	
 	if (pix != NULL && bmp != NULL) {
-		gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], *bmp);
-		gdk_gc_set_clip_origin(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], gDW + xoffset, gDH);
+		style = gtk_widget_get_style(widget);
+		gdk_gc_set_clip_mask(style->bg_gc[gtk_widget_get_state(widget)], *bmp);
+		gdk_gc_set_clip_origin(style->bg_gc[gtk_widget_get_state(widget)], gDW + xoffset, gDH);
 		
-		gdk_draw_pixmap(gpPixmap,
-						widget->style->bg_gc[GTK_WIDGET_STATE(widget)],
+		gtk_widget_get_allocation(widget, &allocation);
+		gdk_draw_drawable(gpPixmap,
+						style->bg_gc[gtk_widget_get_state(widget)],
 						*pix,
 						0,
 						0,
 						gDW + xoffset,
 						gDH,
-						widget->allocation.width,
-						widget->allocation.height);
+						allocation.width,
+						allocation.height);
 		
-		gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], NULL);
+		gdk_gc_set_clip_mask(style->bg_gc[gtk_widget_get_state(widget)], NULL);
 	}
 	
 	return;
@@ -934,7 +948,7 @@ PRIVATE gint loadPixmap(GdkPixmap **gdkpixmap, GtkWidget *widget, GdkBitmap **ma
 		pFullFileName = checkFileExists(pDirectory, pFileName);
 		if (pFullFileName != NULL) {
 			// Create pixmap.
-			*gdkpixmap = gdk_pixmap_create_from_xpm(widget->window, &(*mask), NULL, pFullFileName);
+			*gdkpixmap = gdk_pixmap_create_from_xpm(gtk_widget_get_window(widget), &(*mask), NULL, pFullFileName);
 			if (gdkpixmap == NULL) {
 				retVal = ID_ERR_LOAD_PIXMAP_FAILED;
 			}
@@ -1035,13 +1049,13 @@ PRIVATE void freePixmap(GdkPixmap **gdkpixmap, GdkBitmap **mask)
 {
 	if (gdkpixmap != NULL) {
 		if (*gdkpixmap != NULL) {
-			gdk_pixmap_unref(*gdkpixmap);
+			g_object_unref(*gdkpixmap);
 			*gdkpixmap = NULL;
 		}
 	}
 	if (mask != NULL) {
 		if (*mask != NULL) {
-			gdk_bitmap_unref(*mask);
+			g_object_unref(*mask);
 			*mask = NULL;
 		}
 	}

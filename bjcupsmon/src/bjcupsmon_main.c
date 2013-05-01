@@ -199,7 +199,7 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 								initUI(windowTitle, &gPrinterStatus, TRUE, -1);
 								
 								// Set calling timeout function.
-								gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, NULL);
+								gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GSourceFunc)updateUI, NULL);
 							}
 						}
 					}
@@ -222,7 +222,7 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 			initUI(windowTitle, NULL, FALSE, errorInfo.messageID);
 			if (retVal != ID_ERR_UNKNOWN_PRINTER) {
 				// Set calling timeout function.
-				gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, NULL);
+				gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GSourceFunc)updateUI, NULL);
 			}
 			retVal = ID_ERR_NO_ERROR;
 		}
