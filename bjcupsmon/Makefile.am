@@ -22,7 +22,7 @@ INTLTOOL_FILES = \
 	intltool-update.in
 
 EXTRA_DIST = \
-	$INTLTOOL_FILES
+	$(INTLTOOL_FILES)
 
 DISTCLEANFILES = \
 	intltool-extract.* \
