@@ -8,8 +8,9 @@ INTLTOOL_FILES = intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in
 
-EXTRA_DIST = $(stsmondoc_DATA) \
-	$(INTLTOOL_FILES)
+EXTRA_DIST = \
+	$(INTLTOOL_FILES) \
+	$(PIXMAPS_DATA)
 
 DISTCLEANFILES = \
         intltool-extract.* \
