@@ -11,12 +11,17 @@ INTLTOOL_FILES = intltool-extract.in \
 EXTRA_DIST = $(stsmondoc_DATA) \
 	$(INTLTOOL_FILES)
 
-DISTCLEANFILES = intltool-extract \
-	intltool-merge \
-	intltool-update \
-	po/.intltool-merge-cache
+DISTCLEANFILES = \
+        intltool-extract.* \
+        intltool-merge.* \
+        intltool-update.* \
+        po/.intltool-merge-cache
 
+PIXMAPSdir = $(pkgdatadir)/pixmaps
 
-# Remove doc directory on uninstall
-uninstall-local:
-	-rm -r $(stsmondocdir)
+PIXMAPS_DATA = \
+        pixmaps/*.xpm
+
+EXTRA_DIST = \
+        $(INTLTOOL_FILES) \
+        $(PIXMAPS_DATA)
