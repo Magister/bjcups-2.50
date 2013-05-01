@@ -2,11 +2,11 @@
 
 AM_CPPFLAGS = \
 	$(LIBXML_CFLAGS) \
-	$(GTK__CFLAGS)
+	$(GTK_CFLAGS)
 
 AM_LDFLAGS = \
 	$(LIBXML_LIBS) \
-	$(GTK__LIBS)
+	$(GTK_LIBS)
 
 CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
