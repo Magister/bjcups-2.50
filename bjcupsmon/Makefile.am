@@ -21,8 +21,14 @@ INTLTOOL_FILES = \
 	intltool-merge.in \
 	intltool-update.in
 
+PIXMAPSdir = $(pkgdatadir)/pixmaps
+
+PIXMAPS_DATA = \
+	pixmaps/*.xpm
+
 EXTRA_DIST = \
-	$(INTLTOOL_FILES)
+	$(INTLTOOL_FILES) \
+	$(PIXMAPS_DATA)
 
 DISTCLEANFILES = \
 	intltool-extract.* \
