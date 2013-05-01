@@ -1,0 +1,18 @@
+pstocanonbj     --- CUPS filter for Canon Bubble Jet Printer.
+
+DESCRIPTION
+    The "pstocanonbj" is the CUPS filter program converting the Postscript
+    file to the Canon Bubble Jet Printer command stream. This filter call the
+    Ghostscript to convert the Postscript data into the image data, and also
+    call the Bubble Jet Print Filter for Linux to create the command stream.
+
+REQUIREMENTS
+    You need the following libraries.
+    * libcups               (1.1.x or above)
+
+    And you need the following programs.
+    * CUPS                  (1.1.14 or above)
+    * Ghostscript           (5.50   or above)
+
+INSTALLATION
+    See the file "INSTALL"

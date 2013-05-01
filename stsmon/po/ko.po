@@ -1,0 +1,643 @@
+# Canon Bubble Jet Print Filter for Linux Ver.2.50
+# Copyright CANON INC. 2001-2005
+# All Rights Reserved.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stsmon 2.50\n"
+"POT-Creation-Date: 2005-02-07 14:44+0900\n"
+"PO-Revision-Date: 2005-02-07 17:03+0900\n"
+"Last-Translator: CANON INC.\n"
+"Language-Team: CANON INC.\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=EUC-KR\n"
+"Content-Transfer-Encoding: 8bit\n."
+
+
+#: src/interface.c:41
+msgid "Canon BJF360 Status Monitor"
+msgstr ""
+
+#: src/interface.c:68
+msgid "Collecting printer status. "
+msgstr "프린터 상태 정보를 모으고 있습니다."
+
+#: src/interface.c:77 src/smstat.c:149
+msgid "Cartridge Type:"
+msgstr "카트리지 유형:"
+
+#: src/interface.c:131
+msgid "Continue"
+msgstr "계속"
+
+#: src/interface.c:138
+msgid "Cancel Printing"
+msgstr "인쇄 취소"
+
+#: src/callbacks.c:371 src/support.c:130
+#, c-format
+msgid "Error loading pixmap file: %s"
+msgstr ""
+
+#: src/support.c:121
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr ""
+
+#: src/smstat.c:99
+msgid ""
+"Scanner Cartridge detected.\n"
+"You cannot print with this cartridge. Install another BJ Cartridge in your "
+"printer.\n"
+msgstr ""
+"스캐너 카트리지를 검사하였습니다. \n"
+"이 카트리지로는 인쇄가 불가능합니다. 프린터에 다른 BJ 카트리지를 설치하십시오.\n"
+
+
+#: src/smstat.c:100
+msgid ""
+"Scanner Cartridge detected!\n"
+"Change to appropriate cartridge.\n"
+"Click Cancel Printing to cancel operation.\n"
+msgstr ""
+"스캐너 카트리지를 검사하였습니다!\n"
+"알맞은 카트리지로 교체합니다.\n"
+"[인쇄 취소]를 클릭하여 작업을 취소합니다.\n"
+
+
+#: src/smstat.c:101
+msgid ""
+"Unsupported cartridge installed.\n"
+"Change to appropriate BJ cartridge.\n"
+msgstr ""
+"지원받지 않는 카트리지가 설치되었습니다.\n"
+"알맞은 BJ 카트리지로 교체하십시오.\n"
+
+
+#: src/smstat.c:102
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+msgstr ""
+"카트리지가 설치되어 있지 않습니다!\n"
+"프린터에 알맞은 BJ 카트리지를 설치하십시오.\n"
+
+
+#: src/smstat.c:103
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+"or\n"
+"Click Cancel Printing if no cartridge available.\n"
+msgstr ""
+"카트리지가 설치되어 있지 않습니다!\n"
+"프린터에 알맞은 BJ 카트리지를 설치하십시오.\n"
+"or\n"
+"사용 가능한 카트리지가 없으면 [인쇄 취소]를 클릭합니다.\n"
+
+
+#: src/smstat.c:104
+msgid ""
+"\n"
+"The printer is set not to display a low ink warning.\n"
+msgstr ""
+"\n"
+"프린터에 잉크 잔량 경고가 보이지 않게 설정하였습니다.\n"
+
+
+#: src/smstat.c:105
+msgid ""
+"The used ink tank is full.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more details."
+msgstr ""
+"사용된 잉크 탱크가 거의 다 찼습니다.\n"
+"인쇄를 취소하고, 프린터를 껐다가 다시 켭니다.\n"
+"만일 에러를 제거할 수 없다면, 자세한 정보는 프린터 매뉴얼을 참고하십시오. "
+
+#: src/smstat.c:106
+msgid ""
+"The waste ink absorber is full.\n"
+"Contact the service center for the replacement of the waste ink absorber."
+msgstr ""
+"나머지 잉크 흡수기가 찼습니다.\n"
+"서비스 센터에 연락하여 나머지 잉크 흡수기를 교체하십시오."
+
+#: src/smstat.c:107
+#, c-format
+msgid ""
+"Service error %s.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more detail."
+msgstr ""
+"서비스 에러 \"%s\".\n"
+"인쇄를 취소하고 프린터를 껐다가 다시 켭니다.\n"
+"만일 에러를 제거할 수 없다면, 자세한 정보는 프린터 매뉴얼을 참고하십시오. "
+
+#: src/smstat.c:108
+msgid ""
+"Cleaning.\n"
+"Please wait.\n"
+msgstr ""
+"청소 중입니다.\n"
+"기다려 주십시오.\n"
+
+
+#: src/smstat.c:109
+msgid ""
+"Cartridge replacement is in progress.\n"
+"Close the front cover after replacement is completed.\n"
+msgstr ""
+"카트리지 교체 중입니다.\n"
+"교체가 끝난 후, 프린터 앞 커버를 닫습니다.\n"
+
+
+#: src/smstat.c:110
+msgid ""
+"The holder is at the replacement position.\n"
+"After replacing the print head or the ink tank, close the front cover of the "
+"printer. To replace only the ink tanks, do not remove the print head from "
+"the printer. Do not touch the locking lever.\n"
+msgstr ""
+"홀더가 교체 위치에 있습니다.\n"
+"프린트 헤드 또는 잉크 탱크를 교체한 후, 프린터의 앞 커버를 닫습니다. 잉크 탱크만 교체하는 경우, 프린터로부터 프린트 헤드를 이동하지 않습니다. 잠금 레버를 다치지 마십시오.\n"
+
+
+#: src/smstat.c:111
+msgid ""
+"The holder is at the replacement position.\n"
+"If you need to replace the print head or the ink tank, first open the Inner "
+"Cover. After the replacement is completed, close the Inner Cover, and then "
+"close the cover of the printer.\n"
+"If you are replacing only the ink tank, leave the print head attached. Do "
+"not touch the lock lever.\n"
+msgstr ""
+"홀더가 교체 위치에 있습니다.\n"
+"프린트 헤드 또는 잉크 탱크를 교체하려면 먼저 내부 커버를 엽니다. 교체 후 내부 커버를 닫고, 프린터의 커버를 닫습니다.\n"
+"잉크 탱크만 교체할 경우, 장착된 프린트 헤드를 제거하지 않습니다. 잠금 레버를 다치지 마십시오.\n"
+
+
+#: src/smstat.c:112 src/smstat.c:146
+msgid "Printing.\n"
+msgstr "인쇄 중입니다.\n"
+
+#: src/smstat.c:113
+msgid ""
+"Printer is in use via another interface.\n"
+"Please wait.\n"
+msgstr ""
+"프린터가 다른 인터페이스를 통해 사용 중 입니다.\n"
+"잠시 기다리십시오.\n"
+
+
+#: src/smstat.c:114
+msgid ""
+"Paper out.\n"
+"Load paper and press printer's RESUME button.\n"
+msgstr ""
+"용지를 다 썼습니다.\n"
+"용지를 로드하고, 프린터의 [계속] 버튼을 누릅니다.\n"
+
+
+#: src/smstat.c:115
+msgid "Paper out!\n"
+msgstr "용지를 다 썼습니다!\n"
+
+#: src/smstat.c:116
+msgid "Load paper in the sheet feeder.\n"
+msgstr "용지 공급기에 용지를 로드합니다.\n"
+
+#: src/smstat.c:117
+msgid "Load paper in the cassette.\n"
+msgstr "카셋트에 용지를 로드합니다.\n"
+
+#: src/smstat.c:118
+msgid "Press printer's RESUME button.\n"
+msgstr "프린터의 [계속] 버튼을 누릅니다.\n"
+
+#: src/smstat.c:119
+msgid ""
+"Paper jammed.\n"
+"Remove jammed paper and press printer's RESUME button.\n"
+msgstr ""
+"용지가 걸렸습니다.\n"
+"걸린 용지를 제거하고, 프린터의 [계속] 버튼을 누릅니다.\n"
+
+
+#: src/smstat.c:120
+msgid ""
+"Paper is jammed at the Paper ejection slot.\n"
+"Remove the jammed paper, and press the RESUME button. Printing resumes from "
+"the next paper."
+msgstr ""
+"용지가 용지 방출 슬롯에 걸렸습니다.\n"
+"걸린 용지를 제거하고 [계속] 버튼을 누릅니다. 다음 용지의 인쇄가 계속됩니다."
+
+#: src/smstat.c:121
+msgid ""
+"Paper is jammed in the Transport unit.\n"
+"Open the rear cover, remove the jammed paper, and then press the RESUME "
+"button. Printing resumes from the next sheet.\n"
+"If the jammed paper cannot be removed, first remove the cassette and remove "
+"the paper from the cassette side."
+msgstr ""
+"용지가 운송 단원에 걸렸습니다.\n"
+"후면 커버를 열어 걸린 용지를 제거하고 [계속] 버튼을 누릅니다. 다음 용지의 인쇄가 계속됩니다.\n"
+"걸린 용지가 제거되지 않으면 먼저 카셋트를 제거한 후 카셋트 쪽에서 용지를 제거합니다."
+
+#: src/smstat.c:122
+msgid ""
+"Paper is jammed in the Duplexing Transport section.\n"
+"First, remove the cassette, push the printer over onto its back side, and "
+"then open the Duplexing Transport unit. Next, remove the jammed paper, and "
+"quickly return the printer to its upright position. Finally, press the "
+"RESUME button on the printer. Printing resumes from the next sheet.\n"
+"Refer to the user's guide for details."
+msgstr ""
+"용지가 양면 운송 부분에 걸렸습니다.\n"
+"먼저 카셋트를 제거한 후 프린터를 뒤로 넘어 뜨리고 양면 운송 단원을 엽니다. 다음 걸린 용지를 제거하고 프린터를 직립 위치로 빨리 되돌려 놓습니다. 마지막으로 프린터의 [계속] 버튼을 누릅니다. 그러면 다음 용지의 인쇄가 계속됩니다.\n"
+"자세한 정보는 사용자 가이드를 참조하십시오. "
+
+#: src/smstat.c:123
+msgid ""
+"Operator error.\n"
+"Press printer's RESUME button.\n"
+"If this doesn't clear the error, cancel printing and turn the printer off "
+"and then back on.\n"
+msgstr ""
+"작업자 에러.\n"
+"프린터의 [계속] 버튼을 누릅니다.\n"
+"만일 에러를 제거할 수 없다면, 인쇄를 취소하고 프린터를 껐다가 다시 켭니다. \n"
+
+
+#: src/smstat.c:124
+msgid ""
+"Operator error.\n"
+"The connected printer cannot work correctly.\n"
+msgstr ""
+"작업자 에러.\n"
+"연결된 프린터가 제대로 작업하지 않습니다.\n"
+
+
+#: src/smstat.c:125
+msgid ""
+"The used ink tank is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"사용된 잉크 탱크가 거의 다 찼습니다.\n"
+"프린터의 [계속] 버튼을 누르고, 다시 인쇄를 시작합니다."
+
+#: src/smstat.c:126
+msgid ""
+"The waste ink absorber is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"나머지 잉크 흡수기가 거의 찹니다.\n"
+"프린터의 [계속] 버튼을 눌러 인쇄를 다시 시작합니다."
+
+#: src/smstat.c:127
+msgid ""
+"Protector not installed.\n"
+"Install a protector properly in the printer.\n"
+msgstr ""
+"보호기가 아직 설치되지 않았습니다.\n"
+"프린터에 보호기를 정확하게 설치합니다.\n"
+
+
+#: src/smstat.c:128
+msgid ""
+"An ink tank is not installed properly.\n"
+"Open the front cover of the printer, make sure the ink tank is installed "
+"properly, and close the front cover.\n"
+msgstr ""
+"한 잉크 탱크가 정확하게 설치되지 않았습니다.\n"
+"프린터 앞 커버를 열고 잉크 탱크가 정확하게 설치 되었는지를 확인하고 앞 커버를 닫습니다.\n"
+
+
+#: src/smstat.c:129
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the front cover.\n"
+msgstr ""
+"잉크를 다 썼습니다.\n"
+"잉크 탱크 교체 후 앞면 커버를 닫습니다.\n"
+
+
+#: src/smstat.c:130
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the cover. When replacing the ink tank, make sure "
+"that the Inner Cover is open.\n"
+"\n"
+"You can continue printing under the ink out condition by pressing the RESUME "
+"button. Replace the empty ink tank immediately after the printing. The "
+"printer may be damaged if printing is continued under the ink out "
+"condition.\n"
+msgstr ""
+"잉크를 다 썼습니다.\n"
+"잉크 탱크 교체 후 커버를 닫습니다. 잉크 탱크 교체 시 내부 커버가 열려 있는지 확인합니다.\n"
+"\n"
+"잉크를 다 쓴 정황하에서 [계속] 버튼을 누르면 인쇄를 계속할 수 있습니다. 인쇄를 마친 후 즉시 빈 잉크 탱크를 교체합니다. 잉크를 다 쓴 정황하에서 인쇄를 계속하면 프린터가 손상될 가능성이 있습니다.\n"
+
+
+#: src/smstat.c:131
+msgid ""
+"Front cover is open.\n"
+"Unable to print until the front cover is closed.\n"
+msgstr ""
+"앞 커버가 열렸습니다.\n"
+"앞 커버를 닫은 후에야 인쇄를 할 수 있습니다.\n"
+
+
+#: src/smstat.c:132 src/smstat.c:133
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank. If the CD-R Tray Feeder is "
+"installed, the print head or ink tank cannot be also changed. Close the "
+"front cover, remove the CD-R Tray Feeder, open the front cover again, and "
+"change the print head or ink tank.\n"
+msgstr ""
+"프린터의 앞 커버가 열렸습니다.\n"
+"인쇄가 진행 중이면 프린트 헤드나 잉크 탱크를 교체할 수 없습니다. 앞 커버를 닫고 인쇄를 끝마치기를 기다렸다가 커버를 다시 열고 프린트 헤드 또는 잉크 탱크를 교체합니다. CD-R 용지 공급함이 설치되어 있으면 프린트 헤드 또는 잉크 탱크를 교체할 수 없습니다. 앞 커버를 닫고 CD-R 트레이 공급기를 제거한 후, 앞 커버를 다시 열고 프린트 헤드 또는 잉크 탱크를 교체합니다.\n"
+
+
+#: src/smstat.c:134 src/smstat.c:135
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank.\n"
+msgstr ""
+"프린터의 앞 커버가 열렸습니다.\n"
+"인쇄가 진행 중이면 프린트 헤드나 잉크 탱크를 교체할 수 없습니다. 앞 커버를 닫고 인쇄가 끝마치기를 기다렸다가 커버를 다시 열고 프린트 헤드 또는 잉크 탱크를 교체합니다.\n"
+
+
+#: src/smstat.c:136
+msgid ""
+"The printer's cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the cover, wait for printing to finish, then open the cover again and "
+"change the print head or ink tank.\n"
+msgstr ""
+"프린터 커버가 열렸습니다.\n"
+"인쇄가 진행 중이면 프린트 헤드나 잉크 탱크를 교체할 수 없습니다. 커버를 닫고 인쇄가 끝마치기를 기다렸다가 커버를 다시 열고 프린트 헤드 또는 잉크 탱크를 교체합니다.\n"
+
+
+#: src/smstat.c:137
+msgid ""
+"The CD-R Tray Feeder is installed in the printer.\n"
+"After ensuring that the CD-R tray has been removed, remove the CD-R Tray "
+"Feeder and then press the RESUME button. Printing will then restart.\n"
+msgstr ""
+"CD-R 트레이 공급기가 프린터에 설치 되었습니다.\n"
+"CD-R 트레이가 제거되었는지 확인한 후, CD-R 트레이 공급기를 제거하고 [계속] 버튼을 누릅니다. 인쇄가 다시 시작됩니다. \n"
+
+
+#: src/smstat.c:138
+msgid ""
+"Document printing cannot be executed because the paper output tray is "
+"closed.\n"
+"Open the paper output tray. Printing will restart.\n"
+msgstr ""
+"용지 출력 트레이가 닫겨져 있기 때문에 문서 인쇄가 실행되지 않습니다.\n"
+"용지 출력 트레이를 엽니다. 인쇄가 다시 시작될 것입니다.\n"
+
+
+#: src/smstat.c:139
+msgid ""
+"Printing cannot be executed because the Inner Cover is open.\n"
+"Close the Inner Cover, and then press the RESUME button on the printer. "
+"Printing will restart."
+msgstr ""
+"내부 커버가 열려져 있기 때문에 인쇄를 실행할 수 없습니다.\n"
+"내부 커버를 닫은 후 프린터의 [계속] 버튼을 누릅니다. 인쇄가 다시 시작됩니다."
+
+#: src/smstat.c:140
+msgid ""
+"During printing, the Inner Cover of the printer was opened.\n"
+"Close the Inner Cover, and press the RESUME button on the printer. Printing "
+"resumes from the next paper."
+msgstr ""
+"인쇄 중에 프린터의 내부 커버가 열렸습니다.\n"
+"내부 커버를 닫고 프린터의 [계속] 버튼을 누릅니다. 그러면 다음 용지의 인쇄가 계속됩니다."
+
+#: src/smstat.c:141
+msgid ""
+"\n"
+"The following ink tanks are running low.\n"
+msgstr ""
+"\n"
+"다음과 같은 잉크 탱크들은 조금 남았습니다. \n"
+
+
+#: src/smstat.c:142
+msgid ""
+"\n"
+"The remaining level of the following ink is unknown.\n"
+msgstr ""
+"\n"
+"다음과 같은 잉크의 잔량을 모릅니다.\n"
+
+
+#: src/smstat.c:143
+msgid ""
+"\n"
+"There is a possibility that the printer cannot detect the remaining ink "
+"level properly. Reset the ink counter using the Maintenance tab of the "
+"printer driver whenever you have replaced any ink tank with new one.\n"
+msgstr ""
+"\n"
+"프린터가 잉크 잔량을 적절히 검사하지 못할 수도 있습니다. 매번 잉크 탱크를 새 것으로 교체한 후, 프린터 드라이버의 [유지 관리] 탭을 사용하여 잉크 카운터를 재설정합니다.\n"
+
+
+#: src/smstat.c:144
+msgid ""
+"A digital camera or device that is not supported by the direct printing "
+"function is connected to the Direct Print Port. Disconnect the cable from "
+"the Direct Print Port, and press the RESUME button.\n"
+msgstr "직접 인쇄 기능의 지원을 받지 못하는 디지털 카메라 혹은 설비가 직접 인쇄 포트에 연결되었습니다. 케이블을 직접 인쇄 포트에서 제거하고 [계속] 버튼을 누릅니다.\n"
+
+#: src/smstat.c:145
+msgid ""
+"An error occurred during automatic print head alignment.\n"
+"Press the RESUME button to clear the error. Refer to the user's guide to "
+"check the error, and reexecute print head alignment. If an error still "
+"occurs, carry out manual alignment.\n"
+msgstr ""
+"자동 프린트 헤드 정렬 중 에러가 발생하였습니다. \n"
+"[계속] 버튼을 눌러 에러를 제거합니다. 사용자 가이드를 참조하여 에러를 검사한 후에 프린트 헤드 정렬을 다시 진행합니다. 에러가 또 다시 발생하면 수동 프린트 헤드 정렬을 진행합니다.\n"
+
+
+#: src/smstat.c:147
+msgid "Printer is online.\n"
+msgstr "프린터가 온라인 상태입니다.\n"
+
+#: src/smstat.c:148
+msgid "Printer not responding.\n"
+msgstr "프린터가 응답을 하지 않습니다. \n"
+
+#: src/smstat.c:150
+msgid "Paper Thickness Lever Position:"
+msgstr "용지 두께 레버 위치:"
+
+#: src/smstat.c:151
+msgid "right"
+msgstr "오른쪽으로"
+
+#: src/smstat.c:152
+msgid "left"
+msgstr "왼쪽으로"
+
+#: src/smstat.c:153
+msgid "up"
+msgstr "위로"
+
+#: src/smstat.c:154
+msgid "down"
+msgstr "아래로"
+
+#: src/smstat.c:155
+msgid "Photo"
+msgstr "포토"
+
+#: src/smstat.c:156
+msgid "Color"
+msgstr "칼라 "
+
+#: src/smstat.c:157
+msgid "Photo/Color"
+msgstr "포토/칼라 "
+
+#: src/smstat.c:158
+msgid "Black/Color"
+msgstr "블랙/칼라 "
+
+#: src/smstat.c:159
+msgid "Black"
+msgstr "블랙 "
+
+#: src/smstat.c:160
+msgid "Scanner/Color"
+msgstr "스캐너/칼라"
+
+#: src/smstat.c:161
+msgid "Scanner"
+msgstr "스캐너"
+
+#: src/smstat.c:162
+msgid "Unsupported"
+msgstr "지원하지 않습니다"
+
+#: src/smstat.c:163
+msgid "Unknown"
+msgstr "아직 모릅니다"
+
+#: src/smstat.c:164
+msgid "appropriate BJ cartridge"
+msgstr "알맞은 BJ 카트리지"
+
+#: src/smstat.c:165
+msgid " Photo Black\n"
+msgstr " 포토 블랙\n"
+
+#: src/smstat.c:166
+msgid " Photo Cyan\n"
+msgstr " 포토 시안\n"
+
+#: src/smstat.c:167
+msgid " Photo Magenta\n"
+msgstr " 포토 마젠타\n"
+
+#: src/smstat.c:168
+msgid " Magenta\n"
+msgstr " 마젠타\n"
+
+#: src/smstat.c:169
+msgid " Cyan\n"
+msgstr " 시안\n"
+
+#: src/smstat.c:170
+msgid " Yellow\n"
+msgstr " 옐로\n"
+
+#: src/smstat.c:171
+msgid " Black\n"
+msgstr " 블랙\n"
+
+#: src/smstat.c:172
+msgid " Color\n"
+msgstr " 칼라\n"
+
+#: src/smstat.c:173
+msgid " Black [3e]\n"
+msgstr " 블랙 [3e]\n"
+
+#: src/smstat.c:175
+msgid " Black [6]\n"
+msgstr " 블랙 [6]\n"
+
+#: src/smstat.c:176
+msgid " Red [6]\n"
+msgstr " 빨간색 [6]\n"
+
+#: src/smstat.c:177
+msgid " Photo Cyan [6]\n"
+msgstr " 포토 시안 [6]\n"
+
+#: src/smstat.c:178
+msgid " Photo Magenta [6]\n"
+msgstr " 포토 마젠타 [6]\n"
+
+#: src/smstat.c:179
+msgid " Magenta [6]\n"
+msgstr " 마젠타 [6]\n"
+
+#: src/smstat.c:180
+msgid " Cyan [6]\n"
+msgstr " 시안 [6]\n"
+
+#: src/smstat.c:181
+msgid " Yellow [6]\n"
+msgstr " 옐로 [6]\n"
+
+#: src/smstat.c:183
+msgid " Black [7]\n"
+msgstr " 블랙 [7]\n"
+
+#: src/smstat.c:184
+msgid " Green [7]\n"
+msgstr " 초록색 [7]\n"
+
+#: src/smstat.c:185
+msgid " Red [7]\n"
+msgstr " 빨간색 [7]\n"
+
+#: src/smstat.c:186
+msgid " Photo Cyan [7]\n"
+msgstr " 포토 시안 [7]\n"
+
+#: src/smstat.c:187
+msgid " Photo Magenta [7]\n"
+msgstr " 포토 마젠타 [7]\n"
+
+#: src/smstat.c:188
+msgid " Magenta [7]\n"
+msgstr " 마젠타 [7]\n"
+
+#: src/smstat.c:189
+msgid " Cyan [7]\n"
+msgstr " 시안 [7]\n"
+
+#: src/smstat.c:190
+msgid " Yellow [7]\n"
+msgstr " 옐로 [7]\n"
+
+#: src/smstat.c:192
+msgid " Black [24]\n"
+msgstr " 블랙 [24]\n"
+
+#: src/smstat.c:193
+msgid " Color [24]\n"
+msgstr " 칼라 [24]\n"

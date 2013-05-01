@@ -1,0 +1,12 @@
+To build and install bjcups:
+
+  1) Building misc libraries.
+        cd ../libs
+        make
+        make install
+        cd ..
+
+  2) Building "bjcups".
+        make
+        make install
+

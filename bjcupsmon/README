@@ -1,0 +1,37 @@
+bjcupsmon --- Status monitor for Canon Bubble Jet Printer under CUPS.
+
+DESCRIPTION
+    The "bjcupsmon" is the status monitoring program for Canon Bubble Jet
+    Printers under CUPS. You can obtain the printer status, for instance,
+    ink level, paper jam, cover opened, and so on. The only thing you have to
+    do is as following;
+
+        bjcupsmon PIXUS990I
+
+        * You can ommit the printer name "PIXUS990I", and the default
+          printer will be used.
+
+    The GUI is shown on the screen, and if you start printing, you can see
+    all printer status on it.
+
+
+REQUIREMENTS
+    You need automake and autoconf to build these programs.
+    * automake              (1.4   or above)
+    * autoconf              (2.13  or above)
+
+    You need the following libraries.
+    * libcups               (1.1.x or above)
+    * Gtk+                  (1.2.x or above)
+    * libglade              (0.6   or above)
+
+    And you need the following programs.
+    * CUPS                  (1.1.14 or above)
+    * Ghostscript           (5.50   or above)
+    * bjfilter command set. (2.1    or above)
+       e.g.) bjfilterbjf900-2.1-0.i386.rpm
+
+      "bjfilter command set" is provided by Canon INC.
+
+INSTALLATION
+    See the file "INSTALL"

@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<GTK-Interface>
+
+<project>
+  <name>StsMON</name>
+  <program_name>stsmon</program_name>
+  <directory></directory>
+  <source_directory>src</source_directory>
+  <pixmaps_directory>pixmaps</pixmaps_directory>
+  <language>C</language>
+  <gnome_support>False</gnome_support>
+  <gettext_support>True</gettext_support>
+  <output_main_file>False</output_main_file>
+</project>
+
+<widget>
+  <class>GtkWindow</class>
+  <name>window1</name>
+  <x>0</x>
+  <y>0</y>
+  <signal>
+    <name>destroy</name>
+    <handler>on_window1_destroy</handler>
+    <data>window1</data>
+    <last_modification_time>Fri, 01 Sep 2000 02:37:06 GMT</last_modification_time>
+  </signal>
+  <signal>
+    <name>delete_event</name>
+    <handler>on_window1_delete_event</handler>
+    <data>window1</data>
+    <last_modification_time>Fri, 01 Sep 2000 08:23:49 GMT</last_modification_time>
+  </signal>
+  <signal>
+    <name>destroy_event</name>
+    <handler>on_window1_destroy_event</handler>
+    <last_modification_time>Thu, 22 Feb 2001 06:40:53 GMT</last_modification_time>
+  </signal>
+  <title>Canon BJF360 Status Monitor</title>
+  <type>GTK_WINDOW_TOPLEVEL</type>
+  <position>GTK_WIN_POS_NONE</position>
+  <modal>False</modal>
+  <allow_shrink>False</allow_shrink>
+  <allow_grow>True</allow_grow>
+  <auto_shrink>True</auto_shrink>
+
+  <widget>
+    <class>GtkVBox</class>
+    <name>vbox5</name>
+    <homogeneous>False</homogeneous>
+    <spacing>0</spacing>
+
+    <widget>
+      <class>GtkScrolledWindow</class>
+      <name>scrolledwindow6</name>
+      <border_width>10</border_width>
+      <width>320</width>
+      <height>230</height>
+      <hscrollbar_policy>GTK_POLICY_NEVER</hscrollbar_policy>
+      <vscrollbar_policy>GTK_POLICY_ALWAYS</vscrollbar_policy>
+      <hupdate_policy>GTK_UPDATE_CONTINUOUS</hupdate_policy>
+      <vupdate_policy>GTK_UPDATE_CONTINUOUS</vupdate_policy>
+      <child>
+	<padding>10</padding>
+	<expand>True</expand>
+	<fill>True</fill>
+      </child>
+
+      <widget>
+	<class>GtkText</class>
+	<name>text1</name>
+	<can_focus>True</can_focus>
+	<editable>False</editable>
+	<text>Collecting printer status. </text>
+      </widget>
+    </widget>
+
+    <widget>
+      <class>GtkHSeparator</class>
+      <name>hseparator2</name>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>False</fill>
+      </child>
+    </widget>
+
+    <widget>
+      <class>GtkLabel</class>
+      <name>label1</name>
+      <label>Cartridge Type:</label>
+      <justify>GTK_JUSTIFY_LEFT</justify>
+      <wrap>False</wrap>
+      <xalign>0</xalign>
+      <yalign>0.5</yalign>
+      <xpad>10</xpad>
+      <ypad>3</ypad>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>True</fill>
+      </child>
+    </widget>
+
+    <widget>
+      <class>GtkLabel</class>
+      <name>label2</name>
+      <label></label>
+      <justify>GTK_JUSTIFY_LEFT</justify>
+      <wrap>False</wrap>
+      <xalign>0</xalign>
+      <yalign>0.5</yalign>
+      <xpad>10</xpad>
+      <ypad>3</ypad>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>True</fill>
+      </child>
+    </widget>
+
+    <widget>
+      <class>GtkHSeparator</class>
+      <name>hseparator1</name>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>False</fill>
+      </child>
+    </widget>
+
+    <widget>
+      <class>GtkDrawingArea</class>
+      <name>drawingarea1</name>
+      <width>50</width>
+      <height>90</height>
+      <signal>
+	<name>configure_event</name>
+	<handler>on_drawingarea1_configure_event</handler>
+	<last_modification_time>Mon, 07 Aug 2000 05:53:45 GMT</last_modification_time>
+      </signal>
+      <signal>
+	<name>expose_event</name>
+	<handler>on_drawingarea1_expose_event</handler>
+	<last_modification_time>Mon, 07 Aug 2000 05:54:08 GMT</last_modification_time>
+      </signal>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>True</fill>
+      </child>
+    </widget>
+
+    <widget>
+      <class>GtkHSeparator</class>
+      <name>hseparator3</name>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>True</fill>
+      </child>
+    </widget>
+
+    <widget>
+      <class>GtkHButtonBox</class>
+      <name>hbuttonbox1</name>
+      <border_width>5</border_width>
+      <layout_style>GTK_BUTTONBOX_END</layout_style>
+      <spacing>0</spacing>
+      <child_min_width>85</child_min_width>
+      <child_min_height>21</child_min_height>
+      <child_ipad_x>11</child_ipad_x>
+      <child_ipad_y>0</child_ipad_y>
+      <child>
+	<padding>0</padding>
+	<expand>False</expand>
+	<fill>False</fill>
+      </child>
+
+      <widget>
+	<class>GtkButton</class>
+	<name>print_continue</name>
+	<visible>False</visible>
+	<can_default>True</can_default>
+	<can_focus>True</can_focus>
+	<signal>
+	  <name>clicked</name>
+	  <handler>on_print_continue_clicked</handler>
+	  <data>window1</data>
+	  <last_modification_time>Fri, 01 Sep 2000 02:31:49 GMT</last_modification_time>
+	</signal>
+	<label>Continue</label>
+	<relief>GTK_RELIEF_NORMAL</relief>
+      </widget>
+
+      <widget>
+	<class>GtkButton</class>
+	<name>print_cancel</name>
+	<can_default>True</can_default>
+	<can_focus>True</can_focus>
+	<signal>
+	  <name>clicked</name>
+	  <handler>on_print_cancel_clicked</handler>
+	  <data>window1</data>
+	  <last_modification_time>Fri, 01 Sep 2000 02:35:59 GMT</last_modification_time>
+	</signal>
+	<label>Cancel Printing</label>
+	<relief>GTK_RELIEF_NORMAL</relief>
+      </widget>
+    </widget>
+  </widget>
+</widget>
+
+</GTK-Interface>

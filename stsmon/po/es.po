@@ -1,0 +1,643 @@
+# Canon Bubble Jet Print Filter for Linux Ver.2.50
+# Copyright CANON INC. 2001-2005
+# All Rights Reserved.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stsmon 2.50\n"
+"POT-Creation-Date: 2005-02-07 14:44+0900\n"
+"PO-Revision-Date: 2005-02-08 18:45+0900\n"
+"Last-Translator: CANON INC.\n"
+"Language-Team: CANON INC.\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n."
+
+
+#: src/interface.c:41
+msgid "Canon BJF360 Status Monitor"
+msgstr ""
+
+#: src/interface.c:68
+msgid "Collecting printer status. "
+msgstr "Se está obteniendo el estado de la impresora."
+
+#: src/interface.c:77 src/smstat.c:149
+msgid "Cartridge Type:"
+msgstr "Tipo de cartucho:"
+
+#: src/interface.c:131
+msgid "Continue"
+msgstr "Continuar"
+
+#: src/interface.c:138
+msgid "Cancel Printing"
+msgstr "Cancelar impresión"
+
+#: src/callbacks.c:371 src/support.c:130
+#, c-format
+msgid "Error loading pixmap file: %s"
+msgstr ""
+
+#: src/support.c:121
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr ""
+
+#: src/smstat.c:99
+msgid ""
+"Scanner Cartridge detected.\n"
+"You cannot print with this cartridge. Install another BJ Cartridge in your "
+"printer.\n"
+msgstr ""
+"Se ha detectado un cartucho de escáner.\n"
+"No puede imprimir con ese cartucho. Instale otro cartucho BJ en la impresora.\n"
+
+
+#: src/smstat.c:100
+msgid ""
+"Scanner Cartridge detected!\n"
+"Change to appropriate cartridge.\n"
+"Click Cancel Printing to cancel operation.\n"
+msgstr ""
+"Se ha detectado un cartucho de escaneado de imágenes.\n"
+"Cámbielo por el cartucho adecuado.\n"
+"Haga clic en Cancelar impresión para cancelar la operación.\n"
+
+
+#: src/smstat.c:101
+msgid ""
+"Unsupported cartridge installed.\n"
+"Change to appropriate BJ cartridge.\n"
+msgstr ""
+"Se ha instalado un cartucho no compatible.\n"
+"Cámbielo por el cartucho BJ adecuado.\n"
+
+
+#: src/smstat.c:102
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+msgstr ""
+"No se ha instalado ningún cartucho\n"
+"Instale el cartucho BJ adecuado en la impresora.\n"
+
+
+#: src/smstat.c:103
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+"or\n"
+"Click Cancel Printing if no cartridge available.\n"
+msgstr ""
+"No se ha instalado ningún cartucho.\n"
+"Instale el cartucho BJ adecuado en la impresora.\n"
+"o\n"
+"Haga clic en Cancelar impresión si no hay cartuchos disponibles.\n"
+
+
+#: src/smstat.c:104
+msgid ""
+"\n"
+"The printer is set not to display a low ink warning.\n"
+msgstr ""
+"\n"
+"La impresora está configurada para no mostrar la advertencia sobre el nivel bajo de tinta.\n"
+
+
+#: src/smstat.c:105
+msgid ""
+"The used ink tank is full.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more details."
+msgstr ""
+"El depósito de tinta utilizado está lleno.\n"
+"Cancele la impresión, apague la impresora y vuelva a encenderla.\n"
+"Si esto no elimina el error, consulte el manual de la impresora para obtener más detalles."
+
+#: src/smstat.c:106
+msgid ""
+"The waste ink absorber is full.\n"
+"Contact the service center for the replacement of the waste ink absorber."
+msgstr ""
+"El depósito de tinta de desecho está lleno.\n"
+"Póngase en contacto con el centro de servicio para cambiarlo."
+
+#: src/smstat.c:107
+#, c-format
+msgid ""
+"Service error %s.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more detail."
+msgstr ""
+"Error de servicio %s.\n"
+"Cancele la impresión, apague la impresora y vuelva a encenderla.\n"
+"Si esto no elimina el error, consulte el manual de la impresora para obtener más detalles."
+
+#: src/smstat.c:108
+msgid ""
+"Cleaning.\n"
+"Please wait.\n"
+msgstr ""
+"Se está realizando la limpieza.\n"
+"Espere unos instantes.\n"
+
+
+#: src/smstat.c:109
+msgid ""
+"Cartridge replacement is in progress.\n"
+"Close the front cover after replacement is completed.\n"
+msgstr ""
+"Se está sustituyendo el cartucho.\n"
+"Cierre la tapa delantera una vez que lo haya reemplazado.\n"
+
+
+#: src/smstat.c:110
+msgid ""
+"The holder is at the replacement position.\n"
+"After replacing the print head or the ink tank, close the front cover of the "
+"printer. To replace only the ink tanks, do not remove the print head from "
+"the printer. Do not touch the locking lever.\n"
+msgstr ""
+"El soporte se encuentra en la posición de sustitución.\n"
+"Después de sustituir el cabezal de impresión o el depósito de tinta, cierre la cubierta delantera de la impresora. Si desea sustituir sólo los depósitos de tinta, no quite el cabezal de impresión de la impresora ni toque la palanca de bloqueo.\n"
+
+
+#: src/smstat.c:111
+msgid ""
+"The holder is at the replacement position.\n"
+"If you need to replace the print head or the ink tank, first open the Inner "
+"Cover. After the replacement is completed, close the Inner Cover, and then "
+"close the cover of the printer.\n"
+"If you are replacing only the ink tank, leave the print head attached. Do "
+"not touch the lock lever.\n"
+msgstr ""
+"El soporte está en posición de sustitución.\n"
+"Si necesita cambiar el cabezal de impresión o el depósito de tinta, abra primero la Cubierta interior. Una vez finalizada la sustitución, cierre la Cubierta interior y luego la cubierta de la impresora.\n"
+"Si sólo va a cambiar el depósito de tinta, no suelte el cabezal de impresión. No toque la palanca de bloqueo.\n"
+
+
+#: src/smstat.c:112 src/smstat.c:146
+msgid "Printing.\n"
+msgstr "Imprimiendo.\n"
+
+#: src/smstat.c:113
+msgid ""
+"Printer is in use via another interface.\n"
+"Please wait.\n"
+msgstr ""
+"La impresora está siendo utilizada por otra interfaz.\n"
+"Espere.\n"
+
+
+#: src/smstat.c:114
+msgid ""
+"Paper out.\n"
+"Load paper and press printer's RESUME button.\n"
+msgstr ""
+"Sin papel.\n"
+"Coloque papel y presione el botón REANUDAR de la impresora.\n"
+
+
+#: src/smstat.c:115
+msgid "Paper out!\n"
+msgstr "Sin papel!\n"
+
+#: src/smstat.c:116
+msgid "Load paper in the sheet feeder.\n"
+msgstr "Cargue papel en el alimentador de hojas.\n"
+
+#: src/smstat.c:117
+msgid "Load paper in the cassette.\n"
+msgstr "Cargue papel en la bandeja.\n"
+
+#: src/smstat.c:118
+msgid "Press printer's RESUME button.\n"
+msgstr "Presione el botón REANUDAR en la impresora.\n"
+
+#: src/smstat.c:119
+msgid ""
+"Paper jammed.\n"
+"Remove jammed paper and press printer's RESUME button.\n"
+msgstr ""
+"El papel se ha atascado.\n"
+"Saque el papel atascado y presione el botón REANUDAR de la impresora.\n"
+
+
+#: src/smstat.c:120
+msgid ""
+"Paper is jammed at the Paper ejection slot.\n"
+"Remove the jammed paper, and press the RESUME button. Printing resumes from "
+"the next paper."
+msgstr ""
+"El papel está atascado en la ranura de expulsión de papel.\n"
+"Saque el papel atascado y pulse el botón REANUDAR. La impresión se reanuda a partir del papel siguiente."
+
+#: src/smstat.c:121
+msgid ""
+"Paper is jammed in the Transport unit.\n"
+"Open the rear cover, remove the jammed paper, and then press the RESUME "
+"button. Printing resumes from the next sheet.\n"
+"If the jammed paper cannot be removed, first remove the cassette and remove "
+"the paper from the cassette side."
+msgstr ""
+"Hay papel atascado en la unidad de transporte.\n"
+"Abra la tapa trasera, saque el papel atascado y pulse el botón REANUDAR. La impresión se reanuda a partir de la hoja siguiente.\n"
+"Si no se puede sacar el papel atascado, saque primero el papel del lado del cassette."
+
+#: src/smstat.c:122
+msgid ""
+"Paper is jammed in the Duplexing Transport section.\n"
+"First, remove the cassette, push the printer over onto its back side, and "
+"then open the Duplexing Transport unit. Next, remove the jammed paper, and "
+"quickly return the printer to its upright position. Finally, press the "
+"RESUME button on the printer. Printing resumes from the next sheet.\n"
+"Refer to the user's guide for details."
+msgstr ""
+"El papel está atascado en la sección de transporte de doble cara.\n"
+"Primero, saque el casete, gire la impresora para apoyarla sobre la parte posterior y abra la unidad de transporte de doble cara. Después, saque el papel atascado y vuelva a poner la impresora en su posición vertical. Finalmente, pulse el botón REANUDAR de la impresora. La impresión se reanuda a partir de la hoja siguiente.\n"
+"Consulte el manual de usuario para obtener más detalles."
+
+#: src/smstat.c:123
+msgid ""
+"Operator error.\n"
+"Press printer's RESUME button.\n"
+"If this doesn't clear the error, cancel printing and turn the printer off "
+"and then back on.\n"
+msgstr ""
+"Error del operador.\n"
+"Presione el botón REANUDAR de la impresora.\n"
+"Si esto no elimina el error, cancele la impresión, apague la impresora y vuelva a encenderla.\n"
+
+
+#: src/smstat.c:124
+msgid ""
+"Operator error.\n"
+"The connected printer cannot work correctly.\n"
+msgstr ""
+"Error del operador.\n"
+"La impresora conectada no puede funcionar correctamente.\n"
+
+
+#: src/smstat.c:125
+msgid ""
+"The used ink tank is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"El depósito de tinta utilizado está casi lleno.\n"
+"Presione el botón REANUDAR de la impresora para reanudar la impresión."
+
+#: src/smstat.c:126
+msgid ""
+"The waste ink absorber is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"El dispositivo de absorción de tinta sobrante está casi lleno.\n"
+"Pulse el botón REANUDAR de la impresora para reiniciar la impresión."
+
+#: src/smstat.c:127
+msgid ""
+"Protector not installed.\n"
+"Install a protector properly in the printer.\n"
+msgstr ""
+"El protector no está instalado.\n"
+"Instale correctamente un protector en la impresora.\n"
+
+
+#: src/smstat.c:128
+msgid ""
+"An ink tank is not installed properly.\n"
+"Open the front cover of the printer, make sure the ink tank is installed "
+"properly, and close the front cover.\n"
+msgstr ""
+"Hay un depósito de tinta instalado incorrectamente.\n"
+"Abra la cubierta delantera de la impresora, asegúrese de que el depósito de tinta está instalado de forma correcta y cierre la cubierta.\n"
+
+
+#: src/smstat.c:129
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the front cover.\n"
+msgstr ""
+"Se ha agotado la tinta.\n"
+"Sustituya el depósito de tinta y cierre la cubierta delantera.\n"
+
+
+#: src/smstat.c:130
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the cover. When replacing the ink tank, make sure "
+"that the Inner Cover is open.\n"
+"\n"
+"You can continue printing under the ink out condition by pressing the RESUME "
+"button. Replace the empty ink tank immediately after the printing. The "
+"printer may be damaged if printing is continued under the ink out "
+"condition.\n"
+msgstr ""
+"Se ha agotado la tinta.\n"
+"Cambie el depósito de tinta y cierre la tapa. Al volver a poner el depósito de tinta, asegúrese de que la Cubierta interior está abierta.\n"
+"\n"
+"Puede seguir imprimiendo aunque la tinta esté agotada, si pulsa el botón REANUDAR. Cambie el depósito de tinta vacía inmediatamente después de la impresión. La impresora puede resultar dañada si sigue imprimiendo una vez agotada la tinta.\n"
+
+
+#: src/smstat.c:131
+msgid ""
+"Front cover is open.\n"
+"Unable to print until the front cover is closed.\n"
+msgstr ""
+"La tapa delantera está abierta.\n"
+"No se podrá imprimir hasta que se cierre la tapa delantera.\n"
+
+
+#: src/smstat.c:132 src/smstat.c:133
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank. If the CD-R Tray Feeder is "
+"installed, the print head or ink tank cannot be also changed. Close the "
+"front cover, remove the CD-R Tray Feeder, open the front cover again, and "
+"change the print head or ink tank.\n"
+msgstr ""
+"La cubierta delantera de la impresora está abierta.\n"
+"Dado que la impresión está en curso, no podrá cambiar el cabezal de impresión o el depósito de tinta. Cierre la cubierta delantera, espere a que termine la impresión, vuelva a abrir la cubierta y cambie el cabezal de impresión o el depósito de tinta. Tampoco podrá cambiar el cabezal de impresión o el depósito de tinta si el alimentador de la bandeja de CD está instalado. Cierre la cubierta delantera, extraiga el alimentador de la bandeja de CD, vuelva a abrir la cubierta delantera y cambie el cabezal de impresión ni el depósito de tinta.\n"
+
+
+#: src/smstat.c:134 src/smstat.c:135
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank.\n"
+msgstr ""
+"La cubierta delantera de la impresora está abierta.\n"
+"Dado que la impresión está en curso, no podrá cambiar el cabezal de impresión o el depósito de tinta. Cierre la cubierta delantera, espere a que termine la impresión, vuelva a abrir la cubierta y cambie el cabezal de impresión o el depósito de tinta.\n"
+
+
+#: src/smstat.c:136
+msgid ""
+"The printer's cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the cover, wait for printing to finish, then open the cover again and "
+"change the print head or ink tank.\n"
+msgstr ""
+"La cubierta de la impresora está abierta.\n"
+"Si la impresión está en curso no es posible cambiar el cabezal de impresión ni el depósito de tinta. Cierre la cubierta y espere a que finalice la impresión. Después, vuelva a abrir la cubierta y cambie el cabezal de impresión o el depósito de tinta.\n"
+
+
+#: src/smstat.c:137
+msgid ""
+"The CD-R Tray Feeder is installed in the printer.\n"
+"After ensuring that the CD-R tray has been removed, remove the CD-R Tray "
+"Feeder and then press the RESUME button. Printing will then restart.\n"
+msgstr ""
+"El alimentador de la bandeja de CD está instalado en la impresora.\n"
+"Una vez que se asegure de que ha extraído la bandeja de CD, retire el alimentador de la bandeja de CD y presione el botón REANUDAR. Se reiniciará entonces la impresión.\n"
+
+
+#: src/smstat.c:138
+msgid ""
+"Document printing cannot be executed because the paper output tray is "
+"closed.\n"
+"Open the paper output tray. Printing will restart.\n"
+msgstr ""
+"La impresión de documentos no se puede ejecutar porque la bandeja de salida de papel está cerrada.\n"
+"Abra la bandeja de salida de papel. La impresión se reanudará.\n"
+
+
+#: src/smstat.c:139
+msgid ""
+"Printing cannot be executed because the Inner Cover is open.\n"
+"Close the Inner Cover, and then press the RESUME button on the printer. "
+"Printing will restart."
+msgstr ""
+"No es posible realizar la impresión porque la Cubierta interior está abierta.\n"
+" Cierre la Cubierta interior y pulse el botón REANUDAR de la impresora. La impresión se reiniciará."
+
+#: src/smstat.c:140
+msgid ""
+"During printing, the Inner Cover of the printer was opened.\n"
+"Close the Inner Cover, and press the RESUME button on the printer. Printing "
+"resumes from the next paper."
+msgstr ""
+"Durante la impresión, la Cubierta interior de la impresora se ha abierto.\n"
+"Ciérrela y pulse el botón REANUDAR de la impresora. La impresión se reanuda a partir de la hoja siguiente."
+
+#: src/smstat.c:141
+msgid ""
+"\n"
+"The following ink tanks are running low.\n"
+msgstr ""
+"\n"
+"Los siguientes depósitos de tinta se están agotando.\n"
+
+
+#: src/smstat.c:142
+msgid ""
+"\n"
+"The remaining level of the following ink is unknown.\n"
+msgstr ""
+"\n"
+"Se desconoce el nivel de la siguiente tinta.\n"
+
+
+#: src/smstat.c:143
+msgid ""
+"\n"
+"There is a possibility that the printer cannot detect the remaining ink "
+"level properly. Reset the ink counter using the Maintenance tab of the "
+"printer driver whenever you have replaced any ink tank with new one.\n"
+msgstr ""
+"\n"
+"Es posible que la impresora no detecte adecuadamente el nivel de tinta que queda. Restablezca el contador de tinta en la ficha Mantenimiento del controlador de la impresora cuando sustituya algún depósito de tinta.\n"
+
+
+#: src/smstat.c:144
+msgid ""
+"A digital camera or device that is not supported by the direct printing "
+"function is connected to the Direct Print Port. Disconnect the cable from "
+"the Direct Print Port, and press the RESUME button.\n"
+msgstr "Hay conectado al puerto de impresión directa un dispositivo o cámara digital que no es compatible con la función de impresión directa. Desconecte el cable del puerto de impresión directa y presione el botón REANUDAR.\n"
+
+#: src/smstat.c:145
+msgid ""
+"An error occurred during automatic print head alignment.\n"
+"Press the RESUME button to clear the error. Refer to the user's guide to "
+"check the error, and reexecute print head alignment. If an error still "
+"occurs, carry out manual alignment.\n"
+msgstr ""
+"Se ha producido un error durante la alineación automática de los cabezales.\n"
+"Presione el botón REANUDAR para solucionar el error. Consulte la guía del usuario para comprobar el error y vuelva a ejecutar la alineación de los cabezales. Si sigue produciéndose el error, lleve a cabo una alineación manual.\n"
+
+
+#: src/smstat.c:147
+msgid "Printer is online.\n"
+msgstr "La impresora está conectada.\n"
+
+#: src/smstat.c:148
+msgid "Printer not responding.\n"
+msgstr "La impresora no responde.\n"
+
+#: src/smstat.c:150
+msgid "Paper Thickness Lever Position:"
+msgstr "Posición palanca grosor papel:"
+
+#: src/smstat.c:151
+msgid "right"
+msgstr "derecha"
+
+#: src/smstat.c:152
+msgid "left"
+msgstr "izquierda"
+
+#: src/smstat.c:153
+msgid "up"
+msgstr "arriba"
+
+#: src/smstat.c:154
+msgid "down"
+msgstr "abajo"
+
+#: src/smstat.c:155
+msgid "Photo"
+msgstr "Fotos"
+
+#: src/smstat.c:156
+msgid "Color"
+msgstr "Color"
+
+#: src/smstat.c:157
+msgid "Photo/Color"
+msgstr "Foto/Color"
+
+#: src/smstat.c:158
+msgid "Black/Color"
+msgstr "Negro/Color"
+
+#: src/smstat.c:159
+msgid "Black"
+msgstr "Negro"
+
+#: src/smstat.c:160
+msgid "Scanner/Color"
+msgstr "Escáner/Color"
+
+#: src/smstat.c:161
+msgid "Scanner"
+msgstr "Escáner"
+
+#: src/smstat.c:162
+msgid "Unsupported"
+msgstr "No compatible"
+
+#: src/smstat.c:163
+msgid "Unknown"
+msgstr "Desc."
+
+#: src/smstat.c:164
+msgid "appropriate BJ cartridge"
+msgstr "cartucho BJ adecuado"
+
+#: src/smstat.c:165
+msgid " Photo Black\n"
+msgstr " Negro para foto\n"
+
+#: src/smstat.c:166
+msgid " Photo Cyan\n"
+msgstr " Cian para foto\n"
+
+#: src/smstat.c:167
+msgid " Photo Magenta\n"
+msgstr " Magenta para foto\n"
+
+#: src/smstat.c:168
+msgid " Magenta\n"
+msgstr " Magenta\n"
+
+#: src/smstat.c:169
+msgid " Cyan\n"
+msgstr " Cian\n"
+
+#: src/smstat.c:170
+msgid " Yellow\n"
+msgstr " Amarillo\n"
+
+#: src/smstat.c:171
+msgid " Black\n"
+msgstr " Negro\n"
+
+#: src/smstat.c:172
+msgid " Color\n"
+msgstr " Color\n"
+
+#: src/smstat.c:173
+msgid " Black [3e]\n"
+msgstr " Negro [3e]\n"
+
+#: src/smstat.c:175
+msgid " Black [6]\n"
+msgstr " Negro [6]\n"
+
+#: src/smstat.c:176
+msgid " Red [6]\n"
+msgstr " Rojo [6]\n"
+
+#: src/smstat.c:177
+msgid " Photo Cyan [6]\n"
+msgstr " Cian para foto [6]\n"
+
+#: src/smstat.c:178
+msgid " Photo Magenta [6]\n"
+msgstr " Magenta para foto [6]\n"
+
+#: src/smstat.c:179
+msgid " Magenta [6]\n"
+msgstr " Magenta [6]\n"
+
+#: src/smstat.c:180
+msgid " Cyan [6]\n"
+msgstr " Cian [6]\n"
+
+#: src/smstat.c:181
+msgid " Yellow [6]\n"
+msgstr " Amarillo [6]\n"
+
+#: src/smstat.c:183
+msgid " Black [7]\n"
+msgstr " Negro [7]\n"
+
+#: src/smstat.c:184
+msgid " Green [7]\n"
+msgstr " Verde [7]\n"
+
+#: src/smstat.c:185
+msgid " Red [7]\n"
+msgstr " Rojo [7]\n"
+
+#: src/smstat.c:186
+msgid " Photo Cyan [7]\n"
+msgstr " Cian para foto [7]\n"
+
+#: src/smstat.c:187
+msgid " Photo Magenta [7]\n"
+msgstr " Magenta para foto [7]\n"
+
+#: src/smstat.c:188
+msgid " Magenta [7]\n"
+msgstr " Magenta [7]\n"
+
+#: src/smstat.c:189
+msgid " Cyan [7]\n"
+msgstr " Cian [7]\n"
+
+#: src/smstat.c:190
+msgid " Yellow [7]\n"
+msgstr " Amarillo [7]\n"
+
+#: src/smstat.c:192
+msgid " Black [24]\n"
+msgstr " Negro [24]\n"
+
+#: src/smstat.c:193
+msgid " Color [24]\n"
+msgstr " Color [24]\n"

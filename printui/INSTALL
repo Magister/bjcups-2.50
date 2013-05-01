@@ -1,0 +1,28 @@
+To build and install printui with the new automake and autoconf environment:
+        ./autogen.sh --program-suffix=<Printer Model Name>
+        make
+        make install
+
+        * New automake's version is 1.6.x or above
+        * New autoconf's version is xxxxx
+
+To build and install printui with the old automake and autoconf environment:
+        ./autogen-old.sh --program-suffix=<Printer Model Name>
+        make
+        make install
+
+        * Old automake's version is 1.4.x
+        * Old autoconf's version is 2.13.x
+
+You can set the following <Printer Model Name>.
+            pixusip3100
+            pixusip4100
+            pixusip8600
+            pixmaip1000
+            pixmaip1500
+
+Example for building the pixusip3100 filter with the new automake and autoconf:
+        ./autogen.sh --program-suffix=pixusip3100
+        make
+        make install
+

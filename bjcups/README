@@ -1,0 +1,31 @@
+bjcups          --- CUPS fornt-end GUI for Canon Bubble Jet Printer.
+
+DESCRIPTION
+    The "bjcups" is the CUPS front-end GUI program for Canon Bubble Jet Printer.
+    You can print the file by using the "lpr" command on the command line, but
+    if you want to set several printing options, the "bjcups" command will help
+    you setting those options quite easily. The only thing you have to do on
+    the command line is as following;
+
+        bjcups  -P PIXUSiP3100 sample.jpg
+
+        * You can ommit the printer option "-P PIXUSiP3100", and the default
+          printer will be used.
+
+    The GUI is shown on the screen, and you can choose all options on it.
+    After choosing the options, press the [OK] button to start the printing.
+
+REQUIREMENTS
+    You need the following libraries.
+    * libcups               (1.1.x or above)
+    * libpopt               (1.6.x or above)
+
+    And you need the following programs.
+    * CUPS                  (1.1.14 or above)
+    * Ghostscript           (5.50   or above)
+    * bjfilter command set. (2.5    or above)
+
+      "bjfilter command set" is provided by Canon INC.
+
+INSTALLATION
+    See the file "INSTALL"

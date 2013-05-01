@@ -1,0 +1,12 @@
+To build and install pstocanonbj:
+
+  1) Building misc libraries.
+        cd ../libs
+        make
+        make install
+        cd ..
+
+  2) Building "pstocanonbj".
+        make
+        make install
+

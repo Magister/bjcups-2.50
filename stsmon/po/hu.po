@@ -1,0 +1,643 @@
+# Canon Bubble Jet Print Filter for Linux Ver.2.50
+# Copyright CANON INC. 2001-2005
+# All Rights Reserved.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stsmon 2.50\n"
+"POT-Creation-Date: 2005-02-07 14:44+0900\n"
+"PO-Revision-Date: 2005-02-07 17:01+0900\n"
+"Last-Translator: CANON INC.\n"
+"Language-Team: CANON INC.\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n."
+
+
+#: src/interface.c:41
+msgid "Canon BJF360 Status Monitor"
+msgstr ""
+
+#: src/interface.c:68
+msgid "Collecting printer status. "
+msgstr "Nyomtatóállapot lekérdezése."
+
+#: src/interface.c:77 src/smstat.c:149
+msgid "Cartridge Type:"
+msgstr "Kazettatípus:"
+
+#: src/interface.c:131
+msgid "Continue"
+msgstr "Folytatás"
+
+#: src/interface.c:138
+msgid "Cancel Printing"
+msgstr "Nyomtatás törlése"
+
+#: src/callbacks.c:371 src/support.c:130
+#, c-format
+msgid "Error loading pixmap file: %s"
+msgstr ""
+
+#: src/support.c:121
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr ""
+
+#: src/smstat.c:99
+msgid ""
+"Scanner Cartridge detected.\n"
+"You cannot print with this cartridge. Install another BJ Cartridge in your "
+"printer.\n"
+msgstr ""
+"Lapolvasó kazetta van a nyomtatóban.\n"
+"Nem nyomtathat lapolvasó kazettával. Tegyen egy másik BJ kazettát a nyomtatóba.\n"
+
+
+#: src/smstat.c:100
+msgid ""
+"Scanner Cartridge detected!\n"
+"Change to appropriate cartridge.\n"
+"Click Cancel Printing to cancel operation.\n"
+msgstr ""
+"Lapolvasó kazetta van a nyomtatóban.\n"
+"Váltson át a megfelelõ kazettára.\n"
+"A mûvelet leállításához kattintson a Nyomtatás törlése gombra.\n"
+
+
+#: src/smstat.c:101
+msgid ""
+"Unsupported cartridge installed.\n"
+"Change to appropriate BJ cartridge.\n"
+msgstr ""
+"Nem támogatott kazetta van berakva.\n"
+"Cserélje a megfelelõ BJ kazettára.\n"
+
+
+#: src/smstat.c:102
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+msgstr ""
+"Nincs kazetta a nyomtatóban.\n"
+"Tegyen megfelelõ BJ kazettát a nyomtatóba.\n"
+
+
+#: src/smstat.c:103
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+"or\n"
+"Click Cancel Printing if no cartridge available.\n"
+msgstr ""
+"Nincs kazetta a nyomtatóban!\n"
+"Hellyezze a megfelelõ típusú kazettát a nyomtatóba,\n"
+"vagy\n"
+"ha nincs elérhetõ kazetta, kattintson a Nyomtatás törlése gombra.\n"
+
+
+#: src/smstat.c:104
+msgid ""
+"\n"
+"The printer is set not to display a low ink warning.\n"
+msgstr ""
+"\n"
+"A nyomtató nem fog jelezni alacsony tintaszintnél.\n"
+
+
+#: src/smstat.c:105
+msgid ""
+"The used ink tank is full.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more details."
+msgstr ""
+"A használt tintatartály tele van.\n"
+"Törölje a nyomtatást, kapcsolja ki majd újra be a nyomtatót.\n"
+"Ha ez sem törli a hibát, akkor további részletekért forduljon a nyomtató kézikönyvéhez."
+
+#: src/smstat.c:106
+msgid ""
+"The waste ink absorber is full.\n"
+"Contact the service center for the replacement of the waste ink absorber."
+msgstr ""
+"A hulladéktinta gyûjtõje megtelt.\n"
+"A hulladéktinta gyûjtõjének cseréjével kapcsolatban kérjen segítséget a szervízközponttól."
+
+#: src/smstat.c:107
+#, c-format
+msgid ""
+"Service error %s.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more detail."
+msgstr ""
+"Szolgáltatáshiba: %s.\n"
+"Törölje a nyomtatást, kapcsolja ki a nyomtatót, majd kapcsolja újra be.\n"
+"Ha ez nem törölné a hibát, nézzen a részletek után a kézikönyvben."
+
+#: src/smstat.c:108
+msgid ""
+"Cleaning.\n"
+"Please wait.\n"
+msgstr ""
+"Tisztítás.\n"
+"Kérem, várjon.\n"
+
+
+#: src/smstat.c:109
+msgid ""
+"Cartridge replacement is in progress.\n"
+"Close the front cover after replacement is completed.\n"
+msgstr ""
+"Kazettacsere van folyamatban.\n"
+"A csere után csukja le az elõlapot.\n"
+
+
+#: src/smstat.c:110
+msgid ""
+"The holder is at the replacement position.\n"
+"After replacing the print head or the ink tank, close the front cover of the "
+"printer. To replace only the ink tanks, do not remove the print head from "
+"the printer. Do not touch the locking lever.\n"
+msgstr ""
+"A tartó csere pozícióban van.\n"
+"A nyomtatófej illetve a tintatartály cseréje után zárja le a nyomtató elõlapját. Ha csak tintatartályt akar cserélni, ne vegye ki a nyomtatófejet a nyomtatóból. Ne nyúljon a zárókarhoz.\n"
+
+
+#: src/smstat.c:111
+msgid ""
+"The holder is at the replacement position.\n"
+"If you need to replace the print head or the ink tank, first open the Inner "
+"Cover. After the replacement is completed, close the Inner Cover, and then "
+"close the cover of the printer.\n"
+"If you are replacing only the ink tank, leave the print head attached. Do "
+"not touch the lock lever.\n"
+msgstr ""
+"A tartó cserélõ pozícióban áll.\n"
+"Ha ki akarja cserélni a nyomtatófejet vagy a kazettát, elõször nyissa ki a belsõ fedõt. A csere elvégzése után zárja le a belsõ fedõt, és zárja le a nyomtató fedõlapját.\n"
+"Ha csak tintatartályt akar cserélni, hagyja behelyezve a nyomtatófejet. Ne nyúljon a lezárókarhoz!\n"
+
+
+#: src/smstat.c:112 src/smstat.c:146
+msgid "Printing.\n"
+msgstr "Nyomtatás.\n"
+
+#: src/smstat.c:113
+msgid ""
+"Printer is in use via another interface.\n"
+"Please wait.\n"
+msgstr ""
+"A nyomtatót egy másik felületen keresztül használják.\n"
+"Kérem, várjon.\n"
+
+
+#: src/smstat.c:114
+msgid ""
+"Paper out.\n"
+"Load paper and press printer's RESUME button.\n"
+msgstr ""
+"Kifogyott a papír.\n"
+"Tegyen papírt a nyomtatóba, és nyomja meg a nyomtatón az ÚJRAKEZD gombot.\n"
+
+
+#: src/smstat.c:115
+msgid "Paper out!\n"
+msgstr "Kifogyott a papír!\n"
+
+#: src/smstat.c:116
+msgid "Load paper in the sheet feeder.\n"
+msgstr "Töltsön be papírt a lapadagolóba.\n"
+
+#: src/smstat.c:117
+msgid "Load paper in the cassette.\n"
+msgstr "Tegyen papírt a kazettába.\n"
+
+#: src/smstat.c:118
+msgid "Press printer's RESUME button.\n"
+msgstr "Nyomja meg a nyomtató ÚJRAKEZD gombját.\n"
+
+#: src/smstat.c:119
+msgid ""
+"Paper jammed.\n"
+"Remove jammed paper and press printer's RESUME button.\n"
+msgstr ""
+"A papír beszorult.\n"
+"Távolítsa el a beszorult papírt, és nyomja meg a nyomtatón az ÚJRAKEZD gombot.\n"
+
+
+#: src/smstat.c:120
+msgid ""
+"Paper is jammed at the Paper ejection slot.\n"
+"Remove the jammed paper, and press the RESUME button. Printing resumes from "
+"the next paper."
+msgstr ""
+"A papír beszorult a papírkiadó nyílásba.\n"
+"Távolítsa el az elakadt papírt, és nyomja meg az ÚJRAKEZD gombot. A nyomtatás a következõ laptól folytatódik."
+
+#: src/smstat.c:121
+msgid ""
+"Paper is jammed in the Transport unit.\n"
+"Open the rear cover, remove the jammed paper, and then press the RESUME "
+"button. Printing resumes from the next sheet.\n"
+"If the jammed paper cannot be removed, first remove the cassette and remove "
+"the paper from the cassette side."
+msgstr ""
+"A papír beszorult a továbbító egységbe.\n"
+"Nyissa fel a hátlapot, távolítsa el az elakadt papírt, és nyomja meg az ÚJRAKEZD gombot. A nyomtatás a következo laptól folytatódik.\n"
+"Ha a beszorult papírt nem lehet eltávolítani, eloször távolítsa el a kazettát, majd távolítsa el a papírt a kazetta felol."
+
+#: src/smstat.c:122
+msgid ""
+"Paper is jammed in the Duplexing Transport section.\n"
+"First, remove the cassette, push the printer over onto its back side, and "
+"then open the Duplexing Transport unit. Next, remove the jammed paper, and "
+"quickly return the printer to its upright position. Finally, press the "
+"RESUME button on the printer. Printing resumes from the next sheet.\n"
+"Refer to the user's guide for details."
+msgstr ""
+"A papír beszorult a Duplex továbbító egységbe.\n"
+"Elõször távolítsa el a kazettát, fordítsa fel a nyomtatót, majd nyissa fel a Duplex továbbító egységet. Ezután távolítsa el a beszorult papírt, majd gyorsan fordítsa vissza a nyomtatót. Végül, nyomja meg a nyomtató ÚJRAKEZD gombját. A nyomtatás a következõ laptól folytatódik.\n"
+"A részleteket olvassa el a felhasználói kézikönyvben."
+
+#: src/smstat.c:123
+msgid ""
+"Operator error.\n"
+"Press printer's RESUME button.\n"
+"If this doesn't clear the error, cancel printing and turn the printer off "
+"and then back on.\n"
+msgstr ""
+"Mûködési hiba.\n"
+"Nyomja meg a nyomtató ÚJRAKEZD gombját.\n"
+"Ha ez nem javítja a hibát, akkor törölje a nyomtatást, kapcsolja a nyomtatót ki, majd újra be.\n"
+
+
+#: src/smstat.c:124
+msgid ""
+"Operator error.\n"
+"The connected printer cannot work correctly.\n"
+msgstr ""
+"Mûködtetési hiba.\n"
+"A csatlakoztatott nyomtató nem tud megfelelõen mûködni.\n"
+
+
+#: src/smstat.c:125
+msgid ""
+"The used ink tank is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"A használt tinta majdnem tele van.\n"
+"Nyomja meg a nyomtató ÚJRAKEZD gombját a nyomtatás újrakezdéséhez."
+
+#: src/smstat.c:126
+msgid ""
+"The waste ink absorber is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"Az elhasznált tinta tartálya majdnem tele van.\n"
+"A nyomtatás újraindításához nyomja meg a nyomtató ÚJRAKEZD gombját."
+
+#: src/smstat.c:127
+msgid ""
+"Protector not installed.\n"
+"Install a protector properly in the printer.\n"
+msgstr ""
+"A védõ nincs betéve!\n"
+"Helyezzen helyesen egy védõt a nyomtatóba.\n"
+
+
+#: src/smstat.c:128
+msgid ""
+"An ink tank is not installed properly.\n"
+"Open the front cover of the printer, make sure the ink tank is installed "
+"properly, and close the front cover.\n"
+msgstr ""
+"Egy tintatartályt helytelenül tettek be.\n"
+"Nyissa fel a nyomtató elõlapját, és ellenõrizze, hogy a behelyezés megfelelõ-e, majd zárja le az elõlapot.\n"
+
+
+#: src/smstat.c:129
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the front cover.\n"
+msgstr ""
+"Kifogyott a tinta.\n"
+"Cserélje ki a tintatartályt, és csukja be az elõlapot.\n"
+
+
+#: src/smstat.c:130
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the cover. When replacing the ink tank, make sure "
+"that the Inner Cover is open.\n"
+"\n"
+"You can continue printing under the ink out condition by pressing the RESUME "
+"button. Replace the empty ink tank immediately after the printing. The "
+"printer may be damaged if printing is continued under the ink out "
+"condition.\n"
+msgstr ""
+"Kifogyott a tinta.\n"
+"Cserélje ki a tintatartályt, és csukja be a fedõlapot. Tintatartály cseréjekor gyõzõdjön meg róla, hogy a belsõ fedõ nyitva van.\n"
+"\n"
+"Kifogyó tinta mellett az ÚJRAKEZD gomb megnyomásával folytathatja a nyomtatást. Nyomtatás után azonnal cserélje ki az üres tintatartályt. A nyomtató károsodhat, ha tintahiány mellett nyomtat.\n"
+
+
+#: src/smstat.c:131
+msgid ""
+"Front cover is open.\n"
+"Unable to print until the front cover is closed.\n"
+msgstr ""
+"Az elõlap nyitva van.\n"
+"Nem lehet nyitott elõlappal nyomtatni.\n"
+
+
+#: src/smstat.c:132 src/smstat.c:133
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank. If the CD-R Tray Feeder is "
+"installed, the print head or ink tank cannot be also changed. Close the "
+"front cover, remove the CD-R Tray Feeder, open the front cover again, and "
+"change the print head or ink tank.\n"
+msgstr ""
+"A nyomtató elõlapja nyitva van.\n"
+"Ha nyomtatás van folyamatban, a nyomtatófej vagy a tintatartály nem cserélhetõ. Zárja le az elõlapot, várja meg a nyomtatás végét, majd nyissa fel újra, és cserélje ki a nyomtatófejet vagy a tintatartályt. Ha a CD-R adagoló be van helyezve, a nyomtatófej és a tintatartály szintén nem cserélhetõ. Zárja le az elõlapot, távolítsa el a CDR adagolót, majd nyissa fel újra az elõlapot, és cserélje ki a nyomtatófejet illetve a tintatartályt.\n"
+
+
+#: src/smstat.c:134 src/smstat.c:135
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank.\n"
+msgstr ""
+"A nyomtató elõlapja fel van nyitva.\n"
+"Ha nyomtatás van folyamatban, a nyomtatófejet illetve a tintatartályt nem lehet kicserélni. Zárja le az elõlapot, várja meg míg a nyomtatás befejezõdik, nyissa fel az elõlapot újra, és cserélje ki a nyomtatófejet illetve a tintatartályt.\n"
+
+
+#: src/smstat.c:136
+msgid ""
+"The printer's cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the cover, wait for printing to finish, then open the cover again and "
+"change the print head or ink tank.\n"
+msgstr ""
+"A nyomtató fedõlapja fel van nyitva.\n"
+"Ha nyomtatás van folyamatban, a nyomtatófejet illetve a tintatartályt nem lehet kicserélni. Zárja le a fedõlapot, várja meg míg a nyomtatás befejezõdik, nyissa fel a fedõlapot újra, és cserélje ki a nyomtatófejet illetve a tintatartályt.\n"
+
+
+#: src/smstat.c:137
+msgid ""
+"The CD-R Tray Feeder is installed in the printer.\n"
+"After ensuring that the CD-R tray has been removed, remove the CD-R Tray "
+"Feeder and then press the RESUME button. Printing will then restart.\n"
+msgstr ""
+"A CD-R adagoló be van téve a nyomtatóba.\n"
+"Miután kivette a CD-R tálcát, távolítsa el a CD-R adagolót, és nyomja meg az ÚJRAKEZD gombot. A nyomtatás ezután újrakezdõdik.\n"
+
+
+#: src/smstat.c:138
+msgid ""
+"Document printing cannot be executed because the paper output tray is "
+"closed.\n"
+"Open the paper output tray. Printing will restart.\n"
+msgstr ""
+"A dokumentumnyomtatás nem végezhetõ el, mert a papírgyûjtõ tálca zárva van.\n"
+"Nyissa ki a papírgyûjtõ tálcát. A nyomtatás újraindul.\n"
+
+
+#: src/smstat.c:139
+msgid ""
+"Printing cannot be executed because the Inner Cover is open.\n"
+"Close the Inner Cover, and then press the RESUME button on the printer. "
+"Printing will restart."
+msgstr ""
+"A nyomtatás nem végezhetõ el, mert a belsõ fedõ nyitva van.\n"
+"Zárja le a belsõ fedõt, és nyomja meg a nyomtatón lévõ ÚJRAKEZD gombot. A nyomtatás újraindul."
+
+#: src/smstat.c:140
+msgid ""
+"During printing, the Inner Cover of the printer was opened.\n"
+"Close the Inner Cover, and press the RESUME button on the printer. Printing "
+"resumes from the next paper."
+msgstr ""
+"A nyomtatás során a belsõ fedõ nyitva volt.\n"
+"Zárja be a belsõ fedõt, és nyomja meg a nyomtatón az ÚJRAKEZD gombot. A nyomtatás a következõ laptól folytatódik."
+
+#: src/smstat.c:141
+msgid ""
+"\n"
+"The following ink tanks are running low.\n"
+msgstr ""
+"\n"
+"A következõ tinták kifogyóban vannak.\n"
+
+
+#: src/smstat.c:142
+msgid ""
+"\n"
+"The remaining level of the following ink is unknown.\n"
+msgstr ""
+"\n"
+"A következõ tinta maradék mennyisége ismeretlen.\n"
+
+
+#: src/smstat.c:143
+msgid ""
+"\n"
+"There is a possibility that the printer cannot detect the remaining ink "
+"level properly. Reset the ink counter using the Maintenance tab of the "
+"printer driver whenever you have replaced any ink tank with new one.\n"
+msgstr ""
+"\n"
+"Lehetséges, hogy a nyomtató nem tudja pontosan meghatározni a megmaradt tinta szintjét. Egy tintatartály újra való cseréjekor mindig állítsa vissza a tintamérõt a nyomtatóillesztõ Karbantartás lapján.\n"
+
+
+#: src/smstat.c:144
+msgid ""
+"A digital camera or device that is not supported by the direct printing "
+"function is connected to the Direct Print Port. Disconnect the cable from "
+"the Direct Print Port, and press the RESUME button.\n"
+msgstr "Egy olyan digitális fényképezõ vagy eszköz van csatlakoztatva a közvetlen nyomtatási porthoz, melyet a közvetlen nyomtatás funkció nem támogat. Húzza ki a kábelt a közvetlen nyomtatási portból, és nyomja meg az ÚJRAKEZD gombot.\n"
+
+#: src/smstat.c:145
+msgid ""
+"An error occurred during automatic print head alignment.\n"
+"Press the RESUME button to clear the error. Refer to the user's guide to "
+"check the error, and reexecute print head alignment. If an error still "
+"occurs, carry out manual alignment.\n"
+msgstr ""
+"Hiba történt az automatikus nyomtatófej-igazítás alatt.\n"
+"A hiba megszüntetéséhez nyomja meg az ÚJRAKEZD gombot. A hiba azonosításához tekintse meg a felhasználói kézikönyvet, majd hajtsa végre újra a nyomtatófej-igazítást. Ha továbbra is hiba történik, akkor hajtson végre kézi igazítást.\n"
+
+
+#: src/smstat.c:147
+msgid "Printer is online.\n"
+msgstr "A nyomtató üzemkész.\n"
+
+#: src/smstat.c:148
+msgid "Printer not responding.\n"
+msgstr "A nyomtató nem válaszol.\n"
+
+#: src/smstat.c:150
+msgid "Paper Thickness Lever Position:"
+msgstr "Papírvastagsági kar pozíciója:"
+
+#: src/smstat.c:151
+msgid "right"
+msgstr "jobbra"
+
+#: src/smstat.c:152
+msgid "left"
+msgstr "balra"
+
+#: src/smstat.c:153
+msgid "up"
+msgstr "fel"
+
+#: src/smstat.c:154
+msgid "down"
+msgstr "le"
+
+#: src/smstat.c:155
+msgid "Photo"
+msgstr "Fotó"
+
+#: src/smstat.c:156
+msgid "Color"
+msgstr "Színes"
+
+#: src/smstat.c:157
+msgid "Photo/Color"
+msgstr "Fotó/Színes"
+
+#: src/smstat.c:158
+msgid "Black/Color"
+msgstr "Fekete/Színes"
+
+#: src/smstat.c:159
+msgid "Black"
+msgstr "Fekete"
+
+#: src/smstat.c:160
+msgid "Scanner/Color"
+msgstr "Lapolvasó/színes"
+
+#: src/smstat.c:161
+msgid "Scanner"
+msgstr "Lapolvasó"
+
+#: src/smstat.c:162
+msgid "Unsupported"
+msgstr "Nem támogatott"
+
+#: src/smstat.c:163
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: src/smstat.c:164
+msgid "appropriate BJ cartridge"
+msgstr "megfelelõ BJ kazetta"
+
+#: src/smstat.c:165
+msgid " Photo Black\n"
+msgstr " Fotó fekete\n"
+
+#: src/smstat.c:166
+msgid " Photo Cyan\n"
+msgstr " Fotó ciánkék\n"
+
+#: src/smstat.c:167
+msgid " Photo Magenta\n"
+msgstr " Fotó bíbor\n"
+
+#: src/smstat.c:168
+msgid " Magenta\n"
+msgstr " Bíbor\n"
+
+#: src/smstat.c:169
+msgid " Cyan\n"
+msgstr " Ciánkék\n"
+
+#: src/smstat.c:170
+msgid " Yellow\n"
+msgstr " Sárga\n"
+
+#: src/smstat.c:171
+msgid " Black\n"
+msgstr " Fekete\n"
+
+#: src/smstat.c:172
+msgid " Color\n"
+msgstr " Színes\n"
+
+#: src/smstat.c:173
+msgid " Black [3e]\n"
+msgstr " Fekete [3e]\n"
+
+#: src/smstat.c:175
+msgid " Black [6]\n"
+msgstr " Fekete [6]\n"
+
+#: src/smstat.c:176
+msgid " Red [6]\n"
+msgstr " Piros [6]\n"
+
+#: src/smstat.c:177
+msgid " Photo Cyan [6]\n"
+msgstr " Fotó ciánkék [6]\n"
+
+#: src/smstat.c:178
+msgid " Photo Magenta [6]\n"
+msgstr " Fotó bíbor [6]\n"
+
+#: src/smstat.c:179
+msgid " Magenta [6]\n"
+msgstr " Bíbor [6]\n"
+
+#: src/smstat.c:180
+msgid " Cyan [6]\n"
+msgstr " Ciánkék [6]\n"
+
+#: src/smstat.c:181
+msgid " Yellow [6]\n"
+msgstr " Sárga [6]\n"
+
+#: src/smstat.c:183
+msgid " Black [7]\n"
+msgstr " Fekete [7]\n"
+
+#: src/smstat.c:184
+msgid " Green [7]\n"
+msgstr " Zöld [7]\n"
+
+#: src/smstat.c:185
+msgid " Red [7]\n"
+msgstr " Piros [7]\n"
+
+#: src/smstat.c:186
+msgid " Photo Cyan [7]\n"
+msgstr " Fotó ciánkék [7]\n"
+
+#: src/smstat.c:187
+msgid " Photo Magenta [7]\n"
+msgstr " Fotó bíbor [7]\n"
+
+#: src/smstat.c:188
+msgid " Magenta [7]\n"
+msgstr " Bíbor [7]\n"
+
+#: src/smstat.c:189
+msgid " Cyan [7]\n"
+msgstr " Ciánkék [7]\n"
+
+#: src/smstat.c:190
+msgid " Yellow [7]\n"
+msgstr " Sárga [7]\n"
+
+#: src/smstat.c:192
+msgid " Black [24]\n"
+msgstr " Fekete [24]\n"
+
+#: src/smstat.c:193
+msgid " Color [24]\n"
+msgstr " Színes [24]\n"

@@ -1,0 +1,27 @@
+canon_parallel  --- CUPS parallel backend for Canon Bubble Jet Printer.
+canon_usb       --- CUPS USB backend for Canon Bubble Jet Printer.
+
+DESCRIPTION
+    The "canon_parallel" and "canon_usb" are the CUPS backend programs.
+    which fork the "lgmon*" process to obtain the printer status.
+
+REQUIREMENTS
+    You need the following libraries.
+    * libcups               (1.1.x or above)
+
+    And you need the following programs.
+    * CUPS                  (1.1.14 or above)
+    * bjfilter command set. (2.4    or above)
+       e.g.) bjfilterpixus560i-2.4-0.i386.rpm
+
+      "bjfilter command set" is provided by Canon INC.
+
+INSTALLATION
+    See the file "INSTALL"
+
+LICENSE
+    See the file "LICENSE.canon.txt" which is the license terms for the
+    programs made by Canon, and "LICENSE.txt" which is the original license
+    terms for the usb and parallel backend programs derived from the code
+    made by Easy Software Products.
+

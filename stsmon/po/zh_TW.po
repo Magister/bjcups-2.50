@@ -1,0 +1,643 @@
+# Canon Bubble Jet Print Filter for Linux Ver.2.50
+# Copyright CANON INC. 2001-2005
+# All Rights Reserved.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stsmon 2.50\n"
+"POT-Creation-Date: 2005-02-07 14:44+0900\n"
+"PO-Revision-Date: 2005-02-07 17:04+0900\n"
+"Last-Translator: CANON INC.\n"
+"Language-Team: CANON INC.\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=BIG5\n"
+"Content-Transfer-Encoding: 8bit\n."
+
+
+#: src/interface.c:41
+msgid "Canon BJF360 Status Monitor"
+msgstr ""
+
+#: src/interface.c:68
+msgid "Collecting printer status. "
+msgstr "正在搜集印表機狀態資訊。"
+
+#: src/interface.c:77 src/smstat.c:149
+msgid "Cartridge Type:"
+msgstr "墨水匣類型:"
+
+#: src/interface.c:131
+msgid "Continue"
+msgstr "繼續"
+
+#: src/interface.c:138
+msgid "Cancel Printing"
+msgstr "取消列印"
+
+#: src/callbacks.c:371 src/support.c:130
+#, c-format
+msgid "Error loading pixmap file: %s"
+msgstr ""
+
+#: src/support.c:121
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr ""
+
+#: src/smstat.c:99
+msgid ""
+"Scanner Cartridge detected.\n"
+"You cannot print with this cartridge. Install another BJ Cartridge in your "
+"printer.\n"
+msgstr ""
+"檢測到掃描器墨水匣。\n"
+"您無法用這個墨水匣列印。請在您的印表機安裝另一個 BJ 墨水匣。\n"
+
+
+#: src/smstat.c:100
+msgid ""
+"Scanner Cartridge detected!\n"
+"Change to appropriate cartridge.\n"
+"Click Cancel Printing to cancel operation.\n"
+msgstr ""
+"檢測到掃描器墨水匣！\n"
+"更換為合適的墨水匣。\n"
+"按一下 [取消列印] 以取消操作。\n"
+
+
+#: src/smstat.c:101
+msgid ""
+"Unsupported cartridge installed.\n"
+"Change to appropriate BJ cartridge.\n"
+msgstr ""
+"安裝了不支援的墨水匣。\n"
+"更換為合適的 BJ 墨水匣。\n"
+
+
+#: src/smstat.c:102
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+msgstr ""
+"墨水匣未安裝！\n"
+"在印表機中安裝合適的 BJ 墨水匣。\n"
+
+
+#: src/smstat.c:103
+msgid ""
+"Cartridge not installed!\n"
+"Install appropriate BJ cartridge in the printer.\n"
+"or\n"
+"Click Cancel Printing if no cartridge available.\n"
+msgstr ""
+"墨水匣未安裝！\n"
+"在印表機中安裝合適的 BJ 墨水匣。\n"
+"或\n"
+"如果沒有可用的墨水匣，請按一下 [取消列印]。\n"
+
+
+#: src/smstat.c:104
+msgid ""
+"\n"
+"The printer is set not to display a low ink warning.\n"
+msgstr ""
+"\n"
+"印表機被設定成不顯示低墨水警示。\n"
+
+
+#: src/smstat.c:105
+msgid ""
+"The used ink tank is full.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more details."
+msgstr ""
+"使用的墨水盒幾乎是滿的。\n"
+"取消列印並關閉印表機，然後重新開啟。\n"
+"如果這樣不能消除錯誤，則參閱使用手冊上之說明瞭解更多資訊。"
+
+#: src/smstat.c:106
+msgid ""
+"The waste ink absorber is full.\n"
+"Contact the service center for the replacement of the waste ink absorber."
+msgstr ""
+"廢棄墨水吸收器已滿。\n"
+"請洽詢服務中心更換廢棄墨水吸收器。"
+
+#: src/smstat.c:107
+#, c-format
+msgid ""
+"Service error %s.\n"
+"Cancel printing and turn the printer off and then back on.\n"
+"If this doesn't clear the error, see the printer manual for more detail."
+msgstr ""
+"維修錯誤  [%s]。\n"
+"取消列印並關閉印表機，然後重新開啟。\n"
+"如果這樣不能消除錯誤，請參閱使用手冊上之說明瞭解更多資訊。"
+
+#: src/smstat.c:108
+msgid ""
+"Cleaning.\n"
+"Please wait.\n"
+msgstr ""
+"清潔進行中。\n"
+"請等待。\n"
+
+
+#: src/smstat.c:109
+msgid ""
+"Cartridge replacement is in progress.\n"
+"Close the front cover after replacement is completed.\n"
+msgstr ""
+"墨水匣更換作業進行中。\n"
+"更換完成後，關上印表機前蓋。\n"
+
+
+#: src/smstat.c:110
+msgid ""
+"The holder is at the replacement position.\n"
+"After replacing the print head or the ink tank, close the front cover of the "
+"printer. To replace only the ink tanks, do not remove the print head from "
+"the printer. Do not touch the locking lever.\n"
+msgstr ""
+"固定座已在更換位置。\n"
+"在更換列印頭或墨水盒之後，關閉印表機的前蓋。只更換墨水盒，不要將列印頭移出印表機。不要碰觸鎖定桿。\n"
+
+
+#: src/smstat.c:111
+msgid ""
+"The holder is at the replacement position.\n"
+"If you need to replace the print head or the ink tank, first open the Inner "
+"Cover. After the replacement is completed, close the Inner Cover, and then "
+"close the cover of the printer.\n"
+"If you are replacing only the ink tank, leave the print head attached. Do "
+"not touch the lock lever.\n"
+msgstr ""
+"固定座位於更換位置。\n"
+"如果您需要更換列印頭或墨水盒，首先打開印表機內蓋。更換操作完成後，關閉內蓋，然後關閉印表機機蓋。\n"
+"如果只更換墨水盒，請固定列印頭。不要碰觸鎖定桿。\n"
+
+
+#: src/smstat.c:112 src/smstat.c:146
+msgid "Printing.\n"
+msgstr "列印中。\n"
+
+#: src/smstat.c:113
+msgid ""
+"Printer is in use via another interface.\n"
+"Please wait.\n"
+msgstr ""
+"印表機通過另一接口正在使用。\n"
+"請稍候片刻。\n"
+
+
+#: src/smstat.c:114
+msgid ""
+"Paper out.\n"
+"Load paper and press printer's RESUME button.\n"
+msgstr ""
+"紙張用盡。\n"
+"裝入紙張，按一下印表機的 [恢復] 按鈕。\n"
+
+
+#: src/smstat.c:115
+msgid "Paper out!\n"
+msgstr "紙張用盡！\n"
+
+#: src/smstat.c:116
+msgid "Load paper in the sheet feeder.\n"
+msgstr "在送紙器中裝入紙張。\n"
+
+#: src/smstat.c:117
+msgid "Load paper in the cassette.\n"
+msgstr "在紙匣中裝入紙張。\n"
+
+#: src/smstat.c:118
+msgid "Press printer's RESUME button.\n"
+msgstr "請按一下印表機的 [恢復] 按鈕。\n"
+
+#: src/smstat.c:119
+msgid ""
+"Paper jammed.\n"
+"Remove jammed paper and press printer's RESUME button.\n"
+msgstr ""
+"紙張被夾。\n"
+"取出被夾紙張，按一下印表機的 [恢復] 按鈕。\n"
+
+
+#: src/smstat.c:120
+msgid ""
+"Paper is jammed at the Paper ejection slot.\n"
+"Remove the jammed paper, and press the RESUME button. Printing resumes from "
+"the next paper."
+msgstr ""
+"出紙槽出現夾紙情況。\n"
+"移除被夾紙張，然後按一下 [恢復] 按鈕。從下一頁恢復列印。"
+
+#: src/smstat.c:121
+msgid ""
+"Paper is jammed in the Transport unit.\n"
+"Open the rear cover, remove the jammed paper, and then press the RESUME "
+"button. Printing resumes from the next sheet.\n"
+"If the jammed paper cannot be removed, first remove the cassette and remove "
+"the paper from the cassette side."
+msgstr ""
+"[傳送] 單元出現夾紙情況。\n"
+"打開後蓋，移除被夾紙張，然後按一下 [恢復] 按鈕。從下一頁恢復列印。\n"
+"如果無法移除被夾紙張，請先移除紙匣，然後從紙匣中移除被夾紙張。"
+
+#: src/smstat.c:122
+msgid ""
+"Paper is jammed in the Duplexing Transport section.\n"
+"First, remove the cassette, push the printer over onto its back side, and "
+"then open the Duplexing Transport unit. Next, remove the jammed paper, and "
+"quickly return the printer to its upright position. Finally, press the "
+"RESUME button on the printer. Printing resumes from the next sheet.\n"
+"Refer to the user's guide for details."
+msgstr ""
+"[雙面傳送] 區域出現夾紙情況。\n"
+"首先移除紙匣，翻轉印表機使其背面朝下，然後打開 [雙面傳送] 單元。接著，移除被夾紙張，並將印表機迅速恢復到豎直位置。最後，按一下印表機上的 [恢復] 按鈕。從下一頁恢復列印。\n"
+"參閱用戶指南獲取詳細資訊。"
+
+#: src/smstat.c:123
+msgid ""
+"Operator error.\n"
+"Press printer's RESUME button.\n"
+"If this doesn't clear the error, cancel printing and turn the printer off "
+"and then back on.\n"
+msgstr ""
+"操作員錯誤。\n"
+"按一下印表機的 [恢復] 按鈕。\n"
+"如果這樣不能消除錯誤，則取消列印並關閉印表機，然後重新開啟。\n"
+
+
+#: src/smstat.c:124
+msgid ""
+"Operator error.\n"
+"The connected printer cannot work correctly.\n"
+msgstr ""
+"操作員錯誤。\n"
+"連接的印表機無法正常工作。\n"
+
+
+#: src/smstat.c:125
+msgid ""
+"The used ink tank is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"使用的墨水盒幾乎是滿的。\n"
+"請按一下印表機的 [恢復] 按鈕重新開始列印。"
+
+#: src/smstat.c:126
+msgid ""
+"The waste ink absorber is almost full.\n"
+"Press the printer's RESUME button to restart printing."
+msgstr ""
+"廢棄墨水吸收器將滿。\n"
+"請按一下印表機的 [恢復] 按鈕重新開始列印。"
+
+#: src/smstat.c:127
+msgid ""
+"Protector not installed.\n"
+"Install a protector properly in the printer.\n"
+msgstr ""
+"未安裝保護器！\n"
+"請正確安裝保護器。\n"
+
+
+#: src/smstat.c:128
+msgid ""
+"An ink tank is not installed properly.\n"
+"Open the front cover of the printer, make sure the ink tank is installed "
+"properly, and close the front cover.\n"
+msgstr ""
+"墨水盒安裝不正確。\n"
+"請打開印表機的前蓋，確認墨水盒已經正確安裝，然後關閉前蓋。\n"
+
+
+#: src/smstat.c:129
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the front cover.\n"
+msgstr ""
+"墨水用盡。\n"
+"更換墨水盒並關閉印表機前蓋。\n"
+
+
+#: src/smstat.c:130
+msgid ""
+"Ink has run out.\n"
+"Replace ink tank and close the cover. When replacing the ink tank, make sure "
+"that the Inner Cover is open.\n"
+"\n"
+"You can continue printing under the ink out condition by pressing the RESUME "
+"button. Replace the empty ink tank immediately after the printing. The "
+"printer may be damaged if printing is continued under the ink out "
+"condition.\n"
+msgstr ""
+"墨水用盡。\n"
+"更換墨水盒並關上機蓋。更換墨水盒時，請確定印表機內蓋已開啟。\n"
+"\n"
+"您可以在墨水用盡的情況下按一下 [恢復] 按鈕繼續列印。列印後請立即更換耗盡的墨水盒。如果在墨水用盡的情況下繼續列印，可能使印表機受損。\n"
+
+
+#: src/smstat.c:131
+msgid ""
+"Front cover is open.\n"
+"Unable to print until the front cover is closed.\n"
+msgstr ""
+"開啟前蓋。\n"
+"前蓋關閉後才能列印。\n"
+
+
+#: src/smstat.c:132 src/smstat.c:133
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank. If the CD-R Tray Feeder is "
+"installed, the print head or ink tank cannot be also changed. Close the "
+"front cover, remove the CD-R Tray Feeder, open the front cover again, and "
+"change the print head or ink tank.\n"
+msgstr ""
+"印表機前蓋已開啟。\n"
+"如果列印在進行中，無法更換列印頭或墨水盒。關閉前蓋，等待列印完成，然後再打開前蓋並且更換列印頭或墨水盒。如果已安裝 CD-R 托盤送入器，同樣無法更換列印頭或墨水盒。關閉前蓋，移除 CD-R 托盤送入器，再打開前蓋並且更換列印頭或墨水盒。\n"
+
+
+#: src/smstat.c:134 src/smstat.c:135
+msgid ""
+"The printer's front cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the front cover, wait for printing to finish, then open the cover "
+"again and change the print head or ink tank.\n"
+msgstr ""
+"印表機前蓋已開啟。\n"
+"如果列印在進行中，無法更換列印頭或墨水盒。關閉前蓋，等待列印完成，然後再打開前蓋並且更換列印頭或墨水盒。\n"
+
+
+#: src/smstat.c:136
+msgid ""
+"The printer's cover is open.\n"
+"If printing is in progress, the print head or ink tank cannot be changed. "
+"Close the cover, wait for printing to finish, then open the cover again and "
+"change the print head or ink tank.\n"
+msgstr ""
+"印表機機蓋已打開。\n"
+"如果列印在進行中，無法更換列印頭或墨水盒。關閉機蓋，等待列印完成，然後再次打開機蓋並且更換列印頭或墨水盒。\n"
+
+
+#: src/smstat.c:137
+msgid ""
+"The CD-R Tray Feeder is installed in the printer.\n"
+"After ensuring that the CD-R tray has been removed, remove the CD-R Tray "
+"Feeder and then press the RESUME button. Printing will then restart.\n"
+msgstr ""
+"印表機中已安裝 CD-R 托盤送入器。\n"
+"在確認移除 CD-R 托盤之後，移除 CD-R 托盤送入器並且按一下 [恢復] 按鈕。然後重新開始列印。\n"
+
+
+#: src/smstat.c:138
+msgid ""
+"Document printing cannot be executed because the paper output tray is "
+"closed.\n"
+"Open the paper output tray. Printing will restart.\n"
+msgstr ""
+"由於出紙托盤已關閉，所以無法執行文件列印。\n"
+"打開出紙托盤。重新開始列印。\n"
+
+
+#: src/smstat.c:139
+msgid ""
+"Printing cannot be executed because the Inner Cover is open.\n"
+"Close the Inner Cover, and then press the RESUME button on the printer. "
+"Printing will restart."
+msgstr ""
+"由於內蓋已打開，所以無法執行列印。\n"
+" 關閉內蓋，然後按一下印表機上的 [恢復] 按鈕。重新開始列印。"
+
+#: src/smstat.c:140
+msgid ""
+"During printing, the Inner Cover of the printer was opened.\n"
+"Close the Inner Cover, and press the RESUME button on the printer. Printing "
+"resumes from the next paper."
+msgstr ""
+"列印過程中，打開印表機內蓋。\n"
+"關閉內蓋，然後按一下印表機上的 [恢復] 按鈕。從下一頁恢復列印。"
+
+#: src/smstat.c:141
+msgid ""
+"\n"
+"The following ink tanks are running low.\n"
+msgstr ""
+"\n"
+"以下墨水盒墨水量很少。\n"
+
+
+#: src/smstat.c:142
+msgid ""
+"\n"
+"The remaining level of the following ink is unknown.\n"
+msgstr ""
+"\n"
+"下列墨水殘餘量不明。\n"
+
+
+#: src/smstat.c:143
+msgid ""
+"\n"
+"There is a possibility that the printer cannot detect the remaining ink "
+"level properly. Reset the ink counter using the Maintenance tab of the "
+"printer driver whenever you have replaced any ink tank with new one.\n"
+msgstr ""
+"\n"
+"印表機可能無法正確檢測殘餘墨水量。更換墨水盒後，請使用印表機驅動程式的 [維護] 標籤重置墨水計數器。\n"
+
+
+#: src/smstat.c:144
+msgid ""
+"A digital camera or device that is not supported by the direct printing "
+"function is connected to the Direct Print Port. Disconnect the cable from "
+"the Direct Print Port, and press the RESUME button.\n"
+msgstr "不支援直接列印功能的數位相機或設備連接到直接列印連接埠。從直接列印連接埠斷開線纜，然後按一下 [恢復] 按鈕。\n"
+
+#: src/smstat.c:145
+msgid ""
+"An error occurred during automatic print head alignment.\n"
+"Press the RESUME button to clear the error. Refer to the user's guide to "
+"check the error, and reexecute print head alignment. If an error still "
+"occurs, carry out manual alignment.\n"
+msgstr ""
+"在自動列印頭校準中出現錯誤。\n"
+"按一下 [恢復] 按鈕以消除錯誤。參閱使用者指南以檢查錯誤，並重新執行列印頭校準。如果仍然發生錯誤，請執行手動校準。\n"
+
+
+#: src/smstat.c:147
+msgid "Printer is online.\n"
+msgstr "印表機已連線。\n"
+
+#: src/smstat.c:148
+msgid "Printer not responding.\n"
+msgstr "印表機沒有回應。\n"
+
+#: src/smstat.c:150
+msgid "Paper Thickness Lever Position:"
+msgstr "紙張厚度調整桿位置:"
+
+#: src/smstat.c:151
+msgid "right"
+msgstr "靠右"
+
+#: src/smstat.c:152
+msgid "left"
+msgstr "靠左"
+
+#: src/smstat.c:153
+msgid "up"
+msgstr "靠上"
+
+#: src/smstat.c:154
+msgid "down"
+msgstr "靠下"
+
+#: src/smstat.c:155
+msgid "Photo"
+msgstr "相片"
+
+#: src/smstat.c:156
+msgid "Color"
+msgstr "彩色 "
+
+#: src/smstat.c:157
+msgid "Photo/Color"
+msgstr "相片/彩色"
+
+#: src/smstat.c:158
+msgid "Black/Color"
+msgstr "黑色/彩色"
+
+#: src/smstat.c:159
+msgid "Black"
+msgstr "黑色 "
+
+#: src/smstat.c:160
+msgid "Scanner/Color"
+msgstr "掃描器/彩色"
+
+#: src/smstat.c:161
+msgid "Scanner"
+msgstr "掃描器"
+
+#: src/smstat.c:162
+msgid "Unsupported"
+msgstr "不支援"
+
+#: src/smstat.c:163
+msgid "Unknown"
+msgstr "不明"
+
+#: src/smstat.c:164
+msgid "appropriate BJ cartridge"
+msgstr "合適的 BJ 墨水匣"
+
+#: src/smstat.c:165
+msgid " Photo Black\n"
+msgstr " 相片黑色\n"
+
+#: src/smstat.c:166
+msgid " Photo Cyan\n"
+msgstr " 相片藍色\n"
+
+#: src/smstat.c:167
+msgid " Photo Magenta\n"
+msgstr " 相片紅色\n"
+
+#: src/smstat.c:168
+msgid " Magenta\n"
+msgstr " 紅色\n"
+
+#: src/smstat.c:169
+msgid " Cyan\n"
+msgstr " 藍色\n"
+
+#: src/smstat.c:170
+msgid " Yellow\n"
+msgstr " 黃色\n"
+
+#: src/smstat.c:171
+msgid " Black\n"
+msgstr " 黑色\n"
+
+#: src/smstat.c:172
+msgid " Color\n"
+msgstr " 彩色\n"
+
+#: src/smstat.c:173
+msgid " Black [3e]\n"
+msgstr " 黑色 [3e]\n"
+
+#: src/smstat.c:175
+msgid " Black [6]\n"
+msgstr " 黑色 [6]\n"
+
+#: src/smstat.c:176
+msgid " Red [6]\n"
+msgstr " 橘紅色 [6]\n"
+
+#: src/smstat.c:177
+msgid " Photo Cyan [6]\n"
+msgstr " 相片藍色 [6]\n"
+
+#: src/smstat.c:178
+msgid " Photo Magenta [6]\n"
+msgstr " 相片紅色 [6]\n"
+
+#: src/smstat.c:179
+msgid " Magenta [6]\n"
+msgstr " 紅色 [6]\n"
+
+#: src/smstat.c:180
+msgid " Cyan [6]\n"
+msgstr " 藍色 [6]\n"
+
+#: src/smstat.c:181
+msgid " Yellow [6]\n"
+msgstr " 黃色 [6]\n"
+
+#: src/smstat.c:183
+msgid " Black [7]\n"
+msgstr " 黑色 [7]\n"
+
+#: src/smstat.c:184
+msgid " Green [7]\n"
+msgstr " 綠色 [7]\n"
+
+#: src/smstat.c:185
+msgid " Red [7]\n"
+msgstr " 橘紅色 [7]\n"
+
+#: src/smstat.c:186
+msgid " Photo Cyan [7]\n"
+msgstr " 相片藍色 [7]\n"
+
+#: src/smstat.c:187
+msgid " Photo Magenta [7]\n"
+msgstr " 相片紅色 [7]\n"
+
+#: src/smstat.c:188
+msgid " Magenta [7]\n"
+msgstr " 紅色 [7]\n"
+
+#: src/smstat.c:189
+msgid " Cyan [7]\n"
+msgstr " 藍色 [7]\n"
+
+#: src/smstat.c:190
+msgid " Yellow [7]\n"
+msgstr " 黃色 [7]\n"
+
+#: src/smstat.c:192
+msgid " Black [24]\n"
+msgstr " 黑色 [24]\n"
+
+#: src/smstat.c:193
+msgid " Color [24]\n"
+msgstr " 彩色 [24]\n"
