@@ -163,6 +163,9 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 	// Initialize related cartridge area drawing handling.
 	initDrawing();
 	
+	// Signal connect.
+	glade_xml_signal_autoconnect(gXmlMainWnd);
+	
 	// Disable [Cancel Printing] button.
 	activateWidget(STR_MAIN_BUTTON_NAME_CANCEL, FALSE);
 		
@@ -200,9 +203,6 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 	
 	// Hide [Continue] button.
 	showWidget(STR_MAIN_BUTTON_NAME_CONTINUE, FALSE);
-	
-	// Signal connect.
-	glade_xml_signal_autoconnect(gXmlMainWnd);
 	
 	return;
 	
