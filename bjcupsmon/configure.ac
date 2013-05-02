@@ -12,7 +12,6 @@ AM_SILENT_RULES([yes])
 AC_PROG_CC
 
 
-
 LT_INIT
 
 
@@ -34,6 +33,8 @@ AC_SUBST(PACKAGE_LOCALEDIR)
 
 AC_CONFIG_FILES(po/Makefile.in)
 # Gettext end
+
+PKG_CHECK_MODULES(LIBGLADE,libglade-2.0)
 
 PKG_CHECK_MODULES(LIBXML,libxml)
 

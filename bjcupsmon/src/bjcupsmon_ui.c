@@ -27,6 +27,10 @@
 	#include  "support.h"
 #endif
 
+#ifdef USE_libglade
+	#include  "callbacks.h"
+#endif
+
 #include "bjcupsmon_common.h"
 #include "bjcupsmon_ui.h"
 #include "bjcupsmon_funcprot.h"
@@ -146,12 +150,12 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 	// Create full path of glade file name.
 	memset (gladeFileName, 0, MAX_BUF_SIZE);
 	strncpy(gladeFileName, STR_SHARE_DIRECTORY_NAME, 
-		(MAX_BUF_SIZE<(strlen(STR_SHARE_DIRECTORY_NAME)+strlen(GLADE_FILE_NAME)+1))? MAX_BUF_SIZE<(strlen(STR_SHARE_DIRECTORY_NAME)+strlen(GLADE_FILE_NAME)+1));
+		(MAX_BUF_SIZE<(strlen(STR_SHARE_DIRECTORY_NAME)+strlen(GLADE_FILE_NAME)+1))? MAX_BUF_SIZE : (strlen(STR_SHARE_DIRECTORY_NAME)+strlen(GLADE_FILE_NAME)+1));
 	strcat(gladeFileName, "/");
 	strcat(gladeFileName, GLADE_FILE_NAME);
 	
 	// Show window.
-	gXmlMainWnd = glade_xml_new(gladeFileName, STR_WINDOW_NAME_MAIN);
+	gXmlMainWnd = glade_xml_new(gladeFileName, STR_WINDOW_NAME_MAIN, NULL);
 	
 	// Set window title.
 	setWindowTitle(STR_WINDOW_NAME_MAIN, pWindowTitle);
@@ -177,9 +181,9 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 			if (*pMessageID == ID_STS_MESSAGE_CARTRIDGE_UNSUPPORTED
 				||  *pMessageID == ID_STS_MESSAGE_OC_PAPER_OUT21		// ver.2.5
 				||  *pMessageID == ID_STS_MESSAGE_OC_PAPER_OUT22		// ver.2.5
-				||  *pMssageID == ID_STS_MESSAGE_OC_PAPER_JAM
-				||  *pMssageID == ID_STS_MESSAGE_OC_PAPER_JAM03			// ver.2.5
-				||  *pMssageID == ID_STS_MESSAGE_OC_PAPER_JAM04			// ver.2.5
+				||  *pMessageID == ID_STS_MESSAGE_OC_PAPER_JAM
+				||  *pMessageID == ID_STS_MESSAGE_OC_PAPER_JAM03		// ver.2.5
+				||  *pMessageID == ID_STS_MESSAGE_OC_PAPER_JAM04		// ver.2.5
 				||  *pMessageID == ID_STS_MESSAGE_OC_USBDEVICE			// Ver.2.4
 				||  *pMessageID == ID_STS_MESSAGE_OC_HEADALIGNMENT		// Ver.2.4
 				) {
