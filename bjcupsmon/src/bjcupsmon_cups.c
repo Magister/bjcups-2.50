@@ -419,6 +419,7 @@ PRIVATE gchar * getJobState(gchar *pDestName, gchar *pURI, gchar *pServerName, i
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "job-uri", NULL, pURI);
+		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_NAME, "requesting-user-name", NULL, pPasswd->pw_name);
 		
 		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
 			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
