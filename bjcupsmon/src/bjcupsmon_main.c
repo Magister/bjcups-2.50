@@ -241,10 +241,12 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 // 
 PUBLIC void closeApplication(void)
 {
+	#ifndef USE_libglade
 	// Free message ID area.
 	if (gPrinterStatus.pMessageID != NULL) {
 		free(gPrinterStatus.pMessageID);
 	}
+	#endif
 	
 	// Free pixmaps of cartridge.
 	freePixmaps();
