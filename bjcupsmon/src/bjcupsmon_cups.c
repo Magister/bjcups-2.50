@@ -384,6 +384,88 @@ PUBLIC gint removeJob(gchar *pDestName)
 	return(retVal);
 }// End removeJob
 
+PRIVATE gchar * getJobState(gchar *pDestName, gchar *pURI, gchar *pServerName, ipp_jstate_t *pJobState, gchar *pJobUserName)
+{
+/*** Parameters start ***/
+	http_t			*pHTTP;									// Pointer to HTTP connection.
+	ipp_t			*pRequest,								// Pointer to CUPS IPP request.
+					*pResponse;								// Pointer to CUPS IPP response.
+	ipp_attribute_t	*pAttribute;							// Pointer to CUPS attributes.
+	cups_lang_t		*pLanguage;								// Pointer to language.
+//	ipp_jstate_t	jobState = 0;							// Job state.
+//	gint			jobID = 0;								// Job ID.
+//	gchar			*pJobUserName = NULL;					// User name of print job.
+	uid_t			userID;									// User ID.
+	struct passwd	*pPasswd;								// Pointer to password structure.
+	gint			retVal = ID_ERR_PRINT_JOB_NOT_EXIST;	// Return value.
+/*** Parameters end ***/
+	
+	// Get login name.
+	userID = getuid();
+	pPasswd = getpwuid(userID);
+	
+	// CUPS http connect.
+	if ((pHTTP = httpConnectEncrypt(pServerName, ippPort(), cupsEncryption())) == NULL) {
+		retVal = ID_ERR_CUPS_API_FAILED;
+	}
+	else {
+		pRequest = ippNew();
+		
+		pRequest->request.op.operation_id = IPP_GET_JOB_ATTRIBUTES;
+		pRequest->request.op.request_id   = 1;
+		
+		pLanguage = bjcupsLangDefault();	// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
+		
+		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
+		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
+		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "job-uri", NULL, pURI);
+		
+		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
+			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+				retVal = ID_ERR_CUPS_API_FAILED;
+			}
+			else {
+				pAttribute = pResponse->attrs;
+
+				while (pAttribute != NULL) {
+					while (pAttribute != NULL && pAttribute->group_tag != IPP_TAG_JOB) {
+						pAttribute = pAttribute->next;
+					}
+					if (pAttribute == NULL) {
+						break;
+					}
+					
+					while (pAttribute != NULL && pAttribute->group_tag == IPP_TAG_JOB) {
+						if (strcmp(pAttribute->name, "job-state") == 0 && pAttribute->value_tag == IPP_TAG_ENUM) {
+							*pJobState = (ipp_jstate_t)pAttribute->values[0].integer;
+						}
+						if (strcmp(pAttribute->name, "job-originating-user-name") == 0 && pAttribute->value_tag == IPP_TAG_NAME) {
+							//pJobUserName = pAttribute->values[0].string.text;
+							pJobUserName=malloc(20*sizeof(gchar));
+							strncpy(pJobUserName,pAttribute->values[0].string.text,19);
+							pJobUserName[19]='\0';
+							
+						}
+						pAttribute = pAttribute->next;
+					}
+					if (pAttribute != NULL)
+						pAttribute = pAttribute->next;
+				}
+			}
+			
+			ippDelete(pResponse);
+		}
+		else {
+			retVal = ID_ERR_CUPS_API_FAILED;
+		}
+		
+		cupsLangFree(pLanguage);
+		httpClose(pHTTP);
+	}
+	
+
+	return(pJobUserName);
+}// End getJobState
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // 
@@ -450,11 +532,8 @@ PRIVATE gint getJobID(gchar *pDestName, gchar *pURI, gchar *pServerName, gint *p
 						if (strcmp(pAttribute->name, "job-id") == 0 && pAttribute->value_tag == IPP_TAG_INTEGER) {
 							jobID = pAttribute->values[0].integer;
 						}
-						if (strcmp(pAttribute->name, "job-state") == 0 && pAttribute->value_tag == IPP_TAG_ENUM) {
-							jobState = (ipp_jstate_t)pAttribute->values[0].integer;
-						}
-						if (strcmp(pAttribute->name, "job-originating-user-name") == 0 && pAttribute->value_tag == IPP_TAG_NAME) {
-							pJobUserName = pAttribute->values[0].string.text;
+						if (strcmp(pAttribute->name, "job-uri") == 0 && pAttribute->value_tag == IPP_TAG_URI) {
+							pJobUserName=getJobState(pDestName,pAttribute->values[0].string.text,pServerName,&jobState,pJobUserName);
 						}
 						pAttribute = pAttribute->next;
 					}
