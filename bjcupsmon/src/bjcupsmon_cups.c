@@ -53,6 +53,24 @@ PRIVATE cups_lang_t * bjcupsLangDefault( )
 	return pLanguage;
 }
 
+gint printerIsSupported(cups_option_t *options, gint num_options) {
+	gint i;
+	char *maker_and_model;
+	char *uri;
+	for (i = 0; i < num_options; i++) {
+		if (strcmp(options[i].name, "printer-make-and-model") == 0) {
+			maker_and_model = options[i].value;
+		} else if (strcmp(options[i].name, "device-uri") == 0) {
+			uri = options[i].value;
+		}
+	}
+	if ((strcasestr(maker_and_model, "Canon PIXMA") || strcasestr(maker_and_model, "Canon PIXUS"))
+	    && (strcasestr(uri, "canon-usb"))
+	    ) { 
+		return 1;
+	}
+	return 0;
+}
 
 /*** Functions ***/
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -77,14 +95,25 @@ PUBLIC gint getDefaultPrinterName(gchar *pDestName, gint bufSize)
 	numDests = cupsGetDests(&pDests);
 	
 	for (i = 0; i < numDests; i++) {
-		if (pDests[i].is_default != 0) {
+		if ((pDests[i].is_default != 0) && printerIsSupported(pDests[i].options, pDests[i].num_options)) {
 			// Default printer found.
 			strncpy(pDestName, pDests[i].name, bufSize);
 			retVal = ID_ERR_NO_ERROR;
 			break;
 		}
 	}
-	
+
+	if (retVal != ID_ERR_NO_ERROR) {
+		// iterate over all printers and check if it is supported
+		for (i = 0; i < numDests; i++) {
+			if (printerIsSupported(pDests[i].options, pDests[i].num_options)) {
+				strncpy(pDestName, pDests[i].name, bufSize);
+				retVal = ID_ERR_NO_ERROR;
+				break;
+			}
+		}
+	}
+
 	cupsFreeDests(numDests, pDests);
 	
 	return(retVal);
