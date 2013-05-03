@@ -287,6 +287,7 @@ PRIVATE gboolean updateUI(void)
 	struct timeb		curTime;
 	static struct timeb	prevTime;
 	static gboolean		initTime = FALSE;
+	static gboolean		prevJobExist = FALSE;
 /*** Parameters end ***/
 
 	if (initTime == FALSE) {
@@ -307,6 +308,12 @@ PRIVATE gboolean updateUI(void)
 
 	// Check printer and job.
 	retVal = checkPrinterAndJobState(gDestName, NULL, &jobExist);
+
+	if (jobExist != prevJobExist) {
+		showHideWindow(jobExist);
+		prevJobExist = jobExist;
+	}
+	
 	if (retVal == ID_ERR_NO_ERROR) {
 
 		// Disable [Cancel Printing] button.

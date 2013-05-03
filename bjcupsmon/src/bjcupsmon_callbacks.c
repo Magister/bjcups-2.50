@@ -122,4 +122,12 @@ void sighand_term ()
 //	flag_term = 1;
 }
 
-
+void tray_icon_on_click(GtkStatusIcon *status_icon, gpointer user_data)
+{
+	if (gtk_widget_get_visible(GTK_WIDGET(user_data))) {
+		gtk_widget_hide (GTK_WIDGET(user_data));
+	} else {
+		gtk_window_deiconify (GTK_WINDOW(user_data));
+		gtk_widget_show (GTK_WIDGET(user_data));
+	}
+}

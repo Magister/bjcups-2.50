@@ -3,11 +3,10 @@
   <!-- interface-requires gtk+ 2.6 -->
   <!-- interface-naming-policy toplevel-contextual -->
   <widget class="GtkWindow" id="mainWindow">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">title</property>
-    <signal name="destroy" handler="on_mainWindow_destroy"/>
-    <signal name="delete_event" handler="on_mainWindow_delete_event"/>
+    <signal name="destroy" handler="on_mainWindow_destroy" swapped="no"/>
+    <signal name="delete_event" handler="on_mainWindow_delete_event" swapped="no"/>
     <child>
       <widget class="GtkVBox" id="vboxMain">
         <property name="visible">True</property>
@@ -97,8 +96,8 @@
             <property name="height_request">90</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <signal name="configure_event" handler="on_drawMainCartridge_configure_event"/>
-            <signal name="expose_event" handler="on_drawMainCartridge_expose_event"/>
+            <signal name="configure_event" handler="on_drawMainCartridge_configure_event" swapped="no"/>
+            <signal name="expose_event" handler="on_drawMainCartridge_expose_event" swapped="no"/>
           </widget>
           <packing>
             <property name="expand">False</property>
@@ -130,7 +129,7 @@
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <signal name="clicked" handler="on_buttonMainContinue_clicked"/>
+                <signal name="clicked" handler="on_buttonMainContinue_clicked" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -146,7 +145,7 @@
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <signal name="clicked" handler="on_buttonMainCancel_clicked"/>
+                <signal name="clicked" handler="on_buttonMainCancel_clicked" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>

@@ -27,3 +27,7 @@ on_buttonMainContinue_clicked          (GtkButton       *button,
 void
 on_buttonMainCancel_clicked            (GtkButton       *button,
                                         gpointer         user_data);
+
+void 
+tray_icon_on_click                     (GtkStatusIcon   *status_icon, 
+                                        gpointer         user_data);

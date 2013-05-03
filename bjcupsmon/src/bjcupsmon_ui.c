@@ -41,6 +41,7 @@ PRIVATE GladeXML	*gXmlMainWnd = NULL;		// Pointer to glade xml of main window.
 #else
 PRIVATE GtkWidget	*gMainWnd = NULL;			// Pointer to main window. ver.2.50
 #endif
+PRIVATE GtkWindow   *gtkMainWindow = NULL;
 
 PRIVATE const gchar	*gSTSMessageTable[] = {		// Printer status message table.
 //	N_("The used ink tank is full.\nCancel printing and turn the printer off and then back on.\nIf this doesn't clear the error, see the printer manual for more detail.\n"),
@@ -140,6 +141,9 @@ PRIVATE const gchar	*gOtherMessageTable[] = {		// Other message table.
 // 
 PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboolean isPrinting, ENUM_OtherMessageID otherMsg)
 {
+
+	GtkStatusIcon *tray_icon;
+	
 #ifdef USE_libglade
 /*** Parameters start ***/
 	gchar				gladeFileName[MAX_BUF_SIZE];	// Buffer for glade file name.
@@ -156,6 +160,15 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 	
 	// Show window.
 	gXmlMainWnd = glade_xml_new(gladeFileName, STR_WINDOW_NAME_MAIN, NULL);
+
+	gtkMainWindow = GTK_WINDOW(lookupWidget("mainWindow"));
+
+	// Create tray icon
+	tray_icon = gtk_status_icon_new ();
+	gtk_status_icon_set_from_icon_name(tray_icon, GTK_STOCK_PRINT);
+	gtk_status_icon_set_tooltip(tray_icon, pWindowTitle);
+	gtk_status_icon_set_visible(tray_icon, TRUE);
+	g_signal_connect(G_OBJECT(tray_icon), "activate", G_CALLBACK(tray_icon_on_click), gtkMainWindow); 
 	
 	// Set window title.
 	setWindowTitle(STR_WINDOW_NAME_MAIN, pWindowTitle);
@@ -174,6 +187,8 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 		updateUISettings(NULL, otherMsg, TRUE, TRUE, TRUE, TRUE);
 	}
 	else {	// Printing.
+		gtk_window_deiconify (GTK_WINDOW(gtkMainWindow));
+		gtk_widget_show(GTK_WIDGET(gtkMainWindow));
 		// Enable [Cancel Printing] button.
 		if (pPrinterStatus->printInterface == ID_DEV_1284 )
 			activateWidget(STR_MAIN_BUTTON_NAME_CANCEL, TRUE);
@@ -216,6 +231,8 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 
 	// Show window.
 	gMainWnd 	= create_mainWindow();
+
+	gtkMainWindow = gMainWnd;
 
 	// Initialize related cartridge area drawing handling.
 	initDrawing();
@@ -273,6 +290,19 @@ PUBLIC void initUI(gchar *pWindowTitle, ST_PrinterStatus *pPrinterStatus, gboole
 
 }// End initUI
 
+
+PUBLIC void showHideWindow(gboolean show) {
+	if (show) {
+		if (!gtk_widget_get_visible(GTK_WIDGET(gtkMainWindow))) {
+			gtk_window_deiconify (GTK_WINDOW(gtkMainWindow));
+			gtk_widget_show (GTK_WIDGET(gtkMainWindow));
+		}
+	} else {
+		if (gtk_widget_get_visible(GTK_WIDGET(gtkMainWindow))) {
+			gtk_widget_hide (GTK_WIDGET(gtkMainWindow));
+		}
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // 
