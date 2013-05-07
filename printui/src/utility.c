@@ -42,8 +42,8 @@
 #include <fcntl.h>
 
 #include "callbacks.h"
+#include "interface.h"
 #ifndef USE_LIB_GLADE
-#	include "interface.h"
 #	include "support.h"
 #endif
 

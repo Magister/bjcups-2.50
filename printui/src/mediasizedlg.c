@@ -395,7 +395,7 @@ int ShowMediaSizeRecommendDialog(UIMediaSizeDialog* dialog, gchar* applied)
 				word[len] = '\0';
 				change_to = LookupText(g_keytext_list, word);
 
-				gtk_label_set_text(GTK_LABEL(button[i]->child), change_to);
+				gtk_label_set_text(gtk_button_get_label(button[i]), change_to);
 				if( i == 0 )
 					gtk_toggle_button_set_active(
 						GTK_TOGGLE_BUTTON(button[i]), TRUE);

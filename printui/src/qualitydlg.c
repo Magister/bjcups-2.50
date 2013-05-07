@@ -252,7 +252,7 @@ void UpdateQualityDialogWidgets(GtkWidget* window, gchar* except_name)
 			{
 				gtk_label_set_text(
 					GTK_LABEL(LookupWidget(window, "quality_level_name_label")),
-						GTK_LABEL(GTK_BUTTON(button)->child)->label);
+						gtk_button_get_label(GTK_BUTTON(button)));
 				break;
 			}
 		}

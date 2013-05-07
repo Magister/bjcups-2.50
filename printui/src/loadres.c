@@ -160,7 +160,7 @@ int LoadResources()
 			strcat(glade_path, G_DIR_SEPARATOR_S);
 			strcat(glade_path, glade_name);
 
-			g_ui_xml = glade_xml_new(glade_path, NULL);
+			g_ui_xml = glade_xml_new(glade_path, NULL, NULL);
 
 			g_free(glade_path);
 		}

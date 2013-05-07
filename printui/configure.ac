@@ -96,7 +96,7 @@ fi
 if test "x$with_gtk" = "xno" ; then
     AC_MSG_ERROR([GTK+ is needed for bjcupsmon])
 elif test "x$with_gtk" = "xyes" ; then
-    with_gtk=1
+    with_gtk=2
 fi
 
 if test "x$with_gtk" = "x3"; then
@@ -111,6 +111,8 @@ else
 fi
 
 PKG_CHECK_MODULES(LIBXML,libxml)
+PKG_CHECK_MODULES(LIBGLADE,libglade-2.0)
+
 
 AC_OUTPUT([
 Makefile
