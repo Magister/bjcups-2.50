@@ -1,9 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
-INCLUDES = \
-  -I$(top_srcdir)/include/cncl \
-  -I$(top_srcdir)/include/misc \
-  @GTK_CFLAGS@
+
+AM_CPPFLAGS = \
+        -I$(top_srcdir)/include/cncl \
+        -I$(top_srcdir)/include/misc \
+        $(GTK_CFLAGS) \
+        $(LIBXML_CFLAGS) \
+        -DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
+        -DPACKAGE_LOCALE_DIR=\""$(localedir)"\"
 
 bin_PROGRAMS = printui
 
@@ -33,9 +37,9 @@ printui_SOURCES =  main.c \
   interface.c interface.h \
   support.c support.h
 
-CFLAGS = -O2 -Wall
-
-printui_LDADD = @GTK_LIBS@ -lxml -lpopt \
-  -lcnbpcnclui@CNCL_LIB_ID@ -lcnbpcmcm@CNCL_LIB_ID@
-
-printui_LDFLAGS = -L../../@CNCL_LIB_ID@/libs_bin
+printui_LDFLAGS = \
+        $(GTK_LIBS) \
+        $(LIBXML_LIBS) \
+        -lpopt \
+        -lcnbpcnclui@CNCL_LIB_ID@ -lcnbpcmcm@CNCL_LIB_ID@ \
+        -L../../@CNCL_LIB_ID@/libs_bin
