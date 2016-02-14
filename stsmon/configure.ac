@@ -56,9 +56,12 @@ AC_SUBST(GTK3_MINIMUM)
 
 gtk_version="none"
 with_gtk_default="no"
-PKG_CHECK_MODULES([GTK3],[gtk+-3.0 >= $GTK3_MINIMUM],[gtk_version="3" with_gtk_default="yes"])
-PKG_CHECK_MODULES([GTK2],[gtk+-2.0 >= $GTK2_MINIMUM],[gtk_version="2" with_gtk_default="yes"])
-PKG_CHECK_MODULES([GTK1],[gtk+ >= $GTK1_MINIMUM],[gtk_version="1" with_gtk_default="yes"])
+have_gtk1="yes"
+have_gtk2="yes"
+have_gtk3="yes"
+PKG_CHECK_MODULES([GTK3],[gtk+-3.0 >= $GTK3_MINIMUM],[gtk_version="3" with_gtk_default="yes"], [have_gtk1="no"])
+PKG_CHECK_MODULES([GTK2],[gtk+-2.0 >= $GTK2_MINIMUM],[gtk_version="2" with_gtk_default="yes"], [have_gtk2="no"])
+PKG_CHECK_MODULES([GTK1],[gtk+ >= $GTK1_MINIMUM],[gtk_version="1" with_gtk_default="yes"], [have_gtk3="no"])
 AC_ARG_WITH([gtk], AC_HELP_STRING([--with-gtk=1, 2 or 3],[Select GTK version, 1, 2 or 3]),
             [with_gtk=$withval],
             [with_gtk=$with_gtk_default])
@@ -70,7 +73,13 @@ fi
 if test "x$with_gtk" = "xno" ; then
     AC_MSG_ERROR([GTK+ is needed for bjcupsmon])
 elif test "x$with_gtk" = "xyes" ; then
-    with_gtk=1
+	if test "x$have_gtk2" = "xyes" ; then
+		with_gtk=2
+	elif test "x$have_gtk1" = "xyes" ; then
+		with_gtk=1
+	elif test "x$have_gtk3" = "xyes" ; then
+		with_gtk=3
+	fi
 fi
 
 if test "x$with_gtk" = "x3"; then
