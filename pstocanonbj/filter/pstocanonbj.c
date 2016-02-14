@@ -546,6 +546,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 	char *cmd_buf = NULL;
 	ppd_choice_t *p_choice;
 	ppd_size_t *p_size;
+	ppd_size_t *p_default_size;
 	int reso;
 	char gs_exec_buf[256];
 	char gs_cmd_buf[1024];
@@ -565,12 +566,21 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 		return NULL;
 
 	ppdMarkDefaults(p_ppd);
+
+	// Obtain default page size setting.
+	p_choice = ppdFindMarkedChoice(p_ppd, "PageSize");
+	p_default_size = ppdPageSize(p_ppd, p_choice->choice);
+
 	mark_ps_param_options(p_ppd, p_param);
 	cupsMarkOptions(p_ppd, num_opt, p_cups_opt);
 
 	// Obtain page size setting.
 	p_choice = ppdFindMarkedChoice(p_ppd, "PageSize");
 	p_size = ppdPageSize(p_ppd, p_choice->choice);
+
+	if (!p_size || ((int)(p_size->width == 0)) || ((int)(p_size->length == 0))) {
+	    p_size = p_default_size;
+	}
 
 	// Obtain resolution setting.
 	p_choice = ppdFindMarkedChoice(p_ppd, "Resolution");
