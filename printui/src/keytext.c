@@ -37,7 +37,7 @@
 #ifdef	USE_LIB_GLADE
 #	include <glade/glade.h>
 #endif
-#include <gnome-xml/parser.h>
+#include <libxml/parser.h>
 #include <string.h>
 
 #ifndef	USE_LIB_GLADE
@@ -89,7 +89,7 @@ static void ParseXMLDoc(xmlDocPtr doc, GTree* tree)
 {
 	xmlNodePtr node;
 
-	for( node = doc->root->childs ; node != NULL ; node = node->next )
+	for( node = xmlDocGetRootElement(doc)->children ; node != NULL ; node = node->next )
 	{
 		AddKeyAndTextToTree(node, tree);
 	}
@@ -102,9 +102,9 @@ static gboolean ReadXMLFile(char *fname, GTree* tree)
 	if( (doc = xmlParseFile(fname)) == NULL )
 		return FALSE;
 
-	if( doc->root == NULL
-	 || doc->root->name == NULL
-	 || g_strcasecmp(doc->root->name, "KeyTextList") != 0)
+	if( xmlDocGetRootElement(doc) == NULL
+	 || xmlDocGetRootElement(doc)->name == NULL
+	 || g_strcasecmp(xmlDocGetRootElement(doc)->name, "KeyTextList") != 0)
 	{
 		xmlFreeDoc(doc);
 		return FALSE;
@@ -128,7 +128,7 @@ KeyTextList* LoadKeyTextList(gchar* filename)
 {
 	KeyTextList* list;
 	gchar* pathname = NULL;
-	
+
 	printf("keytext_dir: %s\n", g_keytext_dir);
 
 	if( !g_keytext_dir || !filename )

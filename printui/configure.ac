@@ -110,7 +110,7 @@ else
     AC_MSG_ERROR([Unknown gtk version requested: $with_gtk])
 fi
 
-PKG_CHECK_MODULES(LIBXML,libxml)
+PKG_CHECK_MODULES(LIBXML,libxml-2.0)
 PKG_CHECK_MODULES(LIBGLADE,libglade-2.0)
 
 
