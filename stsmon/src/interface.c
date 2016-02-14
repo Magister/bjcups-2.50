@@ -64,7 +64,7 @@ create_window1 (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (text1);
   gtk_container_add (GTK_CONTAINER (scrolledwindow6), text1);
-  gtk_text_insert (GTK_TEXT (text1), NULL, NULL, NULL,
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer(GTK_TEXT_VIEW (text1)),
                    _("Collecting printer status. "), -1);
 
   hseparator2 = gtk_hseparator_new ();

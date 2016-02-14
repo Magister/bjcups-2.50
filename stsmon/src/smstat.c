@@ -16,7 +16,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 #include	<gtk/gtk.h>
 #include	<stdlib.h>
 #include	<unistd.h>
@@ -204,6 +203,7 @@ print_sts_read(GtkWidget *window1)
 	GtkWidget	*print_cancel;
 	GtkWidget	*drawingarea1;
 	GdkRectangle	update_rect;
+	GtkTextBuffer *buffer;
 
 	int			r_size;
 	char		*stat;
@@ -267,8 +267,8 @@ print_sts_read(GtkWidget *window1)
 		cartridge_pixmap_clear( window1 );
 
 		gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
-		gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,
-				 STR_NOTRESPONDING , -1);
+		gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),
+		                                  STR_NOTRESPONDING , -1);
 		gtk_label_set_text( GTK_LABEL(label1), STR_CARTRIDGE_TYPE);
 		if( sm_gap ) gtk_label_set_text( GTK_LABEL(label2), STR_THICKNESS_LEVER);
 
@@ -322,7 +322,7 @@ print_sts_read(GtkWidget *window1)
 	if( fault_stat == 2 )	/* For F360 Retry at Power ON */
 		fault_stat = 0;
 
-	gtk_text_freeze( GTK_TEXT(text1) );
+	buffer = gtk_text_buffer_new (NULL);
 
 	// Status Area Clear
 	gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
@@ -331,7 +331,7 @@ print_sts_read(GtkWidget *window1)
 	sts.sts_v = strtol( sts_str,NULL,16 );
 	if( sts.sts_vc[0] & 0x80 && !(SM_GetStatVal(disp_status,"DBS:DS",sts_str)) )
 	{
-		gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL, STR_PRINTING , -1);
+		gtk_text_buffer_insert_at_cursor (buffer, STR_PRINTING , -1);
 		enable_cancel = 1;
 		printing_stat = 2;
 	}
@@ -344,7 +344,7 @@ print_sts_read(GtkWidget *window1)
 			&& outputdata_type != LM_PRN_UTIL && endcheck_retry==0 )
 				socket_send_LM( LM_PRN_END );
 		
-		gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL, STR_ONLINE  , -1);
+		gtk_text_buffer_insert_at_cursor (buffer, STR_ONLINE  , -1);
 		if( endcheck_retry == 0 )
 		{
 			enable_cancel = 0;
@@ -466,7 +466,7 @@ print_sts_read(GtkWidget *window1)
 		}
 		else if( !(strncmp( sts_str, CHD_SCANNER,2 )) ){
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,
+			gtk_text_buffer_insert_at_cursor (buffer,
 				 	MES_SCANNER_DETECT , -1);	
 
 			if( strstr( sts_str, CHD_COLOR_VC ) ){ 			// For F660
@@ -483,7 +483,7 @@ print_sts_read(GtkWidget *window1)
 			gtk_label_set_text( GTK_LABEL(label1), mes_str );
 
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);	
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,
+			gtk_text_buffer_insert_at_cursor (buffer,
 			 	MES_UNSUPPORTED , -1);	// 00.12.22	
 		}
 		else{ 
@@ -492,7 +492,7 @@ print_sts_read(GtkWidget *window1)
 
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);	
 			sprintf( mes_str,MES_CARTRIDGE_NONE);		// 00.12.22
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,mes_str, -1);
+			gtk_text_buffer_insert_at_cursor (buffer,mes_str, -1);
 		}
 	    gDw = (area_width - getPixmapsWidth())>>1;
 	
@@ -506,12 +506,13 @@ print_sts_read(GtkWidget *window1)
 	print_err_check( window1, sts.sts_vc[0] );
 
 	if( SER_S300 && cil_kind != 1 ) {
-		gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,
+		gtk_text_buffer_insert_at_cursor (buffer,
 		 	MES_DONT_INK_WARN,-1);
 	}
 
 	// Printer Status String Display
-	gtk_text_thaw( GTK_TEXT(text1));
+	gtk_text_view_set_buffer (GTK_TEXT_VIEW(text1), buffer);
+	g_object_unref (buffer);
 
 	// Cartridge Pixmap Display
 	update_rect.x = 0;
@@ -633,13 +634,13 @@ print_err_check( GtkWidget *window1, char bst )
 		if( !(strcmp( sts_str, DSC_USEDTANK_FULL )))
 		{
 			if (model_id>=MODEL_ip1000)			// v2.5
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_USEDTANK_FULL2, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_USEDTANK_FULL2, -1);
 			else
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_USEDTANK_FULL, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_USEDTANK_FULL, -1);
 		}
 		else {
 			sprintf( mes_str, MES_SERVICE_CALL, sts_str );
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL, mes_str , -1);
+			gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)), mes_str , -1);
 		}
 		enable_cancel = 1;	
 
@@ -657,22 +658,22 @@ print_err_check( GtkWidget *window1, char bst )
 	if( stat != 0 ){
 		if( !(strcmp( sts_str, DBS_CLEANING ))){
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CLEANING, -1);
+			gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CLEANING, -1);
 			enable_cancel = 0;
 		}
 		else if( !(strcmp( sts_str, DBS_CARTRIDGE_CHANGE ))){
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
 			if (model_id>=MODEL_ip3100)			// v2.5
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CARTRIDGE_REPLACE3,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CARTRIDGE_REPLACE3,-1);
 			else if (model_id>=MODEL_ip1000)			// v2.5
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CARTRIDGE_REPLACE2,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CARTRIDGE_REPLACE2,-1);
 			else 
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CARTRIDGE_REPLACE,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CARTRIDGE_REPLACE,-1);
 			enable_cancel = 0;	
 		}
 		else if( !(strcmp( sts_str, DBS_TEST_PRINT ))){
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL, STR_PRINTING , -1);
+			gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)), STR_PRINTING , -1);
 			if( flag_noparent ) printing_stat = 1;	
 
 			enable_cancel = 0;	
@@ -680,7 +681,7 @@ print_err_check( GtkWidget *window1, char bst )
 		}
 		else if( !(strcmp( sts_str, DBS_PRINTER_USED ))){
 			gtk_editable_delete_text( GTK_EDITABLE(text1), 0,-1);
-			gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL, MES_ANOTHER_INTF , -1);
+			gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_ANOTHER_INTF , -1);
 			enable_cancel = 0;	
 		}
 		else if( !(strcmp( sts_str, DBS_ENDING ))){
@@ -719,50 +720,50 @@ print_err_check( GtkWidget *window1, char bst )
 
 
 		   	if( strstr( n_ptr, DOC_USBDEVICE )){
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_USBDEVICE,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_USBDEVICE,-1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 				goto pr_ret;
 			}
 		   	else if( !(strncmp( n_ptr, DOC_COVER_CLOSE, 4 )))		// v2.5
 			{
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_COVER_CLOSE, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_COVER_CLOSE, -1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 		   	else if( !(strncmp( n_ptr, DOC_PAPER_OUT, 4 )))
 			{
 				if (model_id>=MODEL_ip3100)			// v2.5
 				{
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT1, -1);
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT21, -1);
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT3, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT1, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT21, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT3, -1);
 				}
 				else
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT, -1);
 				enable_cancel = 0;
 			}
 		   	else if( !(strncmp( n_ptr, DOC_PAPER_OUT03, 4 )))	// v2.5
 			{
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT1, -1);
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT22, -1);
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_OUT3, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT1, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT22, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_OUT3, -1);
 				enable_cancel = 0;
 			}
 			else if( !(strncmp( n_ptr, DOC_PAPER_JAM, 4 )))
 			{
 				if (model_id>=MODEL_ip3100)			// v2.5
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_JAM251, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_JAM251, -1);
 				else
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_JAM, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_JAM, -1);
 				enable_cancel = 0;
 			}
 			else if( !(strncmp( n_ptr, DOC_PAPER_JAM03, 4 )))	// 2.5
 			{
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_JAM03, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_JAM03, -1);
 				enable_cancel = 0;
 			}
 			else if( !(strncmp( n_ptr, DOC_PAPER_JAM04, 4 )))	// 2.5
 			{
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PAPER_JAM04, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PAPER_JAM04, -1);
 				enable_cancel = 0;
 			}
 			else if( !(strncmp( n_ptr, DOC_CARTRIDGE_NOTHING, 4 ))
@@ -775,40 +776,40 @@ print_err_check( GtkWidget *window1, char bst )
 					enable_cancel = 0;	
 					sprintf( mes_str, MES_CARTRIDGE_NONE);		// 00.12.22
 				}
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,mes_str, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),mes_str, -1);
 			}
 			else if( !(strncmp(n_ptr,"1402",4)) || !(strncmp(n_ptr,"1403",4)) || !(strncmp(n_ptr,"1405",4)) ){
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_OPERATOR_ERR, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_OPERATOR_ERR, -1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 
 			else if( !(strncmp( n_ptr, DOC_SCANNER_DETECT, 4 ))){
 				if( dbs_tp == 0 
   				  && dev_type != DEVICE_TYPE_USB ){
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_SCANNER_DETECT2, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_SCANNER_DETECT2, -1);
 					enable_cancel = 1;
 				}else{
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_SCANNER_DETECT , -1);	
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_SCANNER_DETECT , -1);	
 					enable_cancel = 0;	
 				}
 			}
 
 			else if( !(strncmp( n_ptr, DOC_UNSUPORTED_CHD, 4 ))){	
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_UNSUPPORTED , -1);	// 00.12.22	
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_UNSUPPORTED , -1);	// 00.12.22	
 				enable_cancel = 0;
 			}
 
 		   	else if( !(strncmp( n_ptr, DOC_USEDTANK_ALMOST, 4 ))||!(strncmp( n_ptr, DOC_USEDTANK_ALMOST2, 4 )))
 			{
 				if (model_id>=MODEL_ip1000)			// v2.5
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_USEDTANK_ALMOST2, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_USEDTANK_ALMOST2, -1);
 				else
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_USEDTANK_ALMOST, -1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_USEDTANK_ALMOST, -1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 
 		   	else if( !(strncmp( n_ptr, DOC_PROTECTOR, 4 ))){
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_PROTECTOR,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_PROTECTOR,-1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 
@@ -821,13 +822,13 @@ print_err_check( GtkWidget *window1, char bst )
 				{
 					if( chd_kind  ){
 						if( strstr(n_ptr, DOC_INKTANK_NOTHING) )	// i250 i255
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INKTANK_NONE, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INKTANK_NONE, -1);
 						else
 						{
 							if (model_id>=MODEL_ip3100)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INKOUT2, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INKOUT2, -1);
 							else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INKOUT, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INKOUT, -1);
 						}
 						enable_cancel = ( printing_stat != 0 )? 1:0;
 					}
@@ -837,31 +838,31 @@ print_err_check( GtkWidget *window1, char bst )
 					if( printing_stat != 0 )
 					{	
 						if (model_id>=MODEL_ip3100)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_COVER_OPEN4, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_COVER_OPEN4, -1);
 							
 						else if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_COVER_OPEN3, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_COVER_OPEN3, -1);
 					
 						else if ( strstr( warn_str, DWS_CDR_GUIDE_ON ) ) 
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_COVER_OPEN2, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_COVER_OPEN2, -1);
 						
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_COVER_OPEN, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_COVER_OPEN, -1);
 					}
 					else
 					{
 						if ( strstr( warn_str, DWS_CDR_GUIDE_ON ) ) 
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_COVER_OPEN2, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_COVER_OPEN2, -1);
 						else
 						{
 							if (model_id>=MODEL_ip3100)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CARTRIDGE_REPLACE3,-1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CARTRIDGE_REPLACE3,-1);
 							
 							else if (model_id>=MODEL_ip1000)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CARTRIDGE_REPLACE2,-1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CARTRIDGE_REPLACE2,-1);
 							
 							else 
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_CARTRIDGE_REPLACE, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_CARTRIDGE_REPLACE, -1);
 						}
 					}
 					enable_cancel = ( printing_stat != 0 )? 1:0;
@@ -871,31 +872,31 @@ print_err_check( GtkWidget *window1, char bst )
 					if( strstr( n_ptr, DOC_INKOUT_BLACK_S )  )
 					{
 						if (model_id>=MODEL_ip3100)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_7, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_7, -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_6, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_6, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_BLACK_S",");
 					}
 
 					if( strstr( n_ptr, DOC_INKOUT_BLACK )  )
 					{
 						if( chd_kind == CHD_BC_34 || chd_kind == CHD_BC_3231 )
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_BLACK, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_BLACK, -1);
 						else
 						{
 							if( model_id>=MODEL_560i)
 							{
 								if( (model_id==MODEL_860i)||(model_id==MODEL_560i)||(model_id==MODEL_ip3100)||(model_id==MODEL_ip4100) )
-									gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_3e, -1);
+									gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_3e, -1);
 								else
 								{
 									if (model_id>=MODEL_ip3100)			// v2.5
-										gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_7, -1);
+										gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_7, -1);
 									else
-										gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_6, -1);
+										gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_6, -1);
 								}
 							}else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK, -1);
 						}
 						strcat( n_ptr_sub, DOC_INKOUT_BLACK",");	
 					}
@@ -905,12 +906,12 @@ print_err_check( GtkWidget *window1, char bst )
 						if( model_id>=MODEL_560i)
 						{
 							if (model_id>=MODEL_ip1000)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_CYAN_7, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_CYAN_7, -1);
 							else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_CYAN_6, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_CYAN_6, -1);
 						}
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_CYAN, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_CYAN, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_PHOTO_C",");
 					}
 	
@@ -919,21 +920,21 @@ print_err_check( GtkWidget *window1, char bst )
 						if( model_id>=MODEL_560i)
 						{
 							if (model_id>=MODEL_ip1000)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_MAGENTA_7, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_MAGENTA_7, -1);
 							else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_MAGENTA_6, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_MAGENTA_6, -1);
 						}
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_MAGENTA, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_MAGENTA, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_PHOTO_M",");
 					}
 
 					if( strstr( n_ptr, DOC_INKOUT_RED )  )
 					{
 						if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_RED_7, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_RED_7, -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_RED_6, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_RED_6, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_RED",");
 					}
 
@@ -942,12 +943,12 @@ print_err_check( GtkWidget *window1, char bst )
 						if( model_id>=MODEL_560i)
 						{
 							if (model_id>=MODEL_ip1000)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_CYAN_7, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_CYAN_7, -1);
 							else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_CYAN_6, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_CYAN_6, -1);
 						}
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_CYAN, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_CYAN, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_CYAN",");	
 					}
 
@@ -956,12 +957,12 @@ print_err_check( GtkWidget *window1, char bst )
 						if( model_id>=MODEL_560i)
 						{
 							if (model_id>=MODEL_ip1000)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_MAGENTA_7, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_MAGENTA_7, -1);
 							else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_MAGENTA_6, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_MAGENTA_6, -1);
 						}
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_MAGENTA, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_MAGENTA, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_MAGENTA",");
 					}
 
@@ -970,18 +971,18 @@ print_err_check( GtkWidget *window1, char bst )
 						if( model_id>=MODEL_560i)
 						{
 							if (model_id>=MODEL_ip1000)			// v2.5
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_YELLOW_7 , -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_YELLOW_7 , -1);
 							else
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_YELLOW_6 , -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_YELLOW_6 , -1);
 						}
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_YELLOW , -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_YELLOW , -1);
 						strcat( n_ptr_sub, DOC_INKOUT_YELLOW",");
 					}
 
 					if( strstr( n_ptr, DOC_INKOUT_GREEN )  )
 					{
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_GREEN_7, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_GREEN_7, -1);
 						strcat( n_ptr_sub, DOC_INKOUT_GREEN",");
 					}
 
@@ -992,23 +993,23 @@ print_err_check( GtkWidget *window1, char bst )
 		   	else if( !(strncmp( n_ptr, DOC_CDR_GUIDE_ON, 4 )) || !(strncmp( n_ptr, DOC_CDR_GUIDE_OPEN, 4 )))	// v2.5
 			{
 				if (model_id>=MODEL_ip3100)			// v2.5
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_GUIDE_OPEN,-1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_GUIDE_OPEN,-1);
 				else
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_TRAY_GUIDE,-1);
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_TRAY_GUIDE,-1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 		   	else if( !(strncmp( n_ptr, DOC_CDR_GUIDE_ON_P, 4 )) || !(strncmp( n_ptr, DOC_CDR_GUIDE_OPEN_P, 4 )))	// v2.5
 			{
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_GUIDE_OPEN_P,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_GUIDE_OPEN_P,-1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 		   	else if( !(strncmp( n_ptr, DOC_HEADALIGNMENT, 4 ))){
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_HEADALIGNMENT,-1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_HEADALIGNMENT,-1);
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}
 
 			else {		
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_OPERATOR_ERR2 , -1);		
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_OPERATOR_ERR2 , -1);		
 				enable_cancel = ( printing_stat != 0 )? 1:0;
 			}	
 
@@ -1070,13 +1071,13 @@ print_err_check( GtkWidget *window1, char bst )
 
 			if( (strstr( warn_str, DWS_INKLOW_24COLOR2 ))){		// S300 i250 i255
 					if( ink_warning == 0 ){	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}	
 					if (model_id >= MODEL_ip1000)
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_COLOR_24, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_COLOR_24, -1);
 					else								
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_COLOR, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_COLOR, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_24COLOR2",");
 			}
 			// 860i 
@@ -1086,13 +1087,13 @@ print_err_check( GtkWidget *window1, char bst )
 				{	
 					if( ink_warning == 0 )
 					{	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}									
 					if (model_id>=MODEL_ip3100)			// v2.5
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_7, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_7, -1);
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_6, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_6, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_BLACK_S",");
 				}		
 			}
@@ -1102,29 +1103,29 @@ print_err_check( GtkWidget *window1, char bst )
 				{
 					if( ink_warning == 0 )
 					{	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}									
 					if( chd_kind==CHD_BC_34 || chd_kind==CHD_BC_3231 )	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_BLACK, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_BLACK, -1);
 					else
 					{
 						if( model_id>=MODEL_560i)
 						{
 							if( (model_id==MODEL_860i)||(model_id==MODEL_560i)||(model_id==MODEL_ip3100)||(model_id==MODEL_ip4100) )
-								gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_3e, -1);
+								gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_3e, -1);
 							else
 							{
 								if (model_id>=MODEL_ip3100)			// v2.5
-									gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_7, -1);
+									gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_7, -1);
 								else if (model_id>=MODEL_ip1000)			// v2.5
-									gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_24, -1);
+									gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_24, -1);
 								else
-									gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_6, -1);
+									gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_6, -1);
 							}
 						}
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK, -1);
 					}
 					strcat( n_ptr_sub, DWS_INKLOW_BLACK",");
 				}	
@@ -1135,18 +1136,18 @@ print_err_check( GtkWidget *window1, char bst )
 				{	
 					if( ink_warning == 0 )
 					{	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}
 					if( model_id>=MODEL_560i)
 					{									
 						if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_CYAN_7, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_CYAN_7, -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_CYAN_6, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_CYAN_6, -1);
 					}
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_CYAN, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_CYAN, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_PHOTO_C",");
 				}		
 			}
@@ -1156,18 +1157,18 @@ print_err_check( GtkWidget *window1, char bst )
 				{	
 					if( ink_warning == 0 )
 					{	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}									
 					if( model_id>=MODEL_560i)
 					{									
 						if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_MAGENTA_7 , -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_MAGENTA_7 , -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_MAGENTA_6 , -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_MAGENTA_6 , -1);
 					}
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_PHOTO_MAGENTA , -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_PHOTO_MAGENTA , -1);
 					strcat( n_ptr_sub, DWS_INKLOW_PHOTO_M",");	
 				}		
 			}
@@ -1177,10 +1178,10 @@ print_err_check( GtkWidget *window1, char bst )
 				{
 					if( ink_warning == 0 )													// ip8600
 					{
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);	// ip8600
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);	// ip8600
 						ink_warning = 1;													// ip8600
 					}									
-					gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_GREEN_7 , -1);	// ip8600
+					gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_GREEN_7 , -1);	// ip8600
 					strcat( n_ptr_sub, DWS_INKLOW_GREEN",");								// ip8600
 				}	
 			}
@@ -1190,67 +1191,67 @@ print_err_check( GtkWidget *window1, char bst )
 				{
 					if( ink_warning == 0 )													// 990i
 					{
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);	// 990i
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);	// 990i
 						ink_warning = 1;													// 990i
 					}									
 					if (model_id>=MODEL_ip1000)			// v2.5
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_RED_7 , -1);	// ip8600
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_RED_7 , -1);	// ip8600
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_RED_6 , -1);		// 990i
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_RED_6 , -1);		// 990i
 					strcat( n_ptr_sub, DWS_INKLOW_RED",");									// 990i
 				}	
 			}
 			if( (strstr( warn_str, DWS_INKLOW_CYAN ))){
 				if(!(strstr( doc_str, DOC_INKOUT_CYAN))){
 					if( ink_warning == 0 ){	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}									
 					if( model_id>=MODEL_560i)	
 					{								
 						if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_CYAN_7, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_CYAN_7, -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_CYAN_6, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_CYAN_6, -1);
 					}
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_CYAN, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_CYAN, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_CYAN",");	
 				}	
 			}
 			if( (strstr( warn_str, DWS_INKLOW_MAGENTA ))){
 				if(!(strstr( doc_str, DOC_INKOUT_MAGENTA))){	
 					if( ink_warning == 0 ){	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}									
 					if( model_id>=MODEL_560i)
 					{									
 						if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_MAGENTA_7, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_MAGENTA_7, -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_MAGENTA_6, -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_MAGENTA_6, -1);
 					}
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_MAGENTA, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_MAGENTA, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_MAGENTA",");
 				}	
 			}
 			if( (strstr( warn_str, DWS_INKLOW_YELLOW ))){
 				if(!(strstr( doc_str, DOC_INKOUT_YELLOW))){	
 					if( ink_warning == 0 ){	
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INK_LOW, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INK_LOW, -1);
 						ink_warning = 1;		
 					}									
 					if( model_id>=MODEL_560i)
 					{									
 						if (model_id>=MODEL_ip1000)			// v2.5
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_YELLOW_7 , -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_YELLOW_7 , -1);
 						else
-							gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_YELLOW_6 , -1);
+							gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_YELLOW_6 , -1);
 					}
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_YELLOW , -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_YELLOW , -1);
 					strcat( n_ptr_sub, DWS_INKLOW_YELLOW",");
 				}	
 			}
@@ -1258,31 +1259,31 @@ print_err_check( GtkWidget *window1, char bst )
 			{
 					if( ink_warning != 3 )
 					{
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INKLEVEL_UK, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INKLEVEL_UK, -1);
 						ink_warning = 3;		
 					}									
 					if (model_id >= MODEL_ip1000)
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_COLOR_24, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_COLOR_24, -1);
 					else								
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_COLOR, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_COLOR, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_24COLOR3",");
 			}
 			if( (strstr( warn_str, DWS_INKLOW_24BLACK3 )))		// S300 i250 i255
  			{
 					if( ink_warning != 3 )
 					{
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INKLEVEL_UK, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INKLEVEL_UK, -1);
 						ink_warning = 3;		
 					}									
 					if (model_id>=MODEL_ip1000)			// v2.5
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK_24, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK_24, -1);
 					else
-						gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,STR_I_BLACK, -1);
+						gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),STR_I_BLACK, -1);
 					strcat( n_ptr_sub, DWS_INKLOW_24BLACK3",");
 			}
 			if( ink_warning == 3 )
 			{
-				gtk_text_insert( GTK_TEXT(text1),NULL,NULL,NULL,MES_INKLEVEL_UK2, -1);
+				gtk_text_buffer_insert_at_cursor (gtk_text_view_get_buffer(GTK_TEXT_VIEW(text1)),MES_INKLEVEL_UK2, -1);
 			}
 			if( (strstr( warn_str, DWS_INKLOW_24COLOR1 )))		// S300 i250 i255
 				strcat( n_ptr_sub, DWS_INKLOW_24COLOR1",");	//  for Bitmap  
