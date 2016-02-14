@@ -29,8 +29,32 @@
 #include "bjcupsmon_common.h"
 #include "bjcupsmon_cups.h"
 
+#if (CUPS_VERSION_MAJOR > 1) || (CUPS_VERSION_MINOR > 5)
+#define HAVE_CUPS_1_6 1
+#endif
+
+#ifndef HAVE_CUPS_1_6
+
+#define ippSetOperation(ipp_request, ipp_op_id) ipp_request->request.op.operation_id = ipp_op_id
+#define ippSetRequestId(ipp_request, ipp_rq_id) ipp_request->request.op.request_id = ipp_rq_id
+#define ippGetStatusCode(ipp_request) ipp_request->request.status.status_code
+#define ippFirstAttribute(ipp) ipp->attrs /* simplistic */
+#define bjcups_ippNextAttribute(resp, attr) attr->next
+#define ippGetGroupTag(attr)  attr->group_tag
+#define ippGetName(attr) attr->name
+#define ippGetString(attr, ind, lang) attr->values[ind].string.text
+#define ippGetInteger(attr, ind) pAttribute->values[ind].integer
+#define ippGetValueTag(attr) attr->value_tag
+
+#else
+
+#define bjcups_ippNextAttribute(resp, attr) ippNextAttribute(resp)
+
+#endif
+
+
 //////////////////////////////////////////////////////////////
-// 
+//
 // CS     :	PRIVATE cups_lang_t * bjcupsLangDefault()
 // IN     : none
 // OUT    : LC_ALL(locale)
@@ -42,14 +66,14 @@
 PRIVATE cups_lang_t * bjcupsLangDefault( )
 {
 	cups_lang_t	*pLanguage;
-	char		*tLang;	
-	
+	char		*tLang;
+
 	if( (tLang = getenv("LC_ALL"))==NULL)
 			tLang = getenv("LANG");
-	
+
 	pLanguage = cupsLangDefault();
 	setlocale(LC_ALL,tLang);
-	
+
 	return pLanguage;
 }
 
@@ -66,7 +90,7 @@ gint printerIsSupported(cups_option_t *options, gint num_options) {
 	}
 	if ((strcasestr(maker_and_model, "Canon PIXMA") || strcasestr(maker_and_model, "Canon PIXUS"))
 	    && (strcasestr(uri, "canon-usb"))
-	    ) { 
+	    ) {
 		return 1;
 	}
 	return 0;
@@ -74,14 +98,14 @@ gint printerIsSupported(cups_option_t *options, gint num_options) {
 
 /*** Functions ***/
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC gint getDefaultPrinterName(gchar *pDestName, gint bufSize)
 // IN     : gint bufSize : Size of buffer for default printer name.
 // OUT    : gchar *pDestName : Default printer name of CUPS.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
 //          ID_ERR_NO_PRINTER_ADDED : No printer registered into CUPS.
-// 
+//
 PUBLIC gint getDefaultPrinterName(gchar *pDestName, gint bufSize)
 {
 /*** Parameters start ***/
@@ -90,10 +114,10 @@ PUBLIC gint getDefaultPrinterName(gchar *pDestName, gint bufSize)
 	gint		i;									// Counter.
 	gint		retVal = ID_ERR_NO_PRINTER_ADDED;	// Return value.
 /*** Parameters end ***/
-	
+
 	// Get all dests.
 	numDests = cupsGetDests(&pDests);
-	
+
 	for (i = 0; i < numDests; i++) {
 		if ((pDests[i].is_default != 0) && printerIsSupported(pDests[i].options, pDests[i].num_options)) {
 			// Default printer found.
@@ -115,19 +139,19 @@ PUBLIC gint getDefaultPrinterName(gchar *pDestName, gint bufSize)
 	}
 
 	cupsFreeDests(numDests, pDests);
-	
+
 	return(retVal);
 }// End getDefaultPrinterName
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC gint getProductName(gchar *pDestName, gchar *pProductName)
 // IN     : gchar *pDestName : Printer name.
 // OUT    : gchar *pProductName : Product name. ( ModelName )
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_UNKNOWN_PRINTER : Getting product name failed.
-// 
+//
 PUBLIC gint getProductName(gchar *pDestName, gchar *pProductName)
 {
 /*** Parameters start ***/
@@ -135,7 +159,7 @@ PUBLIC gint getProductName(gchar *pDestName, gchar *pProductName)
 	ppd_file_t	*pPPD;								// Pointer to PPD file.
 	gint		retVal = ID_ERR_UNKNOWN_PRINTER;	// Return value.
 /*** Parameters start ***/
-	
+
 	// Get PPD file name.
 	pPPDName = cupsGetPPD(pDestName);
 	if (pPPDName != NULL) {
@@ -148,20 +172,20 @@ PUBLIC gint getProductName(gchar *pDestName, gchar *pProductName)
 		}
 		unlink(pPPDName);	// Tora 020418: You should remove the copy of the PPD file.
 	}
-	
+
 	return(retVal);
 }// End getProductName
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC gint checkPrinterAndJobState(gchar *pDestName, gboolean *pPrinterReady, gboolean *pJobExist)
 // IN     : gchar *pDestName : Printer name.
 // OUT    : gboolean *pPrinterReady : Any printers registered into CUPS or not.
 //          gboolean *pJobExist : Active job exists or not.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
-// 
+//
 PUBLIC gint checkPrinterAndJobState(gchar *pDestName, gboolean *pPrinterReady, gboolean *pJobExist)
 {
 /*** Parameters start ***/
@@ -169,10 +193,10 @@ PUBLIC gint checkPrinterAndJobState(gchar *pDestName, gboolean *pPrinterReady, g
 	gchar	serverName[HTTP_MAX_URI];	// CUPS server name.
 	gint	retVal = ID_ERR_NO_ERROR;	// Return value.
 /*** Parameters end ***/
-	
+
 	snprintf(printerURI, sizeof(printerURI), "ipp://localhost/printers/%s", pDestName);
 	strncpy(serverName, "localhost", HTTP_MAX_URI-1);
-	
+
 	// Check printer state.
 	retVal = checkPrinterState(pDestName, printerURI, serverName);
 	if (retVal == ID_ERR_NO_ERROR) {
@@ -185,7 +209,7 @@ PUBLIC gint checkPrinterAndJobState(gchar *pDestName, gboolean *pPrinterReady, g
 			*pPrinterReady = FALSE;
 		}
 	}
-	
+
 	if (retVal == ID_ERR_NO_ERROR && pJobExist != NULL) {
 		// Check active job exist.
 		retVal = getJobID(pDestName, printerURI, serverName, NULL);
@@ -196,17 +220,17 @@ PUBLIC gint checkPrinterAndJobState(gchar *pDestName, gboolean *pPrinterReady, g
 			*pJobExist = FALSE;
 		}
 	}
-	
+
 	if (retVal == ID_ERR_UNKNOWN_PRINTER || retVal == ID_ERR_PRINT_JOB_NOT_EXIST) {
 		retVal = ID_ERR_NO_ERROR;
 	}
-	
+
 	return(retVal);
 }// End getPrinterAndJobState
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE gint checkPrinterState(gchar *pDestName, gchar *pURI, gchar *pServerName)
 // IN     : gchar *pDestName : Printer name.
 //          gchar *pURI : Printer URI.
@@ -215,7 +239,7 @@ PUBLIC gint checkPrinterAndJobState(gchar *pDestName, gboolean *pPrinterReady, g
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_UNKNOWN_PRINTER : No printer registerd in CUPS.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
-// 
+//
 PRIVATE gint checkPrinterState(gchar *pDestName, gchar *pURI, gchar *pServerName)
 {
 /*** Parameters start ***/
@@ -227,60 +251,60 @@ PRIVATE gint checkPrinterState(gchar *pDestName, gchar *pURI, gchar *pServerName
 	ipp_pstate_t	printerState = IPP_PRINTER_STOPPED;	// Pointer to printer state.
 	gint			retVal = ID_ERR_UNKNOWN_PRINTER;	// Return value.
 /*** Parameters end ***/
-	
+
 	// CUPS http connect.
 	if ((pHTTP = httpConnectEncrypt(pServerName, ippPort(), cupsEncryption())) == NULL) {
 		retVal = ID_ERR_CUPS_API_FAILED;
 	}
 	else {
 		pRequest = ippNew();
-		
-		pRequest->request.op.operation_id = IPP_GET_PRINTER_ATTRIBUTES;
-		pRequest->request.op.request_id   = 1;
-		
-		pLanguage = bjcupsLangDefault();			// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19 
-				
+
+		ippSetOperation(pRequest, IPP_GET_PRINTER_ATTRIBUTES);
+		ippSetRequestId(pRequest, 1);
+
+		pLanguage = bjcupsLangDefault();			// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
+
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "printer-uri", NULL, pURI);
-		
+
 		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
-			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+			if (ippGetStatusCode(pResponse) > IPP_OK_CONFLICT) {
 				retVal = ID_ERR_CUPS_API_FAILED;
 			}
 			else {
 				if ((pAttribute = ippFindAttribute(pResponse, "printer-state", IPP_TAG_ENUM)) != NULL) {
-					printerState = (ipp_state_t)pAttribute->values[0].integer;
+					printerState = (ipp_state_t) ippGetInteger(pAttribute, 0);
 				}
 			}
-			
+
 			ippDelete(pResponse);
 		}
 		else {
 			retVal = ID_ERR_CUPS_API_FAILED;
 		}
-		
+
 		cupsLangFree(pLanguage);
 		httpClose(pHTTP);
 	}
-	
+
 	if (printerState == IPP_PRINTER_IDLE || printerState == IPP_PRINTER_PROCESSING) {
 		retVal = ID_ERR_NO_ERROR;
 	}
-	
+
 	return(retVal);
 }// End checkPrinterState
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC gint getPrinterStatus(gchar *pDestName, gchar *pStatus, gint bufSize)
 // IN     : gchar *pDestName : Printer name.
 //          gint bufSize : Size of output buffer.
 // OUT    : gchar *pStatus : Printer status string.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
-// 
+//
 PUBLIC gint getPrinterStatus(gchar *pDestName, gchar *pStatus, gint bufSize)
 {
 /*** Parameters start ***/
@@ -293,11 +317,11 @@ PUBLIC gint getPrinterStatus(gchar *pDestName, gchar *pStatus, gint bufSize)
 	gchar			serverName[HTTP_MAX_URI];	// CUPS server name.
 	gint			retVal = ID_ERR_NO_ERROR;	// Return value.
 /*** Parameters end ***/
-	
+
 	// Initialize buffer.
 	memset(printerURI, 0, sizeof(printerURI));
 	memset(serverName, 0, sizeof(serverName));
-	
+
 	// Get printer URI and CUPS server name.
 	retVal = getPrinterURI(pDestName, printerURI, serverName, HTTP_MAX_URI);
 	if (retVal == ID_ERR_NO_ERROR) {
@@ -307,24 +331,24 @@ PUBLIC gint getPrinterStatus(gchar *pDestName, gchar *pStatus, gint bufSize)
 		}
 		else {
 			pRequest = ippNew();
-			
-			pRequest->request.op.operation_id = IPP_GET_PRINTER_ATTRIBUTES;
-			pRequest->request.op.request_id   = 1;
-			
+
+			ippSetOperation(pRequest, IPP_GET_PRINTER_ATTRIBUTES);
+			ippSetRequestId(pRequest, 1);
+
 			pLanguage = bjcupsLangDefault();		// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
-			
+
 			ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 			ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 			ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "printer-uri", NULL, printerURI);
-			
+
 			if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
-				if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+				if (ippGetStatusCode(pResponse) > IPP_OK_CONFLICT) {
 					retVal = ID_ERR_CUPS_API_FAILED;
 				}
 				else {
 					pAttribute = ippFindAttribute(pResponse, "printer-state-message", IPP_TAG_TEXT);
 					if (pAttribute != NULL) {
-						strncpy(pStatus, pAttribute->values[0].string.text, bufSize);
+						strncpy(pStatus, ippGetString(pAttribute, 0, NULL), bufSize);
 					}
 				}
 				ippDelete(pResponse);
@@ -332,24 +356,24 @@ PUBLIC gint getPrinterStatus(gchar *pDestName, gchar *pStatus, gint bufSize)
 			else {
 				retVal = ID_ERR_CUPS_API_FAILED;
 			}
-			
+
 			cupsLangFree(pLanguage);
 			httpClose(pHTTP);
 		}
 	}
-	
+
 	return(retVal);
 }// End getPrinterStatus
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC gint removeJob(gchar *pDestName)
 // IN     : gchar *pDestName : Printer name.
 // OUT    : None.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
-// 
+//
 PUBLIC gint removeJob(gchar *pDestName)
 {
 /*** Parameters start ***/
@@ -362,11 +386,11 @@ PUBLIC gint removeJob(gchar *pDestName)
 	gint			jobID = 0;					// Job ID.
 	gint			retVal = ID_ERR_NO_ERROR;	// Return value.
 /*** Parameters end ***/
-	
+
 	// Initialize buffer.
 	memset(printerURI, 0, sizeof(printerURI));
 	memset(serverName, 0, sizeof(serverName));
-	
+
 	// Get printer URI and CUPS server name.
 	retVal = getPrinterURI(pDestName, printerURI, serverName, HTTP_MAX_URI);
 	if (retVal == ID_ERR_NO_ERROR) {
@@ -374,7 +398,7 @@ PUBLIC gint removeJob(gchar *pDestName)
 		if (retVal == ID_ERR_PRINT_JOB_NOT_EXIST) {
 			retVal = ID_ERR_NO_ERROR;
 		}
-		
+
 		if (retVal == ID_ERR_NO_ERROR) {
 			// CUPS http connect.
 			if ((pHTTP = httpConnectEncrypt(serverName, ippPort(), cupsEncryption())) == NULL) {
@@ -382,20 +406,20 @@ PUBLIC gint removeJob(gchar *pDestName)
 			}
 			else {
 				pRequest = ippNew();
-				
-				pRequest->request.op.operation_id = IPP_CANCEL_JOB;
-				pRequest->request.op.request_id   = 1;
-				
+
+				ippSetOperation(pRequest, IPP_CANCEL_JOB);
+				ippSetRequestId(pRequest, 1);
+
 				pLanguage = bjcupsLangDefault();		// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
-				
+
 				ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 				ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 				ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "printer-uri", NULL, printerURI);
 				ippAddInteger(pRequest, IPP_TAG_OPERATION, IPP_TAG_INTEGER, "job-id", jobID);
 				ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_NAME, "requesting-user-name", NULL, cupsUser());
-				
+
 				if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/jobs/")) != NULL) {
-					if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+					if (ippGetStatusCode(pResponse) > IPP_OK_CONFLICT) {
 						retVal = ID_ERR_CUPS_API_FAILED;
 					}
 					ippDelete(pResponse);
@@ -403,17 +427,17 @@ PUBLIC gint removeJob(gchar *pDestName)
 				else {
 					retVal = ID_ERR_CUPS_API_FAILED;
 				}
-				
+
 				cupsLangFree(pLanguage);
 				httpClose(pHTTP);
 			}
 		}
 	}
-	
+
 	return(retVal);
 }// End removeJob
 
-PRIVATE gchar * getJobState(gchar *pDestName, gchar *pURI, gchar *pServerName, ipp_jstate_t *pJobState, gchar *pJobUserName)
+PRIVATE gchar * getJobState(gchar *pDestName, const gchar *pURI, gchar *pServerName, ipp_jstate_t *pJobState, gchar *pJobUserName)
 {
 /*** Parameters start ***/
 	http_t			*pHTTP;									// Pointer to HTTP connection.
@@ -428,77 +452,77 @@ PRIVATE gchar * getJobState(gchar *pDestName, gchar *pURI, gchar *pServerName, i
 	struct passwd	*pPasswd;								// Pointer to password structure.
 	gint			retVal = ID_ERR_PRINT_JOB_NOT_EXIST;	// Return value.
 /*** Parameters end ***/
-	
+
 	// Get login name.
 	userID = getuid();
 	pPasswd = getpwuid(userID);
-	
+
 	// CUPS http connect.
 	if ((pHTTP = httpConnectEncrypt(pServerName, ippPort(), cupsEncryption())) == NULL) {
 		retVal = ID_ERR_CUPS_API_FAILED;
 	}
 	else {
 		pRequest = ippNew();
-		
-		pRequest->request.op.operation_id = IPP_GET_JOB_ATTRIBUTES;
-		pRequest->request.op.request_id   = 1;
-		
+
+		ippSetOperation(pRequest, IPP_GET_JOB_ATTRIBUTES);
+		ippSetRequestId(pRequest, 1);
+
 		pLanguage = bjcupsLangDefault();	// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
-		
+
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "job-uri", NULL, pURI);
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_NAME, "requesting-user-name", NULL, pPasswd->pw_name);
-		
+
 		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
-			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+			if (ippGetStatusCode(pResponse) > IPP_OK_CONFLICT) {
 				retVal = ID_ERR_CUPS_API_FAILED;
 			}
 			else {
-				pAttribute = pResponse->attrs;
+				pAttribute = ippFirstAttribute(pResponse);
 
 				while (pAttribute != NULL) {
-					while (pAttribute != NULL && pAttribute->group_tag != IPP_TAG_JOB) {
-						pAttribute = pAttribute->next;
+					while (pAttribute != NULL && ippGetGroupTag(pAttribute) != IPP_TAG_JOB) {
+						pAttribute = bjcups_ippNextAttribute(pResponse, pAttribute);
 					}
 					if (pAttribute == NULL) {
 						break;
 					}
-					
-					while (pAttribute != NULL && pAttribute->group_tag == IPP_TAG_JOB) {
-						if (strcmp(pAttribute->name, "job-state") == 0 && pAttribute->value_tag == IPP_TAG_ENUM) {
-							*pJobState = (ipp_jstate_t)pAttribute->values[0].integer;
+
+					while (pAttribute != NULL && ippGetGroupTag(pAttribute) == IPP_TAG_JOB) {
+						if (strcmp(ippGetName(pAttribute), "job-state") == 0 && ippGetValueTag(pAttribute) == IPP_TAG_ENUM) {
+							*pJobState = (ipp_jstate_t)ippGetInteger(pAttribute, 0);
 						}
-						if (strcmp(pAttribute->name, "job-originating-user-name") == 0 && pAttribute->value_tag == IPP_TAG_NAME) {
+						if (strcmp(ippGetName(pAttribute), "job-originating-user-name") == 0 && ippGetValueTag(pAttribute) == IPP_TAG_NAME) {
 							//pJobUserName = pAttribute->values[0].string.text;
 							pJobUserName=malloc(20*sizeof(gchar));
-							strncpy(pJobUserName,pAttribute->values[0].string.text,19);
+							strncpy(pJobUserName,ippGetString(pAttribute, 0, NULL), 19);
 							pJobUserName[19]='\0';
-							
+
 						}
-						pAttribute = pAttribute->next;
+						pAttribute = bjcups_ippNextAttribute(pResponse, pAttribute);
 					}
 					if (pAttribute != NULL)
-						pAttribute = pAttribute->next;
+						pAttribute = bjcups_ippNextAttribute(pResponse, pAttribute);
 				}
 			}
-			
+
 			ippDelete(pResponse);
 		}
 		else {
 			retVal = ID_ERR_CUPS_API_FAILED;
 		}
-		
+
 		cupsLangFree(pLanguage);
 		httpClose(pHTTP);
 	}
-	
+
 
 	return(pJobUserName);
 }// End getJobState
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE gint getJobID(gchar *pDestName, gchar *pURI, gchar *pServerName, gint *pJobID)
 // IN     : gchar *pDestName : Printer name.
 //          gchar *pURI : Printer URI.
@@ -506,7 +530,7 @@ PRIVATE gchar * getJobState(gchar *pDestName, gchar *pURI, gchar *pServerName, i
 // OUT    : gint *pJobID : Job ID.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
-// 
+//
 PRIVATE gint getJobID(gchar *pDestName, gchar *pURI, gchar *pServerName, gint *pJobID)
 {
 /*** Parameters start ***/
@@ -522,50 +546,52 @@ PRIVATE gint getJobID(gchar *pDestName, gchar *pURI, gchar *pServerName, gint *p
 	struct passwd	*pPasswd;								// Pointer to password structure.
 	gint			retVal = ID_ERR_PRINT_JOB_NOT_EXIST;	// Return value.
 /*** Parameters end ***/
-	
+
 	// Get login name.
 	userID = getuid();
 	pPasswd = getpwuid(userID);
-	
+
 	// CUPS http connect.
 	if ((pHTTP = httpConnectEncrypt(pServerName, ippPort(), cupsEncryption())) == NULL) {
 		retVal = ID_ERR_CUPS_API_FAILED;
 	}
 	else {
 		pRequest = ippNew();
-		
-		pRequest->request.op.operation_id = IPP_GET_JOBS;
-		pRequest->request.op.request_id   = 1;
-		
+
+		ippSetOperation(pRequest, IPP_GET_JOBS);
+		ippSetRequestId(pRequest, 1);
+
 		pLanguage = bjcupsLangDefault();	// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
-		
+
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "printer-uri", NULL, pURI);
-		
+		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_NAME, "requesting-user-name", NULL, cupsUser());
+
 		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
-			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+            int statusCode = ippGetStatusCode(pResponse);
+			if (statusCode > IPP_OK_CONFLICT) {
 				retVal = ID_ERR_CUPS_API_FAILED;
 			}
 			else {
-				pAttribute = pResponse->attrs;
+				pAttribute = ippFirstAttribute(pResponse);
 
 				while (pAttribute != NULL) {
-					while (pAttribute != NULL && pAttribute->group_tag != IPP_TAG_JOB) {
-						pAttribute = pAttribute->next;
+					while (pAttribute != NULL && ippGetGroupTag(pAttribute) != IPP_TAG_JOB) {
+						pAttribute = bjcups_ippNextAttribute(pResponse, pAttribute);
 					}
 					if (pAttribute == NULL) {
 						break;
 					}
-					
-					while (pAttribute != NULL && pAttribute->group_tag == IPP_TAG_JOB) {
-						if (strcmp(pAttribute->name, "job-id") == 0 && pAttribute->value_tag == IPP_TAG_INTEGER) {
-							jobID = pAttribute->values[0].integer;
+
+					while (pAttribute != NULL && ippGetGroupTag(pAttribute) == IPP_TAG_JOB) {
+						if (strcmp(ippGetName(pAttribute), "job-id") == 0 && ippGetValueTag(pAttribute) == IPP_TAG_INTEGER) {
+							jobID = ippGetInteger(pAttribute, 0);
 						}
-						if (strcmp(pAttribute->name, "job-uri") == 0 && pAttribute->value_tag == IPP_TAG_URI) {
-							pJobUserName=getJobState(pDestName,pAttribute->values[0].string.text,pServerName,&jobState,pJobUserName);
+						if (strcmp(ippGetName(pAttribute), "job-uri") == 0 && ippGetValueTag(pAttribute) == IPP_TAG_URI) {
+							pJobUserName=getJobState(pDestName,ippGetString(pAttribute, 0, NULL),pServerName,&jobState,pJobUserName);
 						}
-						pAttribute = pAttribute->next;
+						pAttribute = bjcups_ippNextAttribute(pRequest, pAttribute);
 					}
 					if (jobState == IPP_JOB_PROCESSING) {
 						if (pJobUserName != NULL) {
@@ -580,30 +606,30 @@ PRIVATE gint getJobID(gchar *pDestName, gchar *pURI, gchar *pServerName, gint *p
 					}
 
 					if (pAttribute != NULL)
-						pAttribute = pAttribute->next;
+						pAttribute = bjcups_ippNextAttribute(pRequest, pAttribute);
 				}
 			}
-			
+
 			ippDelete(pResponse);
 		}
 		else {
 			retVal = ID_ERR_CUPS_API_FAILED;
 		}
-		
+
 		cupsLangFree(pLanguage);
 		httpClose(pHTTP);
 	}
-	
+
 	if (retVal == ID_ERR_NO_ERROR && pJobID != NULL) {
 		*pJobID = jobID;
 	}
-	
+
 	return(retVal);
 }// End getJobID
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE gint getPrinterURI(gchar *pDestName, gchar *pURI, gchar *pServerName, gint bufSize)
 // IN     : gchar *pDestName : Printer name.
 //          gint bufSize : Size of output buffer.
@@ -611,7 +637,7 @@ PRIVATE gint getJobID(gchar *pDestName, gchar *pURI, gchar *pServerName, gint *p
 //          gchar *pServerName : Server name.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_CUPS_API_FAILED : Error occured in CUPS API.
-// 
+//
 PRIVATE gint getPrinterURI(gchar *pDestName, gchar *pURI, gchar *pServerName, gint bufSize)
 {
 /*** Parameters start ***/
@@ -630,82 +656,82 @@ PRIVATE gint getPrinterURI(gchar *pDestName, gchar *pURI, gchar *pServerName, gi
 						"printer-uri-supported",
 					};
 /*** Parameters end ***/
-	
+
 	// CUPS http connect.
 	if ((pHTTP = httpConnectEncrypt(cupsServer(), ippPort(), cupsEncryption())) == NULL) {
 		retVal = ID_ERR_CUPS_API_FAILED;
 	}
 	else {
 		pRequest = ippNew();
-		
-		pRequest->request.op.operation_id = CUPS_GET_PRINTERS;
-		pRequest->request.op.request_id   = 1;
-		
+
+		ippSetOperation(pRequest, CUPS_GET_PRINTERS);
+		ippSetRequestId(pRequest, 1);
+
 		pLanguage = bjcupsLangDefault();	// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
-		
+
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 		ippAddStrings(pRequest, IPP_TAG_OPERATION, IPP_TAG_KEYWORD, "requested-attributes", sizeof(attributes) / sizeof(attributes[0]), NULL, attributes);
-		
+
 		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
-			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
+			if (ippGetStatusCode(pResponse) > IPP_OK_CONFLICT) {
 				retVal = ID_ERR_CUPS_API_FAILED;
 			}
 			else {
-				pAttribute = pResponse->attrs;
+				pAttribute = ippFirstAttribute(pResponse);
 
 				while (pAttribute != NULL) {
-					while (pAttribute != NULL && pAttribute->group_tag != IPP_TAG_PRINTER) {
-						pAttribute = pAttribute->next;
+					while (pAttribute != NULL && ippGetGroupTag(pAttribute) != IPP_TAG_PRINTER) {
+						pAttribute = bjcups_ippNextAttribute(pRequest, pAttribute);
 					}
 					if (pAttribute == NULL) {
 						break;
 					}
-					
-					while (pAttribute != NULL && pAttribute->group_tag == IPP_TAG_PRINTER) {
-						if (strcmp(pAttribute->name, "printer-name") == 0 && pAttribute->value_tag == IPP_TAG_NAME) {
-							pPrinter = pAttribute->values[0].string.text;
+
+					while (pAttribute != NULL && ippGetGroupTag(pAttribute) == IPP_TAG_PRINTER) {
+						if (strcmp(ippGetName(pAttribute), "printer-name") == 0 && ippGetValueTag(pAttribute) == IPP_TAG_NAME) {
+							pPrinter = ippGetString(pAttribute, 0, NULL);
 						}
-						if (strcmp(pAttribute->name, "printer-uri-supported") == 0 && pAttribute->value_tag == IPP_TAG_URI) {
-							pUri = pAttribute->values[0].string.text;
+						if (strcmp(ippGetName(pAttribute), "printer-uri-supported") == 0 && ippGetValueTag(pAttribute) == IPP_TAG_URI) {
+							pUri = ippGetString(pAttribute, 0, NULL);
 						}
-						pAttribute = pAttribute->next;
+						pAttribute = bjcups_ippNextAttribute(pRequest, pAttribute);
 					}
-					
+
 					// Tora 020418: Compare two printer names ignoring the character case.
 					if (strcasecmp(pDestName, pPrinter) == 0) {
 						strncpy(pURI, pUri, bufSize);
-						
+
 						pTemp = strstr(pURI, "//");
 						pTemp += 2;
 						for (i = 0; *pTemp != '/' && *pTemp != ':'; i++, pTemp++) {
 							pServerName[i] = *pTemp;
 						}
-						
+
 						break;
 					}
 
 					if (pAttribute != NULL)
-						 pAttribute = pAttribute->next;
+						 pAttribute = bjcups_ippNextAttribute(pRequest, pAttribute);
 				}
 			}
-			
+
 			ippDelete(pResponse);
 		}
 		else {
 			retVal = ID_ERR_CUPS_API_FAILED;
 		}
-		
+
 		cupsLangFree(pLanguage);
 		httpClose(pHTTP);
 	}
-	
+
 	if (pURI[0] == '\0') {
 		snprintf(pURI, bufSize, "ipp://localhost/printers/%s", pDestName);
 	}
 	if (pServerName[0] == '\0') {
 		strncpy(pServerName, "localhost", strlen("localhost"));
 	}
-	
+
 	return(retVal);
 }// End getPrinterURI
